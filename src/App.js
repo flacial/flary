@@ -1,24 +1,55 @@
-import logo from './logo.svg';
 import './App.css';
+import {  
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link } from 'react-router-dom'
+import { useState } from 'react'
+import { MainContainer } from './components/RequestPage//MainContainer/MainContainer';
+import { Heading } from './components/RequestPage/Heading/Heading';
+import { Button } from './components/RequestPage/Button/Button';
+import WordInput from './components/RequestPage/inputs';
+import WordsContainer from './components/RequestPage/WordsContainer';
+
+
+fetch()
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(err => console.log('Errrooor', err))
+
 
 function App() {
+  const [ Word, setWord ] = useState('')
+  
+  const onWordChange = (event) => {
+    console.log(event.target.value)
+    setWord(event.target.value)
+  }
+
+  const ButtonClick = () => {
+    
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <MainContainer>
+      <Heading>Words to be searched</Heading>
+        <WordsContainer>
+          <WordInput onChange={onWordChange} placeholder="Type your words"/>
+            <Button>
+              <Link to='/thesaurus'>
+                Submit
+              </Link>
+            </Button>
+        </WordsContainer>
+      </MainContainer>
+      <Switch>
+          <Route path='/thesaurus' >  
+
+          </Route>
+      </Switch>
+
+    </Router>
   );
 }
 
