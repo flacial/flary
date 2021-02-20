@@ -10,42 +10,58 @@ import { Heading } from './components/RequestPage/Heading/Heading';
 import { Button } from './components/RequestPage/Button/Button';
 import WordInput from './components/RequestPage/inputs';
 import WordsContainer from './components/RequestPage/WordsContainer';
-
-
-fetch()
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(err => console.log('Errrooor', err))
+import { getRequest } from './components/RequestPage/Functions/getRequest';
 
 
 function App() {
   const [ Word, setWord ] = useState('')
-  
-  const onWordChange = (event) => {
-    console.log(event.target.value)
+  const [ ReturnedWord, setReturnedWord] = useState('')
+  const [ ShortDef, setShortDef ] = useState('')
+  const [ PartOfSpeech, setPartOfSpeech ] = useState('')
+
+  const getInputValue = (event) => {
     setWord(event.target.value)
   }
 
-  const ButtonClick = () => {
+  const getButtonClick = () => {
+    getRequest(Word)
+    .then(response => ReturnedTheas(response))
+  }
+
+  const ReturnedTheas = (word) => {
+    try {
+    let arrayOfWords = word[0]
+    let { fl, hwi: {hw},  shortdef } = word[0]
     
+    setReturnedWord(hw)
+    setPartOfSpeech(fl)
+    setShortDef(shortdef[0])
+    }
+    catch {
+      console.log('error, word not found')
+    }
   }
 
   return (
     <Router>
-      <MainContainer>
-      <Heading>Words to be searched</Heading>
-        <WordsContainer>
-          <WordInput onChange={onWordChange} placeholder="Type your words"/>
-            <Button>
-              <Link to='/thesaurus'>
-                Submit
-              </Link>
-            </Button>
-        </WordsContainer>
-      </MainContainer>
       <Switch>
-          <Route path='/thesaurus' >  
-
+          <Route exact path='/'>
+            <MainContainer>
+              <Heading>Words to be thesaurused</Heading>
+              <WordsContainer>
+                <WordInput onChange={getInputValue} placeholder="Type your words"/>
+                  <Button onClick={getButtonClick}>
+                    <Link to='/thesaurus'>
+                      Submit
+                    </Link>
+                  </Button>
+              </WordsContainer>
+            </MainContainer>
+          </Route>
+          <Route path='/thesaurus'>  
+            <h2>{ ReturnedWord }</h2>
+            <h2>{ PartOfSpeech }</h2>
+            <h2> { ShortDef } </h2>
           </Route>
       </Switch>
 
