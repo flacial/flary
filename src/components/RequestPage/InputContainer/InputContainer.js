@@ -1,8 +1,8 @@
 import tw from 'tailwind-styled-components'
 
-const WordsContainer = tw.div`
+const InputContainer = tw.div`
     flex
     justify-center
 `
 
-export default WordsContainer;
+export default InputContainer;

@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components'
 
-export const Button = tw.button`
+export const BackButton = tw.button`
     bg-blue-500
     bg-gradient-to-b
     from-green-400
@@ -11,6 +11,5 @@ export const Button = tw.button`
     px-4
     rounded-full
     shadow-2xl
-    inline-block
-    ml-6
+    m-4
 `
