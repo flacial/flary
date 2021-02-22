@@ -1,24 +1,17 @@
 import './App.css';
-import  { Fragment }  from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link, 
   Redirect,
-  useLocation,
-  withRouter,
-  BrowserRouter,
-  useHistory
 } from 'react-router-dom'
-import PropTypes from "prop-types";
 import ReactHtmlParser from 'react-html-parser';
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { getRequest } from './components/RequestPage/Functions/getRequest/getRequest';
 import Thesaurus from './components/RequestPage/Thesaurus/Thesaurus';
 import { Home } from './components/ResponsePage/Home/Home';
 import { Loading, LoadingAndSvgContainer } from './components/ResponsePage/Loading/Loading';
-
 
 const  App = (props) => {
   const [ Word, setWord ] = useState('')
@@ -27,6 +20,7 @@ const  App = (props) => {
   const [ PartOfSpeech, setPartOfSpeech ] = useState('')
   const [ WordExample, setWordExample ] = useState('')
   const [ Error, setError ] = useState(false)
+  const [ PathName, setPathName ] = useState('')
 
   const getInputValue = (event) => {
     setWord(event.target.value)
@@ -61,10 +55,8 @@ const  App = (props) => {
   const sendRequstedWord = (word) => {
     try {
           if (word.length >= 1) {
-            console.log('First')
             RequestedThesaurus(word, 0)
           } else if (!word[0]) {
-            console.log('Third')
             setError(true)
             setTimeout(() => {
               alert('Word not found')
@@ -98,34 +90,22 @@ const  App = (props) => {
     return HomeCondition
   }
 
-  const PlusButtonClick = () => {
-    setWord('')
-    setReturnedWord('')
-    setPartOfSpeech('')
-    setShortDef('')
-    setWordExample('')
-  }
-
-  let PathName = ''
   const getPathName = (Path) => {
-    PathName = Path
-    return PathName
+    setPathName(Path)
   }
 
   useEffect(() => {
-    console.log('getPath',PathName)
-    if (PathName === '/' && ReturnedWord.length) {
-      console.log('True Effect If-stat')
+    if (PathName === '/' && ShortDef.length) {
       BackButtonClick()
     }
+  })
 
-  }, [PathName])
 
   return (
     <Router>
       <Switch>
           <Route exact path='/'>
-            <Thesaurus getInputValue={getInputValue} PlusButtonClick={PlusButtonClick} getButtonClick={getButtonClick} Link={Link} getPathName={getPathName} />
+            <Thesaurus getInputValue={getInputValue} getButtonClick={getButtonClick} Link={Link} getPathName={getPathName} />
           </Route>
           <Route exact path='/thesaurus'>
           {HomeComponent()}

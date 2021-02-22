@@ -5,15 +5,33 @@ export const Button = tw.button`
     bg-gradient-to-b
     from-green-400
     to-green-700
-    text-white
+    text-gray-200
     font-bold
     py-2
     px-6
     rounded-full
     shadow-2xl
     inline-block
-    ml-6
-    hover:bg-gradient-to-b
-    hover:from-green-600
-    hover:to-green-800
-`
+    focus:outline-none
+    focus:ring-4 focus:ring-green-100
+    `
+
+
+
+// export const Button = tw.button`
+// bg-blue-500
+// bg-gradient-to-b
+// from-green-400
+// to-green-700
+// text-white
+// font-bold
+// py-2
+// px-6
+// rounded-full
+// shadow-2xl
+// inline-block
+// ml-6
+// hover:bg-gradient-to-b
+// hover:from-green-600
+// hover:to-green-800
+// `

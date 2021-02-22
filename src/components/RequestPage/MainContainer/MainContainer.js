@@ -5,5 +5,5 @@ export const MainContainer = tw.div`
    text-center
    m-32
    md:m-32
-   lg:m-48
+   lg:m-52
 `
