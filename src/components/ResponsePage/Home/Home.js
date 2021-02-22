@@ -7,10 +7,11 @@ import { SynAntHeader } from '../SynAntHeader/SynAntHeader';
 import { SynAntContainer } from '../SynAntContainer/SynAntContainer';
 import { Example } from '../Examples/Example';
 import { Text } from '../../RequestPage/Text/Text';
+import {useLocation} from 'react-router-dom';
+
 
 export const Home = (
     {
-        Word,
         Link,
         BackButtonClick,
         ReturnedWord,
@@ -18,8 +19,10 @@ export const Home = (
         ShortDef,
         ReactHtmlParser,
         WordExample,
-        Redirect
+        getPathName
 }) => {
+  const location = useLocation()
+  getPathName(location.pathname)
     return (
             <Fragment>
               <div className='flex justify-end' >

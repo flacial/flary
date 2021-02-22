@@ -11,5 +11,8 @@ export const BackButton = tw.button`
     px-4
     rounded-full
     shadow-2xl
-    m-4
+    m-8
+    hover:bg-gradient-to-b
+    hover:from-green-600
+    hover:to-green-800
 `

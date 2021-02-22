@@ -5,15 +5,22 @@ import {
   Switch,
   Route,
   Link, 
-  Redirect
+  Redirect,
+  useLocation,
+  withRouter,
+  BrowserRouter,
+  useHistory
 } from 'react-router-dom'
+import PropTypes from "prop-types";
 import ReactHtmlParser from 'react-html-parser';
 import { useState, useEffect } from 'react'
 import { getRequest } from './components/RequestPage/Functions/getRequest/getRequest';
 import Thesaurus from './components/RequestPage/Thesaurus/Thesaurus';
 import { Home } from './components/ResponsePage/Home/Home';
-import { Loading, SvgPeriod, LoadingAndSvgContainer } from './components/ResponsePage/Loading/Loading';
-function App() {
+import { Loading, LoadingAndSvgContainer } from './components/ResponsePage/Loading/Loading';
+
+
+const  App = (props) => {
   const [ Word, setWord ] = useState('')
   const [ ReturnedWord, setReturnedWord] = useState('')
   const [ ShortDef, setShortDef ] = useState('')
@@ -24,13 +31,13 @@ function App() {
   const getInputValue = (event) => {
     setWord(event.target.value)
   }
-
+  
   const getButtonClick = () => {
-        if (Word === '') {
+    if (Word === '') {
           alert('Type a word please')
         } 
-        getRequest(Word)
-        .then(response => sendRequstedWord(response))
+    getRequest(Word)
+    .then(response => sendRequstedWord(response))
   }
 
   const BackButtonClick = () => {
@@ -53,13 +60,15 @@ function App() {
 
   const sendRequstedWord = (word) => {
     try {
-          if (word.length > 1) {
-            RequestedThesaurus(word, 1)
-          } else if (word.length === 1) {
+          if (word.length >= 1) {
+            console.log('First')
             RequestedThesaurus(word, 0)
           } else if (!word[0]) {
+            console.log('Third')
             setError(true)
-            alert('Word not found')
+            setTimeout(() => {
+              alert('Word not found')
+            }, 500);
           }
     }
     catch (error) {
@@ -72,12 +81,14 @@ function App() {
     if (Word.length) {
         if (ReturnedWord.length) {
             HomeCondition = <Home Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
-            ReactHtmlParser={ReactHtmlParser} WordExample={WordExample} Redirect={Redirect}/>
+            ReactHtmlParser={ReactHtmlParser} WordExample={WordExample} getPathName={getPathName}/>
         } else if (Error) {
           HomeCondition = <Redirect to='/' />
         } else {
           HomeCondition = <LoadingAndSvgContainer>
                             <Loading>Loading</Loading>
+                            <span className='text-9xl inline text-white font-serif' >.</span>
+                            <span className='text-9xl inline text-white font-serif' >.</span>
                             <span className='text-9xl inline text-white font-serif' >.</span>
                           </LoadingAndSvgContainer>
         }
@@ -95,13 +106,26 @@ function App() {
     setWordExample('')
   }
 
-  
+  let PathName = ''
+  const getPathName = (Path) => {
+    PathName = Path
+    return PathName
+  }
+
+  useEffect(() => {
+    console.log('getPath',PathName)
+    if (PathName === '/' && ReturnedWord.length) {
+      console.log('True Effect If-stat')
+      BackButtonClick()
+    }
+
+  }, [PathName])
 
   return (
     <Router>
       <Switch>
           <Route exact path='/'>
-            <Thesaurus getInputValue={getInputValue} PlusButtonClick={PlusButtonClick} getButtonClick={getButtonClick} Link={Link} />
+            <Thesaurus getInputValue={getInputValue} PlusButtonClick={PlusButtonClick} getButtonClick={getButtonClick} Link={Link} getPathName={getPathName} />
           </Route>
           <Route exact path='/thesaurus'>
           {HomeComponent()}

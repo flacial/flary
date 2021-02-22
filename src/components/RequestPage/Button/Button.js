@@ -8,9 +8,12 @@ export const Button = tw.button`
     text-white
     font-bold
     py-2
-    px-4
+    px-6
     rounded-full
     shadow-2xl
     inline-block
     ml-6
+    hover:bg-gradient-to-b
+    hover:from-green-600
+    hover:to-green-800
 `

@@ -7,9 +7,9 @@ box-shadow:  5px 5px 10px #ededed,
              -5px -5px 10px #ffffff;
  
 text-align: left;
-width: 760px;
-height: 1050px;
+width: auto;
+height: auto;
 padding: 20px;
-margin: 20px;
+margin: 3em;
 word-spacing: 0;
 `
