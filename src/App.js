@@ -9,9 +9,10 @@ import {
 import ReactHtmlParser from 'react-html-parser';
 import { useState, useEffect } from 'react';
 import { getRequest } from './components/RequestPage/Functions/getRequest/getRequest';
-import Thesaurus from './components/RequestPage/Thesaurus/Thesaurus';
-import { Home } from './components/ResponsePage/Home/Home';
+import SearchPage from './components/RequestPage/SearchPage/SearchPage';
+import { ThesaurusPage } from './components/ResponsePage/ThesaurusPage/ThesaurusPage';
 import { Loading, LoadingAndSvgContainer } from './components/ResponsePage/Loading/Loading';
+import NavBar from './components/NavBar/NavBar';
 
 const  App = (props) => {
   const [ Word, setWord ] = useState('')
@@ -72,7 +73,7 @@ const  App = (props) => {
     let HomeCondition;
     if (Word.length) {
         if (ReturnedWord.length) {
-            HomeCondition = <Home Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
+            HomeCondition = <ThesaurusPage Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
             ReactHtmlParser={ReactHtmlParser} WordExample={WordExample} getPathName={getPathName}/>
         } else if (Error) {
           HomeCondition = <Redirect to='/' />
@@ -103,9 +104,10 @@ const  App = (props) => {
 
   return (
     <Router>
+    <NavBar/>
       <Switch>
           <Route exact path='/'>
-            <Thesaurus getInputValue={getInputValue} getButtonClick={getButtonClick} Link={Link} getPathName={getPathName} />
+            <SearchPage getInputValue={getInputValue} getButtonClick={getButtonClick} Link={Link} getPathName={getPathName} />
           </Route>
           <Route exact path='/thesaurus'>
           {HomeComponent()}

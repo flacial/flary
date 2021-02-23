@@ -5,11 +5,26 @@ import { TheWord, WordAndType, TheType } from '../WordAndType/WordAndType';
 import { SynAntHeader } from '../SynAntHeader/SynAntHeader';
 import { SynAntContainer } from '../SynAntContainer/SynAntContainer';
 import { Example } from '../Examples/Example';
-import { Text } from '../../RequestPage/Text/Text';
+import { Text } from '../Text/Text';
 import {useLocation} from 'react-router-dom';
 import { useEffect } from 'react'
 
-export const Home = (
+const LinkCSS = `
+bg-gray-100
+text-gray-800
+py-2
+px-4
+rounded-xl
+shadow-2xl
+inline-block
+focus:outline-none
+focus:ring-2 focus:ring-blue-400
+hover:bg-gray-200
+transition duration-200 ease-in-out
+m-4
+`
+
+export const ThesaurusPage = (
     {
         Link,
         BackButtonClick,
@@ -20,35 +35,19 @@ export const Home = (
         WordExample,
         getPathName
 }) => {
+  
   const location = useLocation()
   useEffect(() => {
     getPathName(location.pathname)
+
   })
     return (
             <Fragment>
-              <div className='flex justify-end' >
-              <Link onClick={BackButtonClick} className='
-                        bg-gradient-to-b
-                        from-green-400
-                        to-green-700
-                        font-bold
-                        py-2
-                        px-6
-                        rounded-full
-                        shadow-2xl
-                        inline-block
-                        focus:outline-none
-                        focus:ring-2 focus:ring-green-100
-                        m-6
-                        text-gray-100
-                        hover:bg-gradient-to-b
-                        hover:from-green-600
-                        hover:to-green-800
-                        '
-                        to='/'>
+              <div className='absolute top-0' >
+              <Link onClick={BackButtonClick} className={LinkCSS} to='/'>
                 Back to search
               </Link>
-            </div>
+              </div>
             <WordTypeContainer>
             <ThesaurusHeader>
               Thesaurus
@@ -65,7 +64,7 @@ export const Home = (
               Synonyms & Antonyms of <em>{ReturnedWord}</em>
             </SynAntHeader>
             <SynAntContainer>
-              <span className='font-bold text-xl mr-5'>1</span>
+              <span className='font-bold text-gray-700 text-xl absolute left-0 top-0'>1</span>
               <Text>{ShortDef}</Text>
               <Example> <strong>//</strong> {ReactHtmlParser(WordExample)} </Example>
             </SynAntContainer>
