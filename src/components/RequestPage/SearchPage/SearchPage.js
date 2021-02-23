@@ -2,7 +2,6 @@ import tw from 'tailwind-styled-components';
 import {useLocation} from 'react-router-dom';
 import { useEffect } from 'react'
 import { Heading, Input, useColorMode, Button, Box } from '@chakra-ui/react'
-import { useSpring, animated } from 'react-spring';
 
 export const MainContainer = tw.div`
    text-center
@@ -30,20 +29,15 @@ focus:ring-2 focus:ring-blue-400
 hover:bg-gray-200
 transition duration-200 ease-in-out
 `
-
-const AnimatedHeading = animated(Heading)
-
 const SearchPage = ({ getInputValue, getButtonClick, Link, getPathName }) => {
   const location = useLocation()
   useEffect(() => {
     getPathName(location.pathname)
   })
 
-  const props = useSpring({opacity: 1, from: {opacity: 0}})
-
     return (
         <MainContainer>
-              <Heading style={props} fontFamily='Playfair Display' fontStyle='italic' fontSize={['2xl', '5xl', '6xl']} mt={['12', null, '32']} mb={['5', null, '12']} whiteSpace='nowrap' >Words to be thesaurused</Heading>
+              <Heading fontFamily='Playfair Display' fontStyle='italic' fontSize={['2xl', '5xl', '6xl']} mt={['12', null, '32']} mb={['5', null, '12']} whiteSpace='nowrap' >Words to be thesaurused</Heading>
               <Box display={{ md: "flex"}} justifyContent={[null, 'center', null]} >
               <Box>
                 <Input variant='filled' w={['12rem', 'xs', null]} rounded='xl' mr={[null, null, '2rem']} onChange={getInputValue} placeholder="Type your word"/>

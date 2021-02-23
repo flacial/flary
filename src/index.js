@@ -8,8 +8,8 @@ import {ColorModeScript} from '@chakra-ui/react'
 
 const theme = extendTheme({
   fonts: {
-    heading: "Open Sans",
-    body: "Playfair Display",
+    heading: "Playfair Display",
+    body: "Open Sans",
   },
 })
 
