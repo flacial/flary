@@ -103,7 +103,7 @@ const  App = (props) => {
 
 
   return (
-    <Router>
+    <Router basename='/wordsapiproject' >
     <NavBar/>
       <Switch>
           <Route exact path='/'>
