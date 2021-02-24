@@ -1,13 +1,73 @@
-import { Fragment } from 'react';
-import { WordTypeContainer } from '../WordTypeContainer/WordTypeContainer';
-import { ThesaurusHeader } from '../ThesaurusHeader/ThesaurusHeader';
-import { TheWord, WordAndType, TheType } from '../WordAndType/WordAndType';
-import { SynAntHeader } from '../SynAntHeader/SynAntHeader';
-import { SynAntContainer } from '../SynAntContainer/SynAntContainer';
-import { Example } from '../Examples/Example';
-import { Text } from '../Text/Text';
+import { Fragment, useEffect } from 'react';
 import {useLocation} from 'react-router-dom';
-import { useEffect } from 'react'
+import styled from 'styled-components'
+import tw from 'tailwind-styled-components';
+import { useColorModeValue } from '@chakra-ui/react';
+
+const ThesaurusHeader = tw.h1`
+    text-blue-500   
+    italic
+    font-serif
+    text-3xl
+    font-bold
+    inline-block
+`
+
+const WordTypeContainer = styled.div`
+border-radius: 29px;
+background: linear-gradient(145deg, #ffffff, #e6e6e6);
+box-shadow:  5px 5px 10px #ededed,
+             -5px -5px 10px #ffffff;
+text-align: left;
+width: auto;
+height: auto;
+padding-left: 20px;
+padding-right: 20px;
+padding-top: 5px;
+margin: 3em;
+word-spacing: 0;
+`
+
+const WordAndType = tw.div`
+    mt-5
+`
+
+const TheWord = tw.h1`
+    text-5xl
+    text-gray-700
+    font-serif
+    font-bold
+    inline-block
+`
+
+const TheType = tw.span`
+    text-blue-500
+    text-xl
+    font-bold
+    font-serif
+`
+const SynAntHeader = tw.h2`
+    text-blue-600
+    font-bold
+    text-2xl
+    mt-3
+`
+
+const SynAntContainer = tw.div`
+    mt-2
+    relative pl-6
+`
+
+const Example = tw.span`
+    text-blue-500
+    text-xl
+    block
+`
+
+const Text = tw.span`
+    text-gray-700
+    text-xl
+`
 
 const LinkCSS = `
 bg-gray-100
