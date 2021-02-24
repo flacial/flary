@@ -5,7 +5,7 @@ const NavBar = () => {
     const { colorMode, toggleColorMode } = useColorMode()
     return (
     <Box display='flex' justifyContent='flex-end' >
-    <Button m='4' rounded='full' onClick={toggleColorMode}>
+    <Button boxShadow='lg' m='4' rounded='2xl' onClick={toggleColorMode}>
       {colorMode === "light" 
       ?
       <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -13,7 +13,7 @@ const NavBar = () => {
       </path>
       </svg> 
       :
-      <svg  stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+      <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
       <path d="M256,0C115.39,0,0,115.39,0,256s115.39,256,256,256s256-115.39,256-256S396.61,0,256,0z">
       </path>
       </svg> 

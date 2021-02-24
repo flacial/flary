@@ -15,12 +15,12 @@ text-gray-800
 py-2
 px-4
 rounded-xl
-shadow-2xl
+shadow-xl
 inline-block
 focus:outline-none
 focus:ring-2 focus:ring-blue-400
-hover:bg-gray-200
-transition duration-200 ease-in-out
+hover:bg-gray-300
+transition duration-500 ease-in-out
 m-4
 `
 

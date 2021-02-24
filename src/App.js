@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react';
 import { getRequest } from './components/RequestPage/Functions/getRequest/getRequest';
 import SearchPage from './components/RequestPage/SearchPage/SearchPage';
 import { ThesaurusPage } from './components/ResponsePage/ThesaurusPage/ThesaurusPage';
-import { Loading, LoadingAndSvgContainer } from './components/ResponsePage/Loading/Loading';
+import { LoadingPage } from './components/ResponsePage/Loading/Loading';
 import NavBar from './components/NavBar/NavBar';
 
 const  App = (props) => {
@@ -78,12 +78,7 @@ const  App = (props) => {
         } else if (Error) {
           HomeCondition = <Redirect to='/' />
         } else {
-          HomeCondition = <LoadingAndSvgContainer>
-                            <Loading>Loading</Loading>
-                            <span className='text-9xl inline text-white font-serif' >.</span>
-                            <span className='text-9xl inline text-white font-serif' >.</span>
-                            <span className='text-9xl inline text-white font-serif' >.</span>
-                          </LoadingAndSvgContainer>
+          HomeCondition = <LoadingPage/>
         }
   } else {
     HomeCondition = <Redirect to='/' />
