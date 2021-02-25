@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef } from 'react';
 import {useLocation} from 'react-router-dom';
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components';
-import { chakra, Heading, Input, useColorMode, Button, Box, useColorModeValue } from '@chakra-ui/react'
+import { chakra, Heading, Input, useColorMode, Button, Box, useColorModeValue, background } from '@chakra-ui/react'
 
 const ThesaurusHeader = tw.h1`
     text-blue-500   
@@ -100,10 +100,9 @@ export const ThesaurusPage = (
   })
 
   const LinkChak = chakra(Link)
-
   const bg = useColorModeValue('#edf2f7', '#303436')
   const color = useColorModeValue('#303436', '#edf2f7')
-  const hover = useColorModeValue('hover:bg-gray-200' ,'hover:bg-gray-600')
+
     return (
             <Fragment>
               <Box className='absolute top-0' >
