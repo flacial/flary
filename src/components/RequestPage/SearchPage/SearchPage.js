@@ -1,7 +1,19 @@
 import tw from 'tailwind-styled-components';
-import {useLocation} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react'
-import { Heading, Input, useColorMode, Button, Box } from '@chakra-ui/react'
+import {  } from '@chakra-ui/react'
+import {
+  Heading, Input, useColorMode, Button, Box,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton
+} from "@chakra-ui/react"
+
+
 export const MainContainer = tw.div`
    text-center
    m-auto
@@ -33,7 +45,10 @@ focus:ring-2 focus:ring-blue-400
 hover:bg-gray-200
 transition duration-200 ease-in-out
 `
-const SearchPage = ({ getInputValue, getButtonClick, Link, getPathName }) => {
+
+
+
+const SearchPage = ({ onEnterKeyPress, WordFind, isOpen, onClose, cancelRef, getInputValue, getButtonClick, Link, getPathName }) => {
   const location = useLocation()
   useEffect(() => {
     getPathName(location.pathname)
@@ -41,10 +56,31 @@ const SearchPage = ({ getInputValue, getButtonClick, Link, getPathName }) => {
 
     return (
         <MainContainer>
+          <AlertDialog
+              motionPreset="slideInBottom"
+              leastDestructiveRef={cancelRef}
+              onClose={onClose}
+              isOpen={isOpen}
+              isCentered
+            >
+              <AlertDialogOverlay />
+
+              <AlertDialogContent>
+                  <AlertDialogHeader>Incorrect inputs</AlertDialogHeader>
+                  <AlertDialogCloseButton />
+                  <AlertDialogBody>
+                    {WordFind ? 'Empty input detected, please type a word' : 'Word not found, please type a correct word!'}
+                  </AlertDialogBody>
+                  <AlertDialogFooter>
+                  </AlertDialogFooter>
+              </AlertDialogContent>
+          </AlertDialog>
+
+
               <Heading fontFamily='Playfair Display' fontStyle='italic' fontSize={['3xl', '5xl', '6xl']} mt={['12', null, '32']} mb={['5', null, '12']} whiteSpace='nowrap' >Words to be thesaurused</Heading>
               <Box display={{ md: "flex"}} justifyContent={[null, 'center', null]} >
               <Box>
-                <Input variant='filled' w={['16rem', 'xs', null]} rounded='xl' mr={[null, null, '2rem']} onChange={getInputValue} placeholder="Type your word"/>
+                <Input onKeyPress={onEnterKeyPress} variant='filled' w={['16rem', 'xs', null]} rounded='xl' mr={[null, null, '2rem']} onChange={getInputValue} placeholder="Type your word"/>
               </Box>
               <Box mt={[5, 5, 0]} >
                     <Link onClick={getButtonClick} className={LinkCSS}

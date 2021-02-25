@@ -1,18 +1,22 @@
 import './App.css';
 import {
   BrowserRouter as Router,
+  Router as R,
   Switch,
   Route,
   Link, 
   Redirect,
+  useHistory
 } from 'react-router-dom'
 import ReactHtmlParser from 'react-html-parser';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
 import { getRequest } from './components/RequestPage/Functions/getRequest/getRequest';
 import SearchPage from './components/RequestPage/SearchPage/SearchPage';
 import { ThesaurusPage } from './components/ResponsePage/ThesaurusPage/ThesaurusPage';
 import { LoadingPage } from './components/ResponsePage/Loading/Loading';
 import NavBar from './components/NavBar/NavBar';
+import { useDisclosure } from '@chakra-ui/react'
+import { createBrowserHistory } from 'history'
 
 const  App = () => {
   const [ Word, setWord ] = useState('')
@@ -22,18 +26,28 @@ const  App = () => {
   const [ WordExample, setWordExample ] = useState('')
   const [ Error, setError ] = useState(false)
   const [ PathName, setPathName ] = useState('')
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = useRef()
+  const [ WordFind, setWordFind ] = useState(false)
+ 
+  const history = useHistory();
 
   const getInputValue = (event) => {
     setWord(event.target.value)
   }
   
-  const getButtonClick = () => {
+  const getWords = () => {
     if (Word === '') {
-          alert('Type a word please')
+      setWordFind(true)
+          onOpen()
         } else {
     getRequest(Word)
     .then(response => sendRequstedWord(response))
         }
+  }
+
+  const getButtonClick = () => {
+    getWords()
   }
 
   const BackButtonClick = () => {
@@ -61,15 +75,15 @@ const  App = () => {
           } else if (!word[0]) {
             setError(true)
             setTimeout(() => {
-              alert('Word not found')
+              onOpen()
             }, 100);
           }
     }
     catch (error) {
       console.log(error)
       setError(true)
-      alert('Word not found')
-    }
+      onOpen()
+        }
   }
 
   const ThesaurusPageComponent = () => {
@@ -95,6 +109,13 @@ const  App = () => {
     setPathName(Path)
   }
 
+  const onEnterKeyPress = (event) => {
+    if (event.which === 13) {
+      getWords()
+      history.push('/thesaurus')
+    }
+  }
+
   useEffect(() => {
     if (PathName === '/' && ShortDef.length) {
       BackButtonClick()
@@ -103,17 +124,17 @@ const  App = () => {
 
 
   return (
-    <Router basename='/wordsapiproject' >
-    <NavBar/>
+    <Fragment>
+      <NavBar/>
       <Switch>
           <Route exact path='/'>
-            <SearchPage getInputValue={getInputValue} getButtonClick={getButtonClick} Link={Link} getPathName={getPathName} />
+            <SearchPage onEnterKeyPress={onEnterKeyPress} WordFind={WordFind} isOpen={isOpen} onClose={onClose} cancelRef={cancelRef} getInputValue={getInputValue} getButtonClick={getButtonClick} Link={Link} getPathName={getPathName} />
           </Route>
           <Route exact path='/thesaurus'>
           {ThesaurusPageComponent()}
           </Route>
       </Switch>
-    </Router>
+    </Fragment>
 )
 }
 

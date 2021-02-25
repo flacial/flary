@@ -1,8 +1,8 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import {useLocation} from 'react-router-dom';
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components';
-import { useColorModeValue } from '@chakra-ui/react';
+import { chakra, Heading, Input, useColorMode, Button, Box, useColorModeValue } from '@chakra-ui/react'
 
 const ThesaurusHeader = tw.h1`
     text-blue-500   
@@ -16,13 +16,14 @@ const ThesaurusHeader = tw.h1`
 const WordTypeContainer = styled.div`
 border-radius: 29px;
 background: linear-gradient(145deg, #ffffff, #e6e6e6);
-box-shadow:  5px 5px 10px #ededed, -5px -5px 10px #1A202C;
+box-shadow:  2px 2px 12px #37413f, -10px -10px 0px #3B82F6;
 text-align: left;
 width: auto;
 height: auto;
 padding-left: 20px;
 padding-right: 20px;
 padding-top: 5px;
+padding-bottom: 5px;
 margin: 3em;
 word-spacing: 0;
 `
@@ -69,16 +70,14 @@ const Text = tw.span`
 `
 
 const LinkCSS = `
-bg-gray-100
-text-gray-800
 py-2
 px-4
 rounded-xl
 shadow-xl
 inline-block
 focus:outline-none
-focus:ring-2 focus:ring-blue-400
-hover:bg-gray-300
+focus:ring-2 focus:ring-blue-500
+hover:bg-gray-200
 transition duration-500 ease-in-out
 m-4
 `
@@ -100,34 +99,40 @@ export const ThesaurusPage = (
     getPathName(location.pathname)
 
   })
+
+  const LinkChak = chakra(Link)
+
+  const bg = useColorModeValue('#edf2f7', '#3d3d3d')
+  const color = useColorModeValue('#3d3d3d', '#edf2f7')
+  const hover = useColorModeValue('hover:bg')
     return (
             <Fragment>
-              <div className='absolute top-0' >
-              <Link onClick={BackButtonClick} className={LinkCSS} to='/'>
-                Back to search
-              </Link>
-              </div>
-            <WordTypeContainer>
-            <ThesaurusHeader>
-              Thesaurus
-            </ThesaurusHeader>
-            <WordAndType>
-              <TheWord>
-                {ReturnedWord}
-              </TheWord>
-              <TheType>
-                {PartOfSpeech}
-              </TheType>
-            </WordAndType>
-            <SynAntHeader>
-              Synonyms & Antonyms of <em>{ReturnedWord}</em>
-            </SynAntHeader>
-            <SynAntContainer>
-              <span className='font-bold text-gray-700 text-xl absolute left-0 top-0'>1</span>
-              <Text>{ShortDef}</Text>
-              <Example> <strong>//</strong> {ReactHtmlParser(WordExample)} </Example>
-            </SynAntContainer>
-            </WordTypeContainer>
+              <Box className='absolute top-0' >
+                <LinkChak bg={bg} color={color} onClick={BackButtonClick} className={LinkCSS} to='/'>
+                  Back to search
+                </LinkChak>
+              </Box>
+              <WordTypeContainer>
+                <ThesaurusHeader>
+                  Thesaurus
+                </ThesaurusHeader>
+                <WordAndType>
+                  <TheWord>
+                    {ReturnedWord}
+                  </TheWord>
+                  <TheType>
+                    {PartOfSpeech}
+                  </TheType>
+                </WordAndType>
+                <SynAntHeader>
+                  Synonyms & Antonyms of <em>{ReturnedWord}</em>
+                </SynAntHeader>
+                <SynAntContainer>
+                  <span className='font-bold text-gray-700 text-xl absolute left-0 top-0'>1</span>
+                  <Text>{ShortDef}</Text>
+                  <Example> <strong>//</strong> {ReactHtmlParser(WordExample)} </Example>
+                </SynAntContainer>
+              </WordTypeContainer>
             </Fragment>
     )
 }
