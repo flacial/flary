@@ -1,7 +1,6 @@
 import './App.css';
 import {
   BrowserRouter as Router,
-  Router as R,
   Switch,
   Route,
   Link, 
@@ -16,7 +15,6 @@ import { ThesaurusPage } from './components/ResponsePage/ThesaurusPage/Thesaurus
 import { LoadingPage } from './components/ResponsePage/Loading/Loading';
 import NavBar from './components/NavBar/NavBar';
 import { useDisclosure } from '@chakra-ui/react'
-import { createBrowserHistory } from 'history'
 
 const  App = () => {
   const [ Word, setWord ] = useState('')
