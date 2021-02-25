@@ -16,8 +16,7 @@ const ThesaurusHeader = tw.h1`
 const WordTypeContainer = styled.div`
 border-radius: 29px;
 background: linear-gradient(145deg, #ffffff, #e6e6e6);
-box-shadow:  5px 5px 10px #ededed,
-             -5px -5px 10px #ffffff;
+box-shadow:  5px 5px 10px #ededed, -5px -5px 10px #1A202C;
 text-align: left;
 width: auto;
 height: auto;

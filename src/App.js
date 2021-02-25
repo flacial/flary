@@ -14,7 +14,7 @@ import { ThesaurusPage } from './components/ResponsePage/ThesaurusPage/Thesaurus
 import { LoadingPage } from './components/ResponsePage/Loading/Loading';
 import NavBar from './components/NavBar/NavBar';
 
-const  App = (props) => {
+const  App = () => {
   const [ Word, setWord ] = useState('')
   const [ ReturnedWord, setReturnedWord] = useState('')
   const [ ShortDef, setShortDef ] = useState('')
@@ -67,26 +67,28 @@ const  App = (props) => {
     }
     catch (error) {
       console.log(error)
+      setError(true)
+      alert('Word not found')
     }
   }
 
-  const HomeComponent = () => {
-    let HomeCondition;
+  const ThesaurusPageComponent = () => {
+    let ThesaurusPageCondition;
     if (Word.length) {
         if (ReturnedWord.length) {
-            HomeCondition = <ThesaurusPage Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
+            ThesaurusPageCondition = <ThesaurusPage Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
             ReactHtmlParser={ReactHtmlParser} WordExample={WordExample} getPathName={getPathName}/>
         } else if (Error) {
           setWord('')
           setError(false)
-          HomeCondition = <Redirect to='/' />
+          ThesaurusPageCondition = <Redirect to='/' />
         } else {
-          HomeCondition = <LoadingPage/>
+          ThesaurusPageCondition = <LoadingPage/>
         }
   } else {
-    HomeCondition = <Redirect to='/' />
+    ThesaurusPageCondition = <Redirect to='/' />
   }
-    return HomeCondition
+    return ThesaurusPageCondition
   }
 
   const getPathName = (Path) => {
@@ -97,7 +99,7 @@ const  App = (props) => {
     if (PathName === '/' && ShortDef.length) {
       BackButtonClick()
     }
-  })
+  }, [PathName])
 
 
   return (
@@ -108,7 +110,7 @@ const  App = (props) => {
             <SearchPage getInputValue={getInputValue} getButtonClick={getButtonClick} Link={Link} getPathName={getPathName} />
           </Route>
           <Route exact path='/thesaurus'>
-          {HomeComponent()}
+          {ThesaurusPageComponent()}
           </Route>
       </Switch>
     </Router>
