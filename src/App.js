@@ -30,9 +30,10 @@ const  App = (props) => {
   const getButtonClick = () => {
     if (Word === '') {
           alert('Type a word please')
-        } 
+        } else {
     getRequest(Word)
     .then(response => sendRequstedWord(response))
+        }
   }
 
   const BackButtonClick = () => {
@@ -61,7 +62,7 @@ const  App = (props) => {
             setError(true)
             setTimeout(() => {
               alert('Word not found')
-            }, 500);
+            }, 100);
           }
     }
     catch (error) {
@@ -76,6 +77,8 @@ const  App = (props) => {
             HomeCondition = <ThesaurusPage Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
             ReactHtmlParser={ReactHtmlParser} WordExample={WordExample} getPathName={getPathName}/>
         } else if (Error) {
+          setWord('')
+          setError(false)
           HomeCondition = <Redirect to='/' />
         } else {
           HomeCondition = <LoadingPage/>
