@@ -77,7 +77,6 @@ shadow-xl
 inline-block
 focus:outline-none
 focus:ring-2 focus:ring-blue-500
-hover:bg-gray-200
 transition duration-500 ease-in-out
 m-4
 `
@@ -102,9 +101,9 @@ export const ThesaurusPage = (
 
   const LinkChak = chakra(Link)
 
-  const bg = useColorModeValue('#edf2f7', '#3d3d3d')
-  const color = useColorModeValue('#3d3d3d', '#edf2f7')
-  const hover = useColorModeValue('hover:bg')
+  const bg = useColorModeValue('#edf2f7', '#303436')
+  const color = useColorModeValue('#303436', '#edf2f7')
+  const hover = useColorModeValue('hover:bg-gray-200' ,'hover:bg-gray-600')
     return (
             <Fragment>
               <Box className='absolute top-0' >
