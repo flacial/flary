@@ -6,7 +6,6 @@ import {
   Heading, Input, Button, Box,
   chakra,
   Fade,
-  ScaleFade
 } from "@chakra-ui/react"
 
 
@@ -40,8 +39,6 @@ focus:ring-2 focus:ring-blue-400
 hover:bg-gray-200
 transition duration-200 ease-in-out
 `
-
-
 
 const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen, onClose, cancelRef, getInputValue, getButtonClick, Link, getPathName }) => {
   const location = useLocation()
