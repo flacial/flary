@@ -51,6 +51,7 @@ const  App = () => {
 
   const getButtonClick = () => {
     getWords()
+    console.log(WordFind)
   }
 
   const BackButtonClick = () => {
@@ -79,6 +80,7 @@ const  App = () => {
             setError(true)
             setWordFind(true)
             setWordFindType('no response')
+            onOpen()
           }
     }
     catch (error) {
