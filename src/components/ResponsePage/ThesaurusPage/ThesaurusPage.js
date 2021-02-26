@@ -76,6 +76,7 @@ rounded-xl
 shadow-xl
 inline-block
 focus:outline-none
+focus:border
 focus:ring-2 focus:ring-blue-500
 transition duration-500 ease-in-out
 m-4
@@ -100,13 +101,14 @@ export const ThesaurusPage = (
   })
 
   const LinkChak = chakra(Link)
-  const bg = useColorModeValue('#edf2f7', '#303436')
-  const color = useColorModeValue('#303436', '#edf2f7')
+  const bg = useColorModeValue('#edf2f7', 'rgba(255, 255, 255, 0.08)')
+  const color = useColorModeValue('#252d3d', '#edf2f7')
+  const hover = useColorModeValue({background: "gray.200"}, {background: "gray.700"})
 
     return (
             <Fragment>
               <Box className='absolute top-0' >
-                <LinkChak bg={bg} color={color} onClick={BackButtonClick} className={LinkCSS} to='/'>
+                <LinkChak bg={bg} color={color} _hover={hover} onClick={BackButtonClick} className={LinkCSS} to='/'>
                   Back to search
                 </LinkChak>
               </Box>
