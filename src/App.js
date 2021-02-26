@@ -5,7 +5,8 @@ import {
   Route,
   Link, 
   Redirect,
-  useHistory
+  useHistory,
+  useLocation
 } from 'react-router-dom'
 import ReactHtmlParser from 'react-html-parser';
 import { useState, useEffect, useRef, Fragment } from 'react';
@@ -13,8 +14,8 @@ import { getRequest } from './components/RequestPage/Functions/getRequest/getReq
 import SearchPage from './components/RequestPage/SearchPage/SearchPage';
 import { ThesaurusPage } from './components/ResponsePage/ThesaurusPage/ThesaurusPage';
 import { LoadingPage } from './components/ResponsePage/Loading/Loading';
-import NavBar from './components/NavBar/NavBar';
 import { useDisclosure } from '@chakra-ui/react'
+import { ComponentTransition, AnimationTypes } from "react-component-transition";
 
 const  App = () => {
   const [ Word, setWord ] = useState('')
@@ -27,7 +28,10 @@ const  App = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = useRef()
   const [ WordFind, setWordFind ] = useState(false)
- 
+  const [ WordFindType ,setWordFindType ] = useState('')
+
+  const location = useLocation();
+
   const history = useHistory();
 
   const getInputValue = (event) => {
@@ -37,6 +41,7 @@ const  App = () => {
   const getWords = () => {
     if (Word === '') {
       setWordFind(true)
+      setWordFindType('no input')
           onOpen()
         } else {
     getRequest(Word)
@@ -72,9 +77,8 @@ const  App = () => {
             RequestedThesaurus(word, 0)
           } else if (!word[0]) {
             setError(true)
-            setTimeout(() => {
-              onOpen()
-            }, 100);
+            setWordFind(true)
+            setWordFindType('no response')
           }
     }
     catch (error) {
@@ -100,6 +104,12 @@ const  App = () => {
   } else {
     ThesaurusPageCondition = <Redirect to='/' />
   }
+  if (WordFind) {
+    if (PathName !== '/') {
+      setWordFind(false)
+      setWordFindType('')
+    }
+  }
     return ThesaurusPageCondition
   }
 
@@ -120,19 +130,21 @@ const  App = () => {
     }
   }, [PathName])
 
-
+  
   return (
-    <Fragment>
-      <NavBar/>
-      <Switch>
+    <ComponentTransition
+    enterAnimation={AnimationTypes.fade.enter}
+    exitAnimation={AnimationTypes.fade.exit}
+>
+      <Switch key={location.key} location={location} >
           <Route exact path='/'>
-            <SearchPage onEnterKeyPress={onEnterKeyPress} WordFind={WordFind} isOpen={isOpen} onClose={onClose} cancelRef={cancelRef} getInputValue={getInputValue} getButtonClick={getButtonClick} Link={Link} getPathName={getPathName} />
+            <SearchPage WordFindType={WordFindType} onEnterKeyPress={onEnterKeyPress} WordFind={WordFind} isOpen={isOpen} onClose={onClose} cancelRef={cancelRef} getInputValue={getInputValue} getButtonClick={getButtonClick} Link={Link} getPathName={getPathName} />
           </Route>
           <Route exact path='/thesaurus'>
           {ThesaurusPageComponent()}
           </Route>
       </Switch>
-    </Fragment>
+    </ComponentTransition>
 )
 }
 

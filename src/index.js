@@ -5,6 +5,7 @@ import App from './App';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import {ColorModeScript} from '@chakra-ui/react'
 import { BrowserRouter as Router } from 'react-router-dom'
+import NavBar from './components/NavBar/NavBar';
 
 const theme = extendTheme({
   fonts: {
@@ -18,6 +19,7 @@ ReactDOM.render(
     <ChakraProvider>
     <Router basename='/wordsapiproject' >
     <ColorModeScript theme={theme} />
+      <NavBar />
       <App />
     </Router>
     </ChakraProvider>

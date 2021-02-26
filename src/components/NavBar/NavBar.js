@@ -6,7 +6,7 @@ const NavBar = () => {
     const { colorMode, toggleColorMode } = useColorMode()
     return (
 
-    <Box display='flex' justifyContent='flex-end' >
+    <Box display='flex' justifyContent='flex-end'>
     <Button boxShadow='lg' outline='none' outlineColor='initial' style={{outlineStyle: 'none' }} m='4' rounded='xl' onClick={toggleColorMode}>
       {colorMode === "light" 
       ?
