@@ -67,7 +67,7 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen, onClose, 
                   </path>
                   </chakra.svg>
                   <chakra.span ml='1' color='red.400' >
-                  {(WordFindType === 'no response' ? 'Word not found!' : ( (WordFindType === 'no input') ? 'Input is empty, type a word!' : 'API Side Error' ))}
+                  {(WordFindType === 'no response' ? 'Word not found!' : ( (WordFindType === 'no input') ? 'Input is empty, type a word!' : 'API Side Error or a bug :)' ))}
                   </chakra.span>
                 </Box>
                </Fade>} 

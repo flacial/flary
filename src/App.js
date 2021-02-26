@@ -86,6 +86,7 @@ const  App = () => {
     catch (error) {
       console.log(error)
       setError(true)
+      setWordFind(true)
       onOpen()
         }
   }
