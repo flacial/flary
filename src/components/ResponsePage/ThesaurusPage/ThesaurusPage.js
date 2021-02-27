@@ -139,7 +139,7 @@ export const ThesaurusPage = (
                   Synonyms & Antonyms of <em>{ReturnedWord}</em>
                 </ChakraSynAntHeader>
                 <SynAntContainer>
-                  <span className='font-bold text-gray-700 text-xl absolute left-0 top-0'>1</span>
+                  <chakra.span color={fontColorMain} className='font-bold text-xl absolute left-0 top-0'>1</chakra.span>
                   <ChakraText color={fontColorMain} >{ShortDef}</ChakraText>
                   <ChakraExample color={fontColorDarkWhiteSmallWords}> <strong>//</strong> {ReactHtmlParser(WordExample)} </ChakraExample>
                 </SynAntContainer>

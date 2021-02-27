@@ -11,7 +11,8 @@ import {
 
 export const MainContainer = tw.div`
    text-center
-   m-auto
+   mt-32
+   lg:mt-44
 `
 
 export const WordInput = tw.input`
