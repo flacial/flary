@@ -11,8 +11,9 @@ import {
 
 export const MainContainer = tw.div`
    text-center
-   mt-32
-   lg:mt-44
+   mt-40
+   sm:mt-0
+   md2:mt-44  
 `
 
 export const WordInput = tw.input`
@@ -52,8 +53,8 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen, onClose, 
 
     return (
         <MainContainer>
-              <Heading fontFamily='Playfair Display' fontSize={['3xl', '5xl', '6xl']} mt={['12', null, '32']} mb={['5', null, '12']} whiteSpace='nowrap' >Words to be thesaurused</Heading>
-              <Box display={{ md: "flex"}} justifyContent={[null, 'center', null]} >
+              <Heading fontFamily='Playfair Display' fontSize={['3xl', '5xl', '6xl']} mt={['12', null, '15', '0', '32']} mb={['5', null, '12']} whiteSpace='nowrap' >Words to be thesaurused</Heading>
+              <Box display={{ sm:'flex', md: "flex"}} justifyContent={[null, 'center', null]} >
               <Box>
                 <Input onKeyPress={onEnterKeyPress} variant='filled' w={['16rem', 'xs', null]} rounded='xl' mr={[null, null, '2rem']} onChange={getInputValue} placeholder="Type your word"/>
               {WordFind
@@ -70,7 +71,7 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen, onClose, 
                 </Box>
                </Fade>} 
               </Box>
-              <Box mt={[5, 5, 0]} >
+              <Box mt={[5, 1, 0]} >
                     <LinkChak onClick={getButtonClick} className={LinkCSS}
                         to='/thesaurus'>
                       Search
