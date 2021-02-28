@@ -8,6 +8,7 @@ import {
   Fade,
 } from "@chakra-ui/react"
 
+//Make 1920 x 1080 responsive and iPad
 
 export const MainContainer = tw.div`
    text-center

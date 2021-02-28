@@ -45,7 +45,7 @@ const  App = () => {
           onOpen()
         } else {
     getRequest(Word)
-    .then(response => sendRequstedWord(response))
+    .then(data => sendRequstedWord(data))
         }
   }
 

@@ -1,5 +1,15 @@
 export const getRequest = async (word) => {
-    const Response = await fetch(`https://dictionaryapi.com/api/v3/references/ithesaurus/json/${word}?key=c48ccf67-004d-4d61-bf2b-54e83578866c`)
-    const Data = Response.json()
-    return Data
+    try {
+    const request = await fetch('https://wordsapiprojectserver.herokuapp.com/thesaurus', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            word: word
+        })
+    })
+    return request.json()
+    }
+    catch (error) {
+        console.log(error)
+    }
 }
