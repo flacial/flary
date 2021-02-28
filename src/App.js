@@ -51,7 +51,6 @@ const  App = () => {
 
   const getButtonClick = () => {
     getWords()
-    console.log(WordFind)
   }
 
   const BackButtonClick = () => {
