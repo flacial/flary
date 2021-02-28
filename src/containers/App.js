@@ -10,10 +10,10 @@ import {
 } from 'react-router-dom'
 import ReactHtmlParser from 'react-html-parser';
 import { useState, useEffect, useRef, Fragment } from 'react';
-import { getRequest } from './components/RequestPage/Functions/getRequest/getRequest';
-import SearchPage from './components/RequestPage/SearchPage/SearchPage';
-import { ThesaurusPage } from './components/ResponsePage/ThesaurusPage/ThesaurusPage';
-import { LoadingPage } from './components/ResponsePage/Loading/Loading';
+import { getRequest } from '../services/getRequest';
+import SearchPage from '../components/RequestPage/SearchPage/SearchPage';
+import { ThesaurusPage } from '../components/ResponsePage/ThesaurusPage/ThesaurusPage';
+import { LoadingPage } from '../components/ResponsePage/Loading/Loading';
 import { useDisclosure } from '@chakra-ui/react'
 import { ComponentTransition, AnimationTypes } from "react-component-transition";
 
