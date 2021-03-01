@@ -78,7 +78,6 @@ const  App = () => {
           }
     }
     catch (error) {
-        console.log(error)
         setError(true)
         setWordFind(true)
         onOpen()
@@ -100,7 +99,6 @@ const  App = () => {
     ThesaurusPageCondition = <Redirect to='/' />
   }
   useEffect(() => {
-    console.log(WordFind)
     if (WordFind) {
       if (PathName !== '/') {
         setWordFind(false)
