@@ -12,7 +12,7 @@ import {
 
 const MainContainer = tw.div`
    text-center
-   mt-40
+   mt-28
    sm:mt-0
    md2:mt-44  
 `
@@ -37,7 +37,6 @@ transition duration-200 ease-in-out
 
 const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
    getInputValue, getButtonClick, Link, getPathName }) => {
-     
   const location = useLocation()
   const LinkChak = chakra(Link)
 
@@ -59,15 +58,15 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
                     <path d="M256,0C115.2,0,0,115.2,0,256s115.2,256,256,256s256-115.2,256-256S396.8,0,256,0z M256,51.2    c28.16,0,48.64,23.04,46.08,51.2L281.6,307.2h-51.2l-20.48-204.8C207.36,74.24,227.84,51.2,256,51.2z M256,460.8    c-28.16,0-51.2-23.04-51.2-51.2c0-28.16,23.04-51.2,51.2-51.2s51.2,23.04,51.2,51.2C307.2,437.76,284.16,460.8,256,460.8z">
                     </path>
                     </chakra.svg>
-                    <chakra.span ml='1' color='red.400' >
+                    <chakra.span ml='1' mb={['-1',0, 0]} color='red.400' >
                     {(WordFindType === 'no response' ? 'Word not found!' : ( (WordFindType === 'no input') ? 'Input is empty, type a word!' : 'API Side Error or a bug' ))}
                     </chakra.span>
                   </Box>
                 </Fade>} 
               </Box>
-              <Box mt={[5, 1, 0]} >
+              <Box ml={[0, 5, 0]} mt={[5, 1, 0]} >
                 <LinkChak onClick={getButtonClick} className={LinkCSS}
-                    to={WordFind ? '/' : '/thesaurus'}>
+                    to='/thesaurus'>
                   Search
                 </LinkChak>
               </Box>

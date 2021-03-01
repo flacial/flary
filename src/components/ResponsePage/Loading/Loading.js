@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/react'
 export const LoadingPage = () => {
     return (
         <Box display='flex' justifyContent='center'>
-            <svg className='animate-spin mt-28 md:mt-42 lg:mt-48' stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" aria-hidden="true" focusable="false" height="5em" width="5em" xmlns="http://www.w3.org/2000/svg">
+            <svg className='animate-spin mt-40 md:mt-50 lg:mt-56' stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" aria-hidden="true" focusable="false" height="5em" width="5em" xmlns="http://www.w3.org/2000/svg">
             <path d="M340.896,58.488C303.18,20.771,253.033,0,199.694,0C146.353,0,96.207,20.771,58.491,58.488
 		C20.772,96.206,0,146.354,0,199.693c0,53.342,20.772,103.489,58.491,141.206c37.716,37.717,87.863,58.488,141.203,58.488
 		c53.337,0,103.486-20.771,141.203-58.488c37.719-37.718,58.49-87.865,58.49-141.206C399.387,146.355,378.615,96.207,340.896,58.488

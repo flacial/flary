@@ -39,6 +39,8 @@ const  App = () => {
         } else {
     getRequest(Word)
     .then(data => sendRequstedWord(data))
+    setWordFind(false)
+    setWordFindType('')
         }
   }
 
@@ -98,6 +100,7 @@ const  App = () => {
     ThesaurusPageCondition = <Redirect to='/' />
   }
   useEffect(() => {
+    console.log(WordFind)
     if (WordFind) {
       if (PathName !== '/') {
         setWordFind(false)
