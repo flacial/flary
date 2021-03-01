@@ -12,9 +12,10 @@ import {
 
 const MainContainer = tw.div`
    text-center
-   mt-28
+   mt-40
    sm:mt-0
-   md2:mt-44  
+   md2:mt-38
+   lg:mt-32
 `
 
 const LinkCSS = `
