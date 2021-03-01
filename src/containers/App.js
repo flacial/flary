@@ -105,7 +105,6 @@ const  App = () => {
         setWordFindType('')
       }
     }
-
   }, [WordFind])
   useEffect(() => {
     if (Error) {
