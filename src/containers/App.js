@@ -1,21 +1,17 @@
 import './App.css';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link, 
   Redirect,
-  useHistory,
-  useLocation
+  useHistory
 } from 'react-router-dom'
 import ReactHtmlParser from 'react-html-parser';
-import { useState, useEffect, useRef, Fragment } from 'react';
+import { useState, useEffect } from 'react';
 import { getRequest } from '../services/getRequest';
-import SearchPage from '../components/RequestPage/SearchPage/SearchPage';
 import { ThesaurusPage } from '../components/ResponsePage/ThesaurusPage/ThesaurusPage';
 import { LoadingPage } from '../components/ResponsePage/Loading/Loading';
-import { useDisclosure } from '@chakra-ui/react'
-import { ComponentTransition, AnimationTypes } from "react-component-transition";
+import { useDisclosure } from '@chakra-ui/react';
+import { Presets } from "react-component-transition";
+import Routes from '../Routes/Routes';
 
 const  App = () => {
   const [ Word, setWord ] = useState('')
@@ -25,15 +21,12 @@ const  App = () => {
   const [ WordExample, setWordExample ] = useState('')
   const [ Error, setError ] = useState(false)
   const [ PathName, setPathName ] = useState('')
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const cancelRef = useRef()
+  const { isOpen, onOpen } = useDisclosure()
   const [ WordFind, setWordFind ] = useState(false)
   const [ WordFindType ,setWordFindType ] = useState('')
 
-  const location = useLocation();
-
   const history = useHistory();
-
+  
   const getInputValue = (event) => {
     setWord(event.target.value)
   }
@@ -83,10 +76,10 @@ const  App = () => {
           }
     }
     catch (error) {
-      console.log(error)
-      setError(true)
-      setWordFind(true)
-      onOpen()
+        console.log(error)
+        setError(true)
+        setWordFind(true)
+        onOpen()
         }
   }
 
@@ -94,11 +87,9 @@ const  App = () => {
     let ThesaurusPageCondition;
     if (Word.length) {
         if (ReturnedWord.length) {
-            ThesaurusPageCondition = <ThesaurusPage Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
-            ReactHtmlParser={ReactHtmlParser} WordExample={WordExample} getPathName={getPathName}/>
+            ThesaurusPageCondition = <Presets.TransitionFade><ThesaurusPage Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
+            ReactHtmlParser={ReactHtmlParser} WordExample={WordExample} getPathName={getPathName}/></Presets.TransitionFade>
         } else if (Error) {
-          setWord('')
-          setError(false)
           ThesaurusPageCondition = <Redirect to='/' />
         } else {
           ThesaurusPageCondition = <LoadingPage/>
@@ -106,12 +97,21 @@ const  App = () => {
   } else {
     ThesaurusPageCondition = <Redirect to='/' />
   }
-  if (WordFind) {
-    if (PathName !== '/') {
-      setWordFind(false)
-      setWordFindType('')
+  useEffect(() => {
+    if (WordFind) {
+      if (PathName !== '/') {
+        setWordFind(false)
+        setWordFindType('')
+      }
     }
-  }
+
+  }, [WordFind])
+  useEffect(() => {
+    if (Error) {
+    setWord('')
+    setError(false)
+    }
+  }, [Error])
     return ThesaurusPageCondition
   }
 
@@ -134,20 +134,10 @@ const  App = () => {
 
   
   return (
-    <ComponentTransition
-    enterAnimation={AnimationTypes.fade.enter}
-    exitAnimation={AnimationTypes.fade.exit}
->
-      <Switch key={location.key} location={location} >
-          <Route exact path='/'>
-            <SearchPage WordFindType={WordFindType} onEnterKeyPress={onEnterKeyPress} WordFind={WordFind} isOpen={isOpen} onClose={onClose} cancelRef={cancelRef} getInputValue={getInputValue} getButtonClick={getButtonClick} Link={Link} getPathName={getPathName} />
-          </Route>
-          <Route exact path='/thesaurus'>
-          {ThesaurusPageComponent()}
-          </Route>
-      </Switch>
-    </ComponentTransition>
-)
+      <Routes ThesaurusPageComponent={ThesaurusPageComponent} WordFindType={WordFindType}
+       onEnterKeyPress={onEnterKeyPress} WordFind={WordFind} 
+       isOpen={isOpen} getInputValue={getInputValue} getButtonClick={getButtonClick} Link={Link} getPathName={getPathName}/>
+  )
 }
 
 export default App;

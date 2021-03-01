@@ -1,8 +1,8 @@
-import { Fragment, useEffect, useRef } from 'react';
+import { Fragment, useEffect } from 'react';
 import {useLocation} from 'react-router-dom';
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components';
-import { chakra, Heading, Input, useColorMode, Button, Box, useColorModeValue } from '@chakra-ui/react'
+import { chakra, Box, useColorModeValue } from '@chakra-ui/react'
 
 const ThesaurusHeader = tw.h1`
     italic

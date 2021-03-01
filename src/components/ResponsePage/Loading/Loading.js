@@ -18,3 +18,5 @@ export const LoadingPage = () => {
         </Box>
     )
 }
+
+// TODO Make margin responsive in mobile
