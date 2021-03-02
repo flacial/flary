@@ -2,7 +2,24 @@ import { Fragment, useEffect } from 'react';
 import {useLocation} from 'react-router-dom';
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components';
-import { chakra, Box, useColorModeValue } from '@chakra-ui/react'
+import { 
+  chakra,
+  Box,
+  useColorModeValue,
+  Skeleton,
+  SkeletonTex,
+  Stack,
+  SkeletonText,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Heading,
+  ListItem,
+  UnorderedList
+               } from '@chakra-ui/react'
+import { Presets, ComponentTransition, AnimationTypes } from 'react-component-transition';
 
 const ThesaurusHeader = tw.h1`
     italic
@@ -98,9 +115,40 @@ export const ThesaurusPage = (
         ShortDef,
         ReactHtmlParser,
         WordExample,
-        getPathName
+        getPathName,
+        WordsLoaded,
+        Syns,
+        Ants
 }) => {
-  
+
+  const OrderSynonyms = () => {
+    let Synonyms = []
+    if (Syns !== undefined) {
+       Synonyms = Syns.map((word, index) => {
+        if (Syns[index + 1] === undefined) {
+          return <ListItem listStyleType='none' display='inline-block' key={word}>{`${word}`}</ListItem>
+        } else {
+          return <ListItem listStyleType='none' display='inline-block' key={word}>{`${word},\u00A0`}</ListItem>
+        }
+      })
+    }
+    return Synonyms
+  }
+
+  const OrderAntonyms = () => {
+    let Antonyms = []
+    if (Ants !== undefined) {
+      Antonyms = Ants.map((word, index) => {
+        if (Ants[index + 1] === undefined) {
+          return <ListItem listStyleType='none' display='inline-block' key={word}>{`${word}`}</ListItem>
+        } else {
+          return <ListItem listStyleType='none' display='inline-block' key={word}>{`${word},\u00A0`}</ListItem>
+        }
+      })
+    }
+    return Antonyms
+  }
+    
   const location = useLocation()
   useEffect(() => {
     getPathName(location.pathname)
@@ -112,37 +160,71 @@ export const ThesaurusPage = (
   const fontColorMain = useColorModeValue('gray.700', '#edf2f7')
   const fontColorHeaders = useColorModeValue('#2563EB', '#db8b02')
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange')
+  const fontColorSynAnt = useColorModeValue('#3B82F6', 'orange.300')
   const hover = useColorModeValue({background: "gray.200"}, {background: "gray.700"});
   const gradientbg = useColorModeValue('linear(to-l, gray.200, white)')
   const boxShadow = useColorModeValue('2px 2px 12px #37413f, -10px -10px 0px #3B82F6', '2px 2px 12px #37413f, -10px -10px 0px orange')
-
+  const SkeletonStartColor = useColorModeValue('#3B82F6', 'orange.200')
+  const SkeletonEndColor = useColorModeValue('gray.700', 'orange.500')
     return (
             <Fragment>
-              <Box className='absolute top-0'>
-                <LinkChak bg={bg} color={color} _hover={hover} onClick={BackButtonClick} className={LinkCSS} to='/'>
-                  Back to search
-                </LinkChak>
-              </Box>
-              <ChakraWordTypeContainer boxShadow={boxShadow} bgGradient={gradientbg} m={['1em','3em',null]} marginTop={['20', null, null]} >
-                <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
-                  Thesaurus
-                </ChakraThesaurusHeader>
-                <WordAndType>
-                  <ChakraTheWord color={fontColorMain} >
-                    {ReturnedWord}
-                  </ChakraTheWord>
-                  <ChakraTheType color={fontColorDarkWhiteSmallWords}>
-                    {PartOfSpeech}
-                  </ChakraTheType>
-                </WordAndType>
-                <ChakraSynAntHeader color={fontColorHeaders} >
-                  Synonyms & Antonyms of <em>{ReturnedWord}</em>
-                </ChakraSynAntHeader>
-                <SynAntContainer>
-                  <chakra.span color={fontColorMain} className='font-bold text-xl absolute left-0 top-0'>1</chakra.span>
-                  <ChakraText color={fontColorMain} >{ShortDef}</ChakraText>
-                  <ChakraExample color={fontColorDarkWhiteSmallWords}> <strong>//</strong> {ReactHtmlParser(WordExample)} </ChakraExample>
-                </SynAntContainer>
+              {ReturnedWord.length 
+              ?
+                <Box className='absolute top-0'>
+                  <LinkChak bg={bg} color={color} _hover={hover} onClick={BackButtonClick} className={LinkCSS} to='/'>
+                    Back to search
+                  </LinkChak>
+                </Box>
+              :
+                <></>
+              }
+              <ChakraWordTypeContainer boxShadow={boxShadow} bgGradient={gradientbg} m={['1em','3em',null]} marginTop={['3', null, null]} >
+                      <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
+                        Thesaurus
+                      </ChakraThesaurusHeader>
+                  {(WordsLoaded) ? 
+                    <Presets.TransitionFade>
+                      <WordAndType>
+                          <ChakraTheWord color={fontColorMain}>
+                              {ReturnedWord}
+                          </ChakraTheWord>
+                          <ChakraTheType color={fontColorDarkWhiteSmallWords}>
+                            {PartOfSpeech}
+                          </ChakraTheType>
+                      </WordAndType>
+                      <ChakraSynAntHeader color={fontColorHeaders} >
+                        Synonyms & Antonyms of <em>{ReturnedWord}</em>
+                      </ChakraSynAntHeader>
+                      <SynAntContainer>
+                        <chakra.span color={fontColorMain} className='font-bold text-xl absolute left-0 top-0'>1</chakra.span>
+                        <ChakraText color={fontColorMain} >
+                          {ShortDef} 
+                        </ChakraText>
+                        <ChakraExample color={fontColorSynAnt}> <strong>//</strong> {ReactHtmlParser(WordExample)} 
+                        </ChakraExample>
+                        <Heading mb='1' mt='4' fontSize='2xl' fontFamily='sans-serif' color={fontColorHeaders}>Synonyms for <chakra.span fontStyle='italic'>{ReturnedWord}</chakra.span></Heading>
+                        <Box w={['100%','70%', null]}>
+                        <UnorderedList fontFamily='sans' fontSize='lg' ml='0' color={fontColorSynAnt}>{OrderSynonyms()}</UnorderedList>
+                        </Box>
+                        {(Ants !== undefined) 
+                        ?
+                        <div>
+                          <Heading mb='1' mt='4' fontSize='2xl' fontFamily='sans-serif' color={fontColorHeaders}>Antonyms for <chakra.span fontStyle='italic'>{ReturnedWord}</chakra.span></Heading>
+                          <Box w={['100%','70%', null]}>
+                            <UnorderedList fontFamily='sans' fontSize='lg' ml='0' color={fontColorSynAnt}>{OrderAntonyms()}</UnorderedList>
+                          </Box>
+                        </div>
+                        :
+                        <></>
+                          }
+                      </SynAntContainer>
+                    </Presets.TransitionFade>
+                    :
+                    <Presets.TransitionFade>
+                    <SkeletonText mt="4" mb='3' noOfLines={11} spacing="4" startColor={SkeletonStartColor} endColor={SkeletonEndColor}  />
+                    </Presets.TransitionFade>
+                  }
+
               </ChakraWordTypeContainer>
             </Fragment>
     )

@@ -60,7 +60,7 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
                     </path>
                     </chakra.svg>
                     <chakra.span ml='1' mb={['-1',0, 0]} color='red.400' >
-                    {(WordFindType === 'no response' ? 'Word not found!' : ( (WordFindType === 'no input') ? 'Input is empty, type a word!' : 'API Side Error or a bug' ))}
+                    {(WordFindType === 'no response' ? 'Word not found!' : ((WordFindType === 'no input') ? 'Input is empty, type a word!' : 'The word not in the thesaurus!' ))}
                     </chakra.span>
                   </Box>
                 </Fade>} 

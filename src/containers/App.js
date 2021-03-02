@@ -8,7 +8,6 @@ import ReactHtmlParser from 'react-html-parser';
 import { useState, useEffect } from 'react';
 import { getRequest } from '../services/getRequest';
 import { ThesaurusPage } from '../components/ResponsePage/ThesaurusPage/ThesaurusPage';
-import { LoadingPage } from '../components/ResponsePage/Loading/Loading';
 import { useDisclosure } from '@chakra-ui/react';
 import { Presets } from "react-component-transition";
 import Routes from '../Routes/Routes';
@@ -24,7 +23,17 @@ const  App = () => {
   const { isOpen, onOpen } = useDisclosure()
   const [ WordFind, setWordFind ] = useState(false)
   const [ WordFindType ,setWordFindType ] = useState('')
+  const [ WordsLoaded, setWordsLoaded ] = useState(false)
+  const [ Syns, setSyns ] = useState([])
+  const [ Ants, setAnts ] = useState([])
 
+  useEffect(() => {
+    if (PathName === '/thesaurus' && ShortDef === '') {
+      setWordsLoaded(false)
+    } else if (PathName === '/thesaurus' && !(ShortDef === '')) {
+      setWordsLoaded(true)
+    }
+  })
   const history = useHistory();
   
   const getInputValue = (event) => {
@@ -57,9 +66,11 @@ const  App = () => {
   }
 
   const RequestedThesaurus = (word, index) => {
-    const { fl, hwi: {hw},  shortdef , def: [{sseq: dt}] } = word[index]
+    const { fl, hwi: {hw},  shortdef , def: [{sseq: dt}], meta: {syns}, meta: {ants} } = word[index]
     const WordExample = dt[0][0][1].dt[1][1][0].t
     const WordExampleSlicedIt = WordExample.replace('{it}', '<em>').replace('{/it}', '</em>')
+    setAnts(ants[0])
+    setSyns(syns[0])
     setReturnedWord(hw)
     setPartOfSpeech(fl)
     setShortDef(shortdef[0])
@@ -83,29 +94,22 @@ const  App = () => {
         onOpen()
         }
   }
-
+  
   const ThesaurusPageComponent = () => {
     let ThesaurusPageCondition;
     if (Word.length) {
         if (ReturnedWord.length) {
-            ThesaurusPageCondition = <Presets.TransitionFade><ThesaurusPage Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
+            ThesaurusPageCondition = <Presets.TransitionFade><ThesaurusPage Ants={Ants} Syns={Syns} WordsLoaded={WordsLoaded} Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
             ReactHtmlParser={ReactHtmlParser} WordExample={WordExample} getPathName={getPathName}/></Presets.TransitionFade>
         } else if (Error) {
           ThesaurusPageCondition = <Redirect to='/' />
         } else {
-          ThesaurusPageCondition = <LoadingPage/>
+          ThesaurusPageCondition = <Presets.TransitionFade><ThesaurusPage Ants={Ants} Syns={Syns} WordsLoaded={WordsLoaded} Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
+          ReactHtmlParser={ReactHtmlParser} WordExample={WordExample} getPathName={getPathName}/></Presets.TransitionFade>
         }
   } else {
     ThesaurusPageCondition = <Redirect to='/' />
   }
-  useEffect(() => {
-    if (WordFind) {
-      if (PathName !== '/') {
-        setWordFind(false)
-        setWordFindType('')
-      }
-    }
-  }, [WordFind])
   useEffect(() => {
     if (Error) {
     setWord('')

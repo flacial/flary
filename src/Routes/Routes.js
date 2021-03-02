@@ -8,7 +8,6 @@ import { Presets } from 'react-component-transition';
 
 function Routes({ ThesaurusPageComponent, ...props }) {
   const location = useLocation();
-
     return (
         <Switch key={location.key} location={location} >
           <Route exact path='/'>
