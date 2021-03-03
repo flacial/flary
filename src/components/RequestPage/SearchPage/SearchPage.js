@@ -21,7 +21,7 @@ import {
   useMediaQuery,
   Button
 } from "@chakra-ui/react"
-import { QuestionIcon } from "@chakra-ui/icons"
+import { QuestionIcon, MoonIcon } from "@chakra-ui/icons"
 
 const MainContainer = tw.div`
    text-center
@@ -74,7 +74,7 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
               ?
               <Heading textDecoration={`underline wavy ${fontColorDarkWhiteSmallWords}`} _hover={[null, null, hover]} cursor='pointer' fontFamily='Playfair Display' fontSize={['3xl', '5xl', '6xl']} whiteSpace='nowrap' >thesaurused</Heading>
               :
-              <IconButton outline='none' outlineColor='initial' style={{outlineStyle: 'none' }} _focus={focusBorderColorGeneral} ml='2' outline='none' size='sm' icon={<QuestionIcon w='5' h='5' />} />
+              <IconButton variant='ghost' outline='none' outlineColor='initial' style={{outlineStyle: 'none' }} _focus={focusBorderColorGeneral} ml='2' outline='none' size='sm' icon={<QuestionIcon w='5' h='5' />} />
               }
               </PopoverTrigger>
               <PopoverContent  _focus={focusBorderColorGeneral} background='gray.800' >
