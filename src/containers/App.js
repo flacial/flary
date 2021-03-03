@@ -66,8 +66,9 @@ const  App = () => {
   }
 
   const RequestedThesaurus = (word, index) => {
+    try {
     const { fl, hwi: {hw},  shortdef , def: [{sseq: dt}], meta: {syns}, meta: {ants} } = word[index]
-    const WordExample = dt[0][0][1].dt[1][1][0].t
+    const WordExample = dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1]
     const WordExampleSlicedIt = WordExample.replace('{it}', '<em>').replace('{/it}', '</em>')
     setAnts(ants[0])
     setSyns(syns[0])
@@ -75,6 +76,10 @@ const  App = () => {
     setPartOfSpeech(fl)
     setShortDef(shortdef[0])
     setWordExample(WordExampleSlicedIt)
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 
   const sendRequstedWord = (word) => {

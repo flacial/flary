@@ -1,7 +1,7 @@
 import tw from 'tailwind-styled-components';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react'
-import {  } from '@chakra-ui/react'
+import { useColorModeValue } from '@chakra-ui/react'
 import {
   Heading, 
   Input, 
@@ -40,14 +40,14 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
    getInputValue, getButtonClick, Link, getPathName }) => {
   const location = useLocation()
   const LinkChak = chakra(Link)
-
+  const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange')
   useEffect(() => {
     getPathName(location.pathname)
   })
 
     return (
         <MainContainer>
-            <Heading fontFamily='Playfair Display' fontSize={['3xl', '5xl', '6xl']} mt={['12', null, '15', '0', '32']} mb={['5', null, '12']} whiteSpace='nowrap' >Words to be thesaurused</Heading>
+            <Heading fontFamily='Playfair Display' fontSize={['3xl', '5xl', '6xl']} mt={['12', null, '15', '0', '32']} mb={['5', null, '12']} whiteSpace='nowrap' >Words to be <chakra.span color={fontColorDarkWhiteSmallWords} fontStyle='italic'>thesaurused</chakra.span></Heading>
             <Box display={{ sm:'flex', md: "flex"}} justifyContent={[null, 'center', null]} >
               <Box>
                 <Input onKeyPress={onEnterKeyPress} variant='filled' w={['16rem', 'xs', null]} rounded='xl' mr={[null, null, '2rem']} onChange={getInputValue} placeholder="Type your word"/>
