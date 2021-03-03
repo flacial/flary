@@ -17,7 +17,8 @@ import {
   TabPanel,
   Heading,
   ListItem,
-  UnorderedList
+  UnorderedList,
+  useMediaQuery
                } from '@chakra-ui/react'
 import { Presets, ComponentTransition, AnimationTypes } from 'react-component-transition';
 
@@ -167,12 +168,13 @@ export const ThesaurusPage = (
   const SkeletonStartColor = useColorModeValue('#3B82F6', 'orange.200')
   const SkeletonEndColor = useColorModeValue('gray.700', 'orange.500')
   const focusBorderColorGeneral = useColorModeValue({boxShadow: '0 0 0 3px #3B82F6'}, {boxShadow: '0 0 0 3px orange'})
+  const isLargerthan440 = useMediaQuery("(max-width: 440px)")
 
     return (
             <Fragment>
               {ReturnedWord.length 
               ?
-                <Box className='absolute top-0'>
+                <Box className='absolute top-0' left={[null, '32', null]}>
                   <LinkChak _focus={focusBorderColorGeneral} bg={bg} color={color} _hover={hover} onClick={BackButtonClick} className={LinkCSS} to='/'>
                     Back to search
                   </LinkChak>
@@ -180,7 +182,7 @@ export const ThesaurusPage = (
               :
                 <></>
               }
-              <ChakraWordTypeContainer boxShadow={boxShadow} bgGradient={gradientbg} m={['1em','3em',null]} marginTop={['3', null, null]} >
+              <ChakraWordTypeContainer boxShadow={boxShadow} bgGradient={gradientbg} m={(isLargerthan440) && '5'} ml={[null, '9em', null]} mr={[null, '9em', null]} marginTop={['6', null, null]} >
                       <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
                         Thesaurus
                       </ChakraThesaurusHeader>
