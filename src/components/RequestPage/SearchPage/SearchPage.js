@@ -55,8 +55,9 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
   const { isOpen: isLaunch, onOpen: onLunch, onClose: onExit } = useDisclosure()
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange')
   const hover = useColorModeValue({color: '#3B82F6'}, {color: 'orange'});
-  const hoverBg = useColorModeValue({Backgroundcolor: 'blue.300'}, {Backgroundcolor: 'orange.300'});
   const fontColorMain = useColorModeValue('#edf2f7', 'gray.800')
+  const focusBorderColorInput = useColorModeValue('#3B82F6', 'orange.400')
+  const focusBorderColorGeneral = useColorModeValue({boxShadow: '0 0 0 3px #3B82F6'}, {boxShadow: '0 0 0 3px orange'})
   useEffect(() => {
     getPathName(location.pathname)
   })
@@ -73,10 +74,10 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
               ?
               <Heading textDecoration={`underline wavy ${fontColorDarkWhiteSmallWords}`} _hover={[null, null, hover]} cursor='pointer' fontFamily='Playfair Display' fontSize={['3xl', '5xl', '6xl']} whiteSpace='nowrap' >thesaurused</Heading>
               :
-              <IconButton ml='2' outline='none' size='sm' icon={<QuestionIcon w='5' h='5' />} />
+              <IconButton outline='none' outlineColor='initial' style={{outlineStyle: 'none' }} _focus={focusBorderColorGeneral} ml='2' outline='none' size='sm' icon={<QuestionIcon w='5' h='5' />} />
               }
               </PopoverTrigger>
-              <PopoverContent >
+              <PopoverContent  _focus={focusBorderColorGeneral} background='gray.800' >
                 <PopoverArrow />
                 <PopoverCloseButton />
                 <PopoverHeader fontFamily='Playfair Display' fontSize={['xl']} fontWeight='bold'>Thesaurus</PopoverHeader>
@@ -86,7 +87,7 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
         </Box>
             <Box display={{ sm:'flex', md: "flex"}} justifyContent={[null, 'center', null]} >
               <Box>
-                <Input onKeyPress={onEnterKeyPress} variant='filled' w={['16rem', 'xs', null]} rounded='xl' mr={[null, null, '2rem']} onChange={getInputValue} placeholder="Type your word"/>
+                <Input focusBorderColor={focusBorderColorInput} onKeyPress={onEnterKeyPress} variant='filled' w={['16rem', 'xs', null]} rounded='xl' mr={[null, null, '2rem']} onChange={getInputValue} placeholder="Type your word"/>
                 {WordFind
                 &&
                 <Fade in={isOpen} >
@@ -102,7 +103,7 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
                 </Fade>} 
               </Box>
               <Box ml={[0, 5, 0]} mt={[5, 1, 0]} >
-                <LinkChak color={
+                <LinkChak _hover={{background: "gray.200"}} _focus={focusBorderColorGeneral} color={
                   // [fontColorMain, 'gray.800', null]
                   (isMoreThan420px) 
                   ?

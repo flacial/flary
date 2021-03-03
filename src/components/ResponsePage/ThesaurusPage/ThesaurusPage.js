@@ -37,15 +37,15 @@ width: auto;
 height: auto;
 padding-left: 20px;
 padding-right: 20px;
-padding-top: 5px;
-padding-bottom: 5px;
+padding-top: 15px;
+padding-bottom: 20px;
 word-spacing: 0;
 `
 
 const ChakraWordTypeContainer = chakra(WordTypeContainer)
 
 const WordAndType = tw.div`
-    mt-5
+    mt-1
 `
 
 const TheWord = tw.h1`
@@ -163,15 +163,17 @@ export const ThesaurusPage = (
   const fontColorSynAnt = useColorModeValue('#3B82F6', 'orange.300')
   const hover = useColorModeValue({background: "gray.200"}, {background: "gray.700"});
   const gradientbg = useColorModeValue('linear(to-l, gray.200, white)')
-  const boxShadow = useColorModeValue('2px 2px 12px #37413f, -10px -10px 0px #3B82F6', '2px 2px 12px #37413f, -10px -10px 0px orange')
+  const boxShadow = useColorModeValue('0px 0px 20px #a2a2a2, -10px -10px 0px #3B82F6', '0px 0px 11px #1c1c1c, -10px -10px 0px orange')
   const SkeletonStartColor = useColorModeValue('#3B82F6', 'orange.200')
   const SkeletonEndColor = useColorModeValue('gray.700', 'orange.500')
+  const focusBorderColorGeneral = useColorModeValue({boxShadow: '0 0 0 3px #3B82F6'}, {boxShadow: '0 0 0 3px orange'})
+
     return (
             <Fragment>
               {ReturnedWord.length 
               ?
                 <Box className='absolute top-0'>
-                  <LinkChak bg={bg} color={color} _hover={hover} onClick={BackButtonClick} className={LinkCSS} to='/'>
+                  <LinkChak _focus={focusBorderColorGeneral} bg={bg} color={color} _hover={hover} onClick={BackButtonClick} className={LinkCSS} to='/'>
                     Back to search
                   </LinkChak>
                 </Box>
@@ -196,13 +198,13 @@ export const ThesaurusPage = (
                         Synonyms & Antonyms of <em>{ReturnedWord}</em>
                       </ChakraSynAntHeader>
                       <SynAntContainer>
-                        <chakra.span color={fontColorMain} className='font-bold text-xl absolute left-0 top-0'>1</chakra.span>
+                        {/* <chakra.span color={fontColorMain} className='font-bold text-xl absolute left-0 top-0'>1</chakra.span> */}
                         <ChakraText color={fontColorMain} >
                           {ShortDef} 
                         </ChakraText>
                         <ChakraExample color={fontColorSynAnt}> <strong>//</strong> {ReactHtmlParser(WordExample)} 
                         </ChakraExample>
-                        <Heading mb='1' mt='4' fontSize='2xl' fontFamily='sans-serif' color={fontColorHeaders}>Synonyms for <chakra.span fontStyle='italic'>{ReturnedWord}</chakra.span></Heading>
+                        <Heading mb='1' mt='2' fontSize='2xl' fontFamily='sans-serif' color={fontColorHeaders}>Synonyms for <chakra.span fontStyle='italic'>{ReturnedWord}</chakra.span></Heading>
                         <Box w={['100%','70%', null]}>
                         <UnorderedList fontFamily='sans' fontSize='lg' ml='0' color={fontColorSynAnt}>{OrderSynonyms()}</UnorderedList>
                         </Box>
