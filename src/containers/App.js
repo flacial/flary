@@ -84,9 +84,9 @@ const  App = () => {
 
   const sendRequstedWord = (word) => {
     try {
-          if (word.length >= 1) {
+          if (word[0].hwi) {
             RequestedThesaurus(word, 0)
-          } else if (!word[0]) {
+          } else {
             setError(true)
             setWordFind(true)
             setWordFindType('no response')

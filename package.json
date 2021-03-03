@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://flacial.github.io/wordsapiproject",
   "dependencies": {
+    "@chakra-ui/icons": "^1.0.5",
     "@chakra-ui/react": "^1.3.3",
     "@craco/craco": "^6.1.1",
     "@emotion/react": "^11.1.5",
