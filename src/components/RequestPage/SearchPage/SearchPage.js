@@ -77,7 +77,7 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
               <IconButton variant='ghost' outline='none' outlineColor='initial' style={{outlineStyle: 'none' }} _focus={focusBorderColorGeneral} ml='2' outline='none' size='sm' icon={<QuestionIcon w='5' h='5' />} />
               }
               </PopoverTrigger>
-              <PopoverContent  _focus={focusBorderColorGeneral} background='gray.800' >
+              <PopoverContent outline='none' outlineColor='initial' style={{outlineStyle: 'none' }} _focus={focusBorderColorGeneral} background={fontColorMain} >
                 <PopoverArrow />
                 <PopoverCloseButton />
                 <PopoverHeader fontFamily='Playfair Display' fontSize={['xl']} fontWeight='bold'>Thesaurus</PopoverHeader>
