@@ -1,26 +1,18 @@
 import { Fragment, useEffect } from 'react';
-import {useLocation} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components';
 import { 
   chakra,
   Box,
   useColorModeValue,
-  Skeleton,
-  SkeletonTex,
-  Stack,
   SkeletonText,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
   Heading,
   ListItem,
   UnorderedList,
   useMediaQuery
-               } from '@chakra-ui/react'
-import { Presets, ComponentTransition, AnimationTypes } from 'react-component-transition';
+} from '@chakra-ui/react'
+import { Presets } from 'react-component-transition';
 
 const ThesaurusHeader = tw.h1`
     italic
@@ -95,31 +87,31 @@ const Text = tw.span`
 const ChakraText = chakra(Text)
 
 const LinkCSS = `
-py-2
-px-4
-rounded-xl
-shadow-xl
-inline-block
-focus:outline-none
-focus:border
-focus:ring-2 focus:ring-blue-500
-transition duration-500 ease-in-out
-m-4
+  py-2
+  px-4
+  rounded-xl
+  shadow-xl
+  inline-block
+  focus:outline-none
+  focus:border
+  focus:ring-2 focus:ring-blue-500
+  transition duration-500 ease-in-out
+  m-4
 `
 
 export const ThesaurusPage = (
     {
-        Link,
-        BackButtonClick,
-        ReturnedWord,
-        PartOfSpeech,
-        ShortDef,
-        ReactHtmlParser,
-        WordExample,
-        getPathName,
-        WordsLoaded,
-        Syns,
-        Ants
+      Link,
+      BackButtonClick,
+      ReturnedWord,
+      PartOfSpeech,
+      ShortDef,
+      ReactHtmlParser,
+      WordExample,
+      getPathName,
+      WordsLoaded,
+      Syns,
+      Ants
 }) => {
 
   const OrderSynonyms = () => {
@@ -135,6 +127,8 @@ export const ThesaurusPage = (
     }
     return Synonyms
   }
+
+  const turnWordToList = (MainObj, ) => {}
 
   const OrderAntonyms = () => {
     let Antonyms = []

@@ -67,7 +67,7 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
             <Heading fontFamily='Playfair Display' fontSize={['3xl', '5xl', '6xl']} whiteSpace='nowrap' >Words to be 
             {(isMoreThan420px) ? '\u00A0' : ' thesaurused'}
             </Heading>
-            <Popover placement='auto-start' display='inline-block'>
+            <Popover placement='auto-end' display='inline-block'>
               <PopoverTrigger >
               {(isMoreThan420px) 
               ?
