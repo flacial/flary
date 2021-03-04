@@ -26,6 +26,7 @@ const  App = () => {
   const [ WordsLoaded, setWordsLoaded ] = useState(false)
   const [ Syns, setSyns ] = useState([])
   const [ Ants, setAnts ] = useState([])
+  const [ WordArray, setWordArray ] = useState([])
 
   useEffect(() => {
     if (PathName === '/thesaurus' && ShortDef === '') {
@@ -65,9 +66,13 @@ const  App = () => {
     setWordExample('')
   }
 
-  const RequestedThesaurus = (word, index) => {
-    try {
-    const { fl, hwi: {hw},  shortdef , def: [{sseq: dt}], meta: {syns}, meta: {ants} } = word[index]
+  const WordArrayFilter = (word, type) => {
+    const filteredArray = word.filter((arr) => arr.fl === type)
+    return filteredArray
+  }
+
+  const WordArraySetState = (wordArray) => {
+    const { fl, hwi: {hw},  shortdef , def: [{sseq: dt}], meta: {syns}, meta: {ants} } = wordArray
     const WordExample = dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1]
     const WordExampleSlicedIt = WordExample.replace('{it}', '<em>').replace('{/it}', '</em>')
     setAnts(ants[0])
@@ -76,6 +81,11 @@ const  App = () => {
     setPartOfSpeech(fl)
     setShortDef(shortdef[0])
     setWordExample(WordExampleSlicedIt)
+  }
+
+  const RequestedThesaurus = (word, index) => {
+    try {
+      WordArraySetState(WordArrayFilter(word, 'noun'))
     }
     catch (error) {
       console.log(error)
