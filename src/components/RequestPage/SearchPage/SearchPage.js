@@ -12,7 +12,6 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverBody,
-  PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
   useDisclosure,
@@ -56,7 +55,7 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange')
   const hover = useColorModeValue({color: '#3B82F6'}, {color: 'orange'});
   const fontColorMain = useColorModeValue('#edf2f7', 'gray.800')
-  const focusBorderColorInput = useColorModeValue('#3B82F6', 'orange.400')
+  const focusBorderColorInput = useColorModeValue('#3B82F6', '#ffa500')
   const focusBorderColorGeneral = useColorModeValue({boxShadow: '0 0 0 3px #3B82F6'}, {boxShadow: '0 0 0 3px orange'})
   useEffect(() => {
     getPathName(location.pathname)
@@ -104,14 +103,12 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
               </Box>
               <Box ml={[0, 5, 0]} mt={[5, 1, 0]} >
                 <LinkChak _hover={{background: "gray.200"}} _focus={focusBorderColorGeneral} color={
-                  // [fontColorMain, 'gray.800', null]
                   (isMoreThan420px) 
                   ?
                   fontColorMain
                   :
                   'gray.800'
                 } bgColor={
-                  // [fontColorDarkWhiteSmallWords, 'gray.100', null ]
                   (isMoreThan420px) 
                   ?
                   fontColorDarkWhiteSmallWords
