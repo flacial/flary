@@ -6,21 +6,31 @@ module.exports = {
       screens: {
         'sm2': '760px',
         'md2': '1020px',
-        // sm	640px	@media (min-width: 640px) { ... }
-        // md	768px	@media (min-width: 768px) { ... }
-        // lg	1024px	@media (min-width: 1024px) { ... }
-        // xl	1280px	@media (min-width: 1280px) { ... }
-        // 2xl	1536px	@media (min-width: 1536px) { ... }
       },
     },
     fontFamily: {
       'display': ['Oswald'],
-      'body': ['Open Sans'],
-      'serif': ['Playfair Display', 'serif']
+      'serif': ['Playfair Display', 'serif'],
+      'heading': "Playfair Display",
+      'body': "Open Sans",
+    },
+    filter: { // defaults to {}
+      'none': 'none',
+      'grayscale': 'grayscale(1)',
+      'invert': 'invert(1)',
+      'sepia': 'sepia(1)',
+    },
+    backdropFilter: { // defaults to {}
+      'none': 'none',
+      'blur': 'blur(20px)',
     },
   },
   variants: {
     extend: {},
+    filter: ['responsive'], // defaults to ['responsive']
+    backdropFilter: ['responsive'], // defaults to ['responsive']
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-filters'),
+  ],
 }

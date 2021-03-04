@@ -174,7 +174,7 @@ export const ThesaurusPage = (
             <Fragment>
               {ReturnedWord.length 
               ?
-                <Box className='absolute top-0' left={[null, '32', null]}>
+                <Box zIndex='overlay' className='fixed top-0' left={[null, '32', null]}>
                   <LinkChak _focus={focusBorderColorGeneral} bg={bg} color={color} _hover={hover} onClick={BackButtonClick} className={LinkCSS} to='/'>
                     Back to search
                   </LinkChak>

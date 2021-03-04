@@ -6,19 +6,13 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import {ColorModeScript} from '@chakra-ui/react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import NavBar from './components/NavBar/NavBar';
-
-const theme = extendTheme({
-  fonts: {
-    heading: "Playfair Display",
-    body: "Open Sans",
-  },
-})
+import theme from './theme';
 
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider>
     <Router basename='/wordsapiproject' >
-    <ColorModeScript theme={theme} />
+    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <NavBar />
       <App />
     </Router>
