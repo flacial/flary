@@ -2,7 +2,7 @@ import { Fragment, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components';
-import { 
+import {
   chakra,
   Box,
   useColorModeValue,
@@ -10,7 +10,12 @@ import {
   Heading,
   ListItem,
   UnorderedList,
-  useMediaQuery
+  useMediaQuery,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel
 } from '@chakra-ui/react'
 import { Presets } from 'react-component-transition';
 
@@ -128,7 +133,7 @@ export const ThesaurusPage = (
     return Synonyms
   }
 
-  const turnWordToList = (MainObj, ) => {}
+  const turnWordToList = (MainObj, ) => {} //TODO Add turnWordToList function for Syn and Ant
 
   const OrderAntonyms = () => {
     let Antonyms = []
@@ -163,20 +168,10 @@ export const ThesaurusPage = (
   const SkeletonEndColor = useColorModeValue('gray.700', 'orange.500')
   const focusBorderColorGeneral = useColorModeValue({boxShadow: '0 0 0 3px #3B82F6'}, {boxShadow: '0 0 0 3px orange'})
   const isLargerthan440 = useMediaQuery("(max-width: 440px)")
+  const Tabshover = useColorModeValue({color: '#3B82F6'}, {color: "orange"});
 
-    return (
-            <Fragment>
-              {ReturnedWord.length 
-              ?
-                <Box zIndex='overlay' className='fixed top-0' left={[null, '32', null]}>
-                  <LinkChak _focus={focusBorderColorGeneral} bg={bg} color={color} _hover={hover} onClick={BackButtonClick} className={LinkCSS} to='/'>
-                    Back to search
-                  </LinkChak>
-                </Box>
-              :
-                <></>
-              }
-              <ChakraWordTypeContainer boxShadow={boxShadow} bgGradient={gradientbg} m={(isLargerthan440) && '5'} ml={[null, '9em', null]} mr={[null, '9em', null]} marginTop={['6', null, null]} >
+  const TheWholeThesaurus = () => (
+                  <ChakraWordTypeContainer boxShadow={boxShadow} bgGradient={gradientbg} m={(isLargerthan440) && '5'} ml={[null, '9em', null]} mr={[null, '9em', null]} marginTop={['6', null, null]}>
                       <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
                         Thesaurus
                       </ChakraThesaurusHeader>
@@ -194,7 +189,6 @@ export const ThesaurusPage = (
                         Synonyms & Antonyms of <em>{ReturnedWord}</em>
                       </ChakraSynAntHeader>
                       <SynAntContainer>
-                        {/* <chakra.span color={fontColorMain} className='font-bold text-xl absolute left-0 top-0'>1</chakra.span> */}
                         <ChakraText color={fontColorMain} >
                           {ShortDef} 
                         </ChakraText>
@@ -222,8 +216,44 @@ export const ThesaurusPage = (
                     <SkeletonText mt="4" mb='3' noOfLines={11} spacing="4" startColor={SkeletonStartColor} endColor={SkeletonEndColor}  />
                     </Presets.TransitionFade>
                   }
-
               </ChakraWordTypeContainer>
+  )
+
+
+    return (
+            <Fragment>
+              {ReturnedWord.length 
+              ?
+                <Box zIndex='overlay' className='fixed top-0' left={[null, '32', null]}>
+                  <LinkChak _focus={focusBorderColorGeneral} bg={bg} color={color} _hover={hover} onClick={BackButtonClick} className={LinkCSS} to='/'>
+                    Back to search
+                  </LinkChak>
+                </Box>
+              :
+                <></>
+              }
+              <Presets.TransitionFade>
+              <Tabs align='center' variant="solid-rounded">
+                <TabList mt="1em">
+                  <Tab _hover={Tabshover} _selected={{ color: color, bg: bg  }} _focus={focusBorderColorGeneral} outline='none' outlineColor='initial' style={{outlineStyle: 'none' }}>Noun</Tab>
+                  <Tab _hover={Tabshover} _selected={{ color: color, bg: bg  }} _focus={focusBorderColorGeneral} outline='none' outlineColor='initial' style={{outlineStyle: 'none' }}>Verb</Tab>
+                  <Tab _hover={Tabshover} _selected={{ color: color, bg: bg  }} _focus={focusBorderColorGeneral} outline='none' outlineColor='initial' style={{outlineStyle: 'none' }}>Adjective</Tab>
+                </TabList>
+                <TabPanels>
+                  <TabPanel>
+                  {TheWholeThesaurus()}
+                  </TabPanel>
+                  <TabPanel>
+                  {TheWholeThesaurus()}
+                  </TabPanel>
+                  <TabPanel>
+                  {TheWholeThesaurus()}
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
+              </Presets.TransitionFade>
+
+              
             </Fragment>
     )
 }
