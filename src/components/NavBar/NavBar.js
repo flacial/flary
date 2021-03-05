@@ -6,7 +6,7 @@ const NavBar = () => {
 
     return (
 
-      <Box className='backdrop-blur' zIndex='overlay'  display='flex' position='sticky' top='0' justifyContent='flex-end' h='70px' w='full' borderRadius='0 0 20px 20px'>
+      <Box className='backdrop-blur' zIndex='sticky'  display='flex' position='sticky' top='0' justifyContent='flex-end' h='70px' w='full' borderRadius='0 0 20px 20px'>
         <Button _focus={focusBorderColorInput} focusBorderColor={focusBorderColorInput} boxShadow='lg' outline='none' outlineColor='initial' style={{outlineStyle: 'none' }} m='4' mr={[null, '40', null ]} rounded='xl' onClick={toggleColorMode}>
           {colorMode === "light" 
           ?

@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components';
@@ -15,7 +15,8 @@ import {
   TabList,
   TabPanels,
   Tab,
-  TabPanel
+  TabPanel,
+  Portal
 } from '@chakra-ui/react'
 import { Presets } from 'react-component-transition';
 
@@ -181,9 +182,11 @@ export const ThesaurusPage = (
                   {(WordsLoaded) ? 
                     <Presets.TransitionFade>
                       <WordAndType>
+                      <Presets.TransitionFade>
                           <ChakraTheWord color={fontColorMain}>
                               {ReturnedWord}
                           </ChakraTheWord>
+                          </Presets.TransitionFade>
                           <ChakraTheType color={fontColorDarkWhiteSmallWords}>
                             {PartOfSpeech}
                           </ChakraTheType>
@@ -227,7 +230,7 @@ export const ThesaurusPage = (
             <Fragment>
               {ReturnedWord.length 
               ?
-                <Box zIndex='overlay' className='fixed top-0' left={[null, '32', null]}>
+                <Box zIndex='sticky' className='fixed top-0' left={[null, '32', null]}>
                   <LinkChak _focus={focusBorderColorGeneral} bg={bg} color={color} _hover={hover} onClick={BackButtonClick} className={LinkCSS} to='/'>
                     Back to search
                   </LinkChak>
@@ -268,8 +271,6 @@ export const ThesaurusPage = (
                   </TabPanel>
                 </TabPanels>
               </Tabs>
-
-              
             </Fragment>
     )
 }
