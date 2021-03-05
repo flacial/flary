@@ -116,7 +116,10 @@ export const ThesaurusPage = (
       getPathName,
       WordsLoaded,
       Syns,
-      Ants
+      Ants,
+      PathName,
+      onTabClick,
+      AvailableWordType
 }) => {
 
   const OrderSynonyms = () => {
@@ -148,7 +151,7 @@ export const ThesaurusPage = (
     }
     return Antonyms
   }
-    
+  
   const location = useLocation()
   useEffect(() => {
     getPathName(location.pathname)
@@ -232,12 +235,26 @@ export const ThesaurusPage = (
               :
                 <></>
               }
-              <Presets.TransitionFade>
               <Tabs align='center' variant="solid-rounded">
                 <TabList mt="1em">
-                  <Tab _hover={Tabshover} _selected={{ color: color, bg: bg  }} _focus={focusBorderColorGeneral} outline='none' outlineColor='initial' style={{outlineStyle: 'none' }}>Noun</Tab>
-                  <Tab _hover={Tabshover} _selected={{ color: color, bg: bg  }} _focus={focusBorderColorGeneral} outline='none' outlineColor='initial' style={{outlineStyle: 'none' }}>Verb</Tab>
-                  <Tab _hover={Tabshover} _selected={{ color: color, bg: bg  }} _focus={focusBorderColorGeneral} outline='none' outlineColor='initial' style={{outlineStyle: 'none' }}>Adjective</Tab>
+                {(AvailableWordType.noun) ? ((Object.keys(AvailableWordType).length === 1) ? <></> : 
+                  <Tab onClick={() => onTabClick('noun')} _hover={Tabshover} _selected={{ color: color, bg: bg  }} _focus={focusBorderColorGeneral} outline='none' outlineColor='initial' style={{outlineStyle: 'none' }}>Noun</Tab>
+                  )
+                  :
+                  <></>
+                }
+                {(AvailableWordType.verb) ? ((Object.keys(AvailableWordType).length === 1) ? <></> : 
+                  <Tab onClick={() => onTabClick('verb')} _hover={Tabshover} _selected={{ color: color, bg: bg  }} _focus={focusBorderColorGeneral} outline='none' outlineColor='initial' style={{outlineStyle: 'none' }}>Verb</Tab>
+                  )
+                  :
+                  <></>
+                }
+                {(AvailableWordType.adjective) ? ((Object.keys(AvailableWordType).length === 1) ? <></> :
+                  <Tab onClick={() => onTabClick('adjective')} _hover={Tabshover} _selected={{ color: color, bg: bg  }} _focus={focusBorderColorGeneral} outline='none' outlineColor='initial' style={{outlineStyle: 'none' }}>Adjective</Tab>
+                  )
+                  :
+                  <></>
+                }
                 </TabList>
                 <TabPanels>
                   <TabPanel>
@@ -251,7 +268,6 @@ export const ThesaurusPage = (
                   </TabPanel>
                 </TabPanels>
               </Tabs>
-              </Presets.TransitionFade>
 
               
             </Fragment>

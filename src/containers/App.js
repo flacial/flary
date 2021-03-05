@@ -27,6 +27,7 @@ const  App = () => {
   const [ Syns, setSyns ] = useState([])
   const [ Ants, setAnts ] = useState([])
   const [ WordArray, setWordArray ] = useState([])
+  const [ AvailableWordType , setAvailableWordType ] = useState({})
 
   useEffect(() => {
     if (PathName === '/thesaurus' && ShortDef === '') {
@@ -64,11 +65,21 @@ const  App = () => {
     setPartOfSpeech('')
     setShortDef('')
     setWordExample('')
+    setSyns([])
+    setAnts([])
+    setWordsLoaded(false)
   }
+
+  useEffect(() => {
+    if (PathName === '/' && AvailableWordType !== {}) {
+      setAvailableWordType({})
+      BackButtonClick()
+    }
+  }, [PathName])
 
   const WordArrayFilter = (word, type) => {
     const filteredArray = word.filter((arr) => arr.fl === type)
-    return filteredArray
+    return filteredArray[0]
   }
 
   const WordArraySetState = (wordArray) => {
@@ -83,19 +94,69 @@ const  App = () => {
     setWordExample(WordExampleSlicedIt)
   }
 
-  const RequestedThesaurus = (word, index) => {
+  const onTabClick = (type) => {
+    switch (type) {
+      case 'verb':
+        WordArraySetState(WordArrayFilter(WordArray, 'verb'))
+        break;
+      case 'noun':
+        WordArraySetState(WordArrayFilter(WordArray, 'noun'))
+        break;
+      case 'adjective':
+        WordArraySetState(WordArrayFilter(WordArray, 'adjective'))
+        break;
+      default:
+        break;
+    }
+  }
+
+
+
+  const RequestedThesaurus = (word) => {
     try {
-      WordArraySetState(WordArrayFilter(word, 'noun'))
+      setWordArray(word)
+      word.forEach((arr, index) => {
+      switch (arr.fl) {
+        case 'noun':
+          // WordArraySetState(WordArrayFilter(word, 'noun'))
+          setAvailableWordType(prevState => Object.assign({}, prevState, {noun: true }))
+          break;
+        case 'verb':
+          // WordArraySetState(WordArrayFilter(word, 'verb'))
+          setAvailableWordType(prevState => Object.assign({}, prevState, {verb: true }))
+          break;
+        case 'adjective':
+          // WordArraySetState(WordArrayFilter(word, 'adjective'))
+          setAvailableWordType(prevState => Object.assign({}, prevState, {adjective: true }))
+          break;
+        default:
+          break;
+      }
+      if (arr.fl === 'noun') {
+        WordArraySetState(WordArrayFilter(word, 'noun'))
+      } else if (word[index - 1] !== undefined) {
+        if (word[index - 1].fl === 'noun') {
+          WordArraySetState(WordArrayFilter(word, 'noun'))
+        }
+      } else {
+        WordArraySetState(WordArrayFilter(word, arr.fl))
+      }
+    });
     }
     catch (error) {
       console.log(error)
     }
   }
 
+  const getWordArrayReq = (word) => {
+    return word
+  }
+
   const sendRequstedWord = (word) => {
     try {
           if (word[0].hwi) {
-            RequestedThesaurus(word, 0)
+            RequestedThesaurus(word)
+            getWordArrayReq(word)
           } else {
             setError(true)
             setWordFind(true)
@@ -114,12 +175,12 @@ const  App = () => {
     let ThesaurusPageCondition;
     if (Word.length) {
         if (ReturnedWord.length) {
-            ThesaurusPageCondition = <Presets.TransitionFade><ThesaurusPage Ants={Ants} Syns={Syns} WordsLoaded={WordsLoaded} Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
+            ThesaurusPageCondition = <Presets.TransitionFade><ThesaurusPage AvailableWordType={AvailableWordType} onTabClick={onTabClick} PathName={PathName} Ants={Ants} Syns={Syns} WordsLoaded={WordsLoaded} Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
             ReactHtmlParser={ReactHtmlParser} WordExample={WordExample} getPathName={getPathName}/></Presets.TransitionFade>
         } else if (Error) {
           ThesaurusPageCondition = <Redirect to='/' />
         } else {
-          ThesaurusPageCondition = <Presets.TransitionFade><ThesaurusPage Ants={Ants} Syns={Syns} WordsLoaded={WordsLoaded} Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
+          ThesaurusPageCondition = <Presets.TransitionFade><ThesaurusPage AvailableWordType={AvailableWordType} onTabClick={onTabClick} PathName={PathName} Ants={Ants} Syns={Syns} WordsLoaded={WordsLoaded} Word={Word} Link={Link} BackButtonClick={BackButtonClick} ReturnedWord={ReturnedWord} PartOfSpeech={PartOfSpeech} ShortDef={ShortDef}
           ReactHtmlParser={ReactHtmlParser} WordExample={WordExample} getPathName={getPathName}/></Presets.TransitionFade>
         }
   } else {
