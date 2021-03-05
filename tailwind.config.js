@@ -22,7 +22,7 @@ module.exports = {
     },
     backdropFilter: { // defaults to {}
       'none': 'none',
-      'blur': 'blur(20px)',
+      'blur': 'blur(5px)',
     },
   },
   variants: {

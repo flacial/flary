@@ -175,7 +175,7 @@ export const ThesaurusPage = (
   const Tabshover = useColorModeValue({color: '#3B82F6'}, {color: "orange"});
 
   const TheWholeThesaurus = () => (
-                  <ChakraWordTypeContainer boxShadow={boxShadow} bgGradient={gradientbg} m={(isLargerthan440) && '5'} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['6', null, null]}>
+                  <ChakraWordTypeContainer boxShadow={boxShadow} bgGradient={gradientbg} m={(isLargerthan440) && '5'} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
                       <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
                         Thesaurus
                       </ChakraThesaurusHeader>
@@ -243,8 +243,9 @@ export const ThesaurusPage = (
               :
                 <></>
               }
-              <Tabs align='center' variant="solid-rounded">
-                <TabList mt="1em">
+              <Tabs align='center' variant="soft-rounded">
+              {/* <Box className='backdrop-blur z-50' display='flex' justifyContent='center' h='22' width='full'  position='fixed' bottom='0'> */}
+                <TabList marginTop='1'>
                 {(AvailableWordType.noun) ? ((Object.keys(AvailableWordType).length === 1) ? <></> : 
                   <Tab onClick={() => onTabClick('noun')} _hover={Tabshover} _selected={{ color: color, bg: bg  }} _focus={focusBorderColorGeneral} outline='none' outlineColor='initial' style={{outlineStyle: 'none' }}>Noun</Tab>
                   )
@@ -264,6 +265,7 @@ export const ThesaurusPage = (
                   <></>
                 }
                 </TabList>
+                {/* </Box> */}
                 <TabPanels>
                   <TabPanel>
                   {TheWholeThesaurus()}
