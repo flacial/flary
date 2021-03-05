@@ -175,7 +175,7 @@ export const ThesaurusPage = (
   const Tabshover = useColorModeValue({color: '#3B82F6'}, {color: "orange"});
 
   const TheWholeThesaurus = () => (
-                  <ChakraWordTypeContainer boxShadow={boxShadow} bgGradient={gradientbg} m={(isLargerthan440) && '5'} ml={[null, '9em', null]} mr={[null, '9em', null]} marginTop={['6', null, null]}>
+                  <ChakraWordTypeContainer boxShadow={boxShadow} bgGradient={gradientbg} m={(isLargerthan440) && '5'} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['6', null, null]}>
                       <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
                         Thesaurus
                       </ChakraThesaurusHeader>
@@ -198,8 +198,13 @@ export const ThesaurusPage = (
                         <ChakraText color={fontColorMain} >
                           {ShortDef} 
                         </ChakraText>
-                        <ChakraExample color={fontColorSynAnt}> <strong>//</strong> {ReactHtmlParser(WordExample)} 
+                        {(ShortDef.slice(0, 5) === WordExample.slice(0, 5))
+                         ?
+                         <></>
+                         :
+                         <ChakraExample color={fontColorSynAnt}> <strong>//</strong> {ReactHtmlParser(WordExample)} 
                         </ChakraExample>
+                         }
                         <Heading mb='1' mt='2' fontSize='2xl' fontFamily='sans-serif' color={fontColorHeaders}>Synonyms for <chakra.span fontStyle='italic'>{ReturnedWord}</chakra.span></Heading>
                         <Box w={['100%','70%', null]}>
                         <UnorderedList fontFamily='sans' fontSize='lg' ml='0' color={fontColorSynAnt}>{OrderSynonyms()}</UnorderedList>
