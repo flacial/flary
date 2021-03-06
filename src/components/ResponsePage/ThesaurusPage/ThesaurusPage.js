@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components';
@@ -16,7 +16,6 @@ import {
   TabPanels,
   Tab,
   TabPanel,
-  Portal
 } from '@chakra-ui/react'
 import { Presets } from 'react-component-transition';
 
@@ -118,7 +117,6 @@ export const ThesaurusPage = (
       WordsLoaded,
       Syns,
       Ants,
-      PathName,
       onTabClick,
       AvailableWordType
 }) => {
@@ -202,7 +200,7 @@ export const ThesaurusPage = (
                          ?
                          <></>
                          :
-                         <ChakraExample color={fontColorSynAnt}> <strong>//</strong> {ReactHtmlParser(WordExample)} 
+                         <ChakraExample color={fontColorSynAnt}> <strong>{'//'}</strong> {ReactHtmlParser(WordExample)} 
                         </ChakraExample>
                          }
                         <Heading mb='1' mt='2' fontSize='2xl' fontFamily='sans-serif' color={fontColorHeaders}>Synonyms for <chakra.span fontStyle='italic'>{ReturnedWord}</chakra.span></Heading>

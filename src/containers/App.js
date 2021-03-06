@@ -46,9 +46,9 @@ const App = () => {
 
     //Used as a condition to render the values or skeleton in ThesaurusPage
     useEffect(() => {
-      if (PathName === '/thesaurus' && ShortDef === '') {
+      if (PathName === '/thesaurus' && !ShortDef.length) {
         setWordsLoaded(false)
-      } else if (PathName === '/thesaurus' && !(ShortDef === '')) {
+      } else if (PathName === '/thesaurus' && ShortDef.length) {
         setWordsLoaded(true)
       }
     })
@@ -87,7 +87,7 @@ const App = () => {
     }
 
     useEffect(() => {
-      if (PathName !== '/thesaurus' && AvailableWordType !== {}) {
+      if (PathName !== '/thesaurus' && Object.keys(AvailableWordType).length !== 0) {
         setAvailableWordType({})
         BackButtonClick()
       }

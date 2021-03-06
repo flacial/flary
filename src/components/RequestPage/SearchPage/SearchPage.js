@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components';
 import { useLocation } from 'react-router-dom';
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import {
   Heading, 
   Input, 
@@ -14,13 +14,11 @@ import {
   PopoverBody,
   PopoverArrow,
   PopoverCloseButton,
-  useDisclosure,
   useColorModeValue,
   IconButton,
   useMediaQuery,
-  Button
 } from "@chakra-ui/react"
-import { QuestionIcon, MoonIcon } from "@chakra-ui/icons"
+import { QuestionIcon } from "@chakra-ui/icons"
 
 const MainContainer = tw.div`
    text-center
@@ -51,7 +49,6 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
   const [ isMoreThan420px ] = useMediaQuery("(max-width: 420px)")
   const location = useLocation()
   const LinkChak = chakra(Link)
-  const { isOpen: isLaunch, onOpen: onLunch, onClose: onExit } = useDisclosure()
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange')
   const hover = useColorModeValue({color: '#3B82F6'}, {color: 'orange'});
   const fontColorMain = useColorModeValue('#edf2f7', 'gray.800')
@@ -73,7 +70,7 @@ const SearchPage = ({ WordFindType, onEnterKeyPress, WordFind, isOpen,
               ?
               <Heading textDecoration={`underline wavy ${fontColorDarkWhiteSmallWords}`} _hover={[null, null, hover]} cursor='pointer' fontFamily='Playfair Display' fontSize={['3xl', '5xl', '6xl']} whiteSpace='nowrap' >thesaurused</Heading>
               :
-              <IconButton variant='ghost' outline='none' outlineColor='initial' style={{outlineStyle: 'none' }} _focus={focusBorderColorGeneral} ml='2' outline='none' size='sm' icon={<QuestionIcon w='5' h='5' />} />
+              <IconButton variant='ghost' outline='none' outlineColor='initial' style={{outlineStyle: 'none' }} _focus={focusBorderColorGeneral} ml='2' size='sm' icon={<QuestionIcon w='5' h='5' />} />
               }
               </PopoverTrigger>
               <PopoverContent outline='none' outlineColor='initial' style={{outlineStyle: 'none' }} _focus={focusBorderColorGeneral} background={fontColorMain} >
