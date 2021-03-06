@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/wordsapiproject/static/css/main.dd45bffa.chunk.css",
-    "main.js": "/wordsapiproject/static/js/main.b3f70618.chunk.js",
-    "main.js.map": "/wordsapiproject/static/js/main.b3f70618.chunk.js.map",
+    "main.js": "/wordsapiproject/static/js/main.20b9e3c4.chunk.js",
+    "main.js.map": "/wordsapiproject/static/js/main.20b9e3c4.chunk.js.map",
     "runtime-main.js": "/wordsapiproject/static/js/runtime-main.1fdbffaf.js",
     "runtime-main.js.map": "/wordsapiproject/static/js/runtime-main.1fdbffaf.js.map",
-    "static/js/2.409aac65.chunk.js": "/wordsapiproject/static/js/2.409aac65.chunk.js",
-    "static/js/2.409aac65.chunk.js.map": "/wordsapiproject/static/js/2.409aac65.chunk.js.map",
+    "static/js/2.48456009.chunk.js": "/wordsapiproject/static/js/2.48456009.chunk.js",
+    "static/js/2.48456009.chunk.js.map": "/wordsapiproject/static/js/2.48456009.chunk.js.map",
     "index.html": "/wordsapiproject/index.html",
     "static/css/main.dd45bffa.chunk.css.map": "/wordsapiproject/static/css/main.dd45bffa.chunk.css.map",
-    "static/js/2.409aac65.chunk.js.LICENSE.txt": "/wordsapiproject/static/js/2.409aac65.chunk.js.LICENSE.txt"
+    "static/js/2.48456009.chunk.js.LICENSE.txt": "/wordsapiproject/static/js/2.48456009.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.1fdbffaf.js",
-    "static/js/2.409aac65.chunk.js",
+    "static/js/2.48456009.chunk.js",
     "static/css/main.dd45bffa.chunk.css",
-    "static/js/main.b3f70618.chunk.js"
+    "static/js/main.20b9e3c4.chunk.js"
   ]
 }
