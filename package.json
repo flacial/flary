@@ -24,6 +24,7 @@
     "react-scripts": "4.0.2",
     "react-spring": "^8.0.27",
     "styled-components": "^5.2.1",
+    "tailwind-styled-components": "^1.0.7",
     "tailwindcss-filters": "^3.0.0",
     "web-vitals": "^1.1.0"
   },
@@ -63,7 +64,6 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "postcss": "^7.0.35",
-    "tailwind-styled-components": "^1.0.7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
   }
 }
