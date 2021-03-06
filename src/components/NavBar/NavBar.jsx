@@ -7,10 +7,19 @@ import React from 'react';
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const focusBorderColorInput = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
+  // const fallbackBackground = useColorModeValue('rgba(255, 255, 255, .9)', 'rgba(0, 0, 0, 0.26)');
 
   return (
-
-    <Box className="backdrop-blur" zIndex="sticky" display="flex" position="sticky" top="0" justifyContent="flex-end" h="70px" w="full" borderRadius="0 0 20px 20px">
+    <Box
+      zIndex="9991"
+      position="sticky"
+      top="0"
+      h="70px"
+      w="full"
+      borderRadius="0 0 20px 20px"
+      display="flex"
+      justifyContent="flex-end"
+    >
       <Button _focus={focusBorderColorInput} focusBorderColor={focusBorderColorInput} boxShadow="lg" outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }} m="4" mr={[null, '40', null]} rounded="xl" onClick={toggleColorMode}>
         {colorMode === 'light'
           ? <MoonIcon />

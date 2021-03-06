@@ -1,7 +1,9 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
-import { Fragment, useEffect, React } from 'react';
+import {
+  Fragment, useEffect, React,
+} from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
@@ -160,6 +162,7 @@ const ThesaurusPage = (
   const focusBorderColorGeneral = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
   const isLargerthan440 = useMediaQuery('(max-width: 440px)');
   const Tabshover = useColorModeValue({ color: '#3B82F6' }, { color: 'orange' });
+  const fallbackBackground = useColorModeValue('rgba(255, 255, 255, .9)', 'rgba(0, 0, 0, 0.26)');
 
   const TheWholeThesaurus = () => (
     <ChakraWordTypeContainer boxShadow={boxShadow} bgGradient={gradientbg} m={(isLargerthan440) && '5'} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
@@ -233,17 +236,36 @@ const ThesaurusPage = (
     <>
       {ReturnedWord.length
         ? (
-          <Box zIndex="sticky" className="fixed top-0" left={[null, '32', null]}>
+          <Box zIndex="9991" className="fixed top-0" left={[null, '32', null]}>
             <LinkChak _focus={focusBorderColorGeneral} bg={bg} color={color} _hover={hover} onClick={BackButtonClick} className={LinkCSS} to="/">
               Back to search
             </LinkChak>
           </Box>
         )
         : <></>}
+      {(location.pathname === '/thesaurus')
+        ? ((isLargerthan440[0])
+          ? (
+            <Box
+              background={!(CSS.supports('backdrop-filter', 'blur(5px)'))
+                  && fallbackBackground}
+              className="backdrop-blur"
+              zIndex="9990"
+              position="fixed"
+              top="0"
+              h="70px"
+              w="full"
+              borderRadius="0 0 20px 20px"
+            />
+          )
+          : <></>
+        )
+        : <></>}
+
       <Tabs align="center" variant="soft-rounded">
         {/* <Box className='backdrop-blur z-50' display='flex'
          justifyContent='center' h='22' width='full'  position='fixed' bottom='0'> */}
-        <TabList marginTop="1">
+        <TabList marginTop={['4', 0, null]}>
           {(AvailableWordType.noun) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
             : <Tab onClick={() => onTabClick('noun')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
           )
