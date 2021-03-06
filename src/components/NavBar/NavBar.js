@@ -1,5 +1,6 @@
 import { chakra, Box, Button, useColorMode, useColorModeValue } from '@chakra-ui/react';
 import { MoonIcon } from "@chakra-ui/icons"
+import React from 'react';
 const NavBar = () => {
     const { colorMode, toggleColorMode } = useColorMode()
     const focusBorderColorInput = useColorModeValue({boxShadow: '0 0 0 3px #3B82F6'}, {boxShadow: '0 0 0 3px orange'})

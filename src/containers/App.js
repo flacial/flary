@@ -7,7 +7,8 @@ import {
 import ReactHtmlParser from 'react-html-parser';
 import {
   useState,
-  useEffect
+  useEffect,
+  React
 } from 'react';
 import {
   getRequest

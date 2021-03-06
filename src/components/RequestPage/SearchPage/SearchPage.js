@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components';
 import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react'
+import { useEffect, React } from 'react'
 import {
   Heading, 
   Input, 

@@ -3,6 +3,7 @@ import {
     Route,
     useLocation
 } from 'react-router-dom'
+import React from 'react';
 import SearchPage from '../components/RequestPage/SearchPage/SearchPage';
 import { Presets } from 'react-component-transition';
 
