@@ -121,34 +121,26 @@ export const ThesaurusPage = (
       AvailableWordType
 }) => {
 
-  const OrderSynonyms = () => {
-    let Synonyms = []
-    if (Syns !== undefined) {
-       Synonyms = Syns.map((word, index) => {
-        if (Syns[index + 1] === undefined) {
+  const turnWordInToList = (MainObj) => {
+    let ReturnedObj = []
+    if (MainObj !== undefined) {
+      ReturnedObj = MainObj.map((word, index) => {
+        if (MainObj[index + 1] === undefined) {
           return <ListItem listStyleType='none' display='inline-block' key={word}>{`${word}`}</ListItem>
         } else {
           return <ListItem listStyleType='none' display='inline-block' key={word}>{`${word},\u00A0`}</ListItem>
         }
       })
     }
-    return Synonyms
+    return ReturnedObj
   }
 
-  const turnWordToList = (MainObj, ) => {} //TODO Add turnWordToList function for Syn and Ant
-
+  //Change synonyms and antonyms words to list items
+  const OrderSynonyms = () => {
+    return turnWordInToList(Syns)
+  }
   const OrderAntonyms = () => {
-    let Antonyms = []
-    if (Ants !== undefined) {
-      Antonyms = Ants.map((word, index) => {
-        if (Ants[index + 1] === undefined) {
-          return <ListItem listStyleType='none' display='inline-block' key={word}>{`${word}`}</ListItem>
-        } else {
-          return <ListItem listStyleType='none' display='inline-block' key={word}>{`${word},\u00A0`}</ListItem>
-        }
-      })
-    }
-    return Antonyms
+    return turnWordInToList(Ants)
   }
   
   const location = useLocation()
