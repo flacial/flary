@@ -7,7 +7,6 @@ import React from 'react';
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const focusBorderColorInput = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
-  // const fallbackBackground = useColorModeValue('rgba(255, 255, 255, .9)', 'rgba(0, 0, 0, 0.26)');
 
   return (
     <Box

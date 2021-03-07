@@ -24,6 +24,9 @@ import getRequest from '../services/getRequest';
 import ThesaurusPage from '../components/ResponsePage/ThesaurusPage/ThesaurusPage';
 import Routes from '../Routes/Routes';
 
+// TODO understand wth is your state doing
+// TODO add a way to double click a word and then it searches for it
+
 const App = () => {
   const [Word, setWord] = useState('');
   const [ReturnedWord, setReturnedWord] = useState('');
@@ -228,29 +231,33 @@ const App = () => {
     setPathName(Path);
   };
 
+  const ThesaurusPageFunc = () => (
+    <ThesaurusPage
+      AvailableWordType={AvailableWordType}
+      onTabClick={onTabClick}
+      PathName={PathName}
+      Ants={Ants}
+      Syns={Syns}
+      WordsLoaded={WordsLoaded}
+      Word={Word}
+      Link={Link}
+      BackButtonClick={BackButtonClick}
+      ReturnedWord={ReturnedWord}
+      PartOfSpeech={PartOfSpeech}
+      ShortDef={ShortDef}
+      ReactHtmlParser={ReactHtmlParser}
+      WordExample={WordExample}
+      getPathName={getPathName}
+    />
+  );
+
   const ThesaurusPageComponent = () => {
     let ThesaurusPageCondition;
     if (Word.length) {
       if (ReturnedWord.length) {
         ThesaurusPageCondition = (
           <Presets.TransitionFade>
-            <ThesaurusPage
-              AvailableWordType={AvailableWordType}
-              onTabClick={onTabClick}
-              PathName={PathName}
-              Ants={Ants}
-              Syns={Syns}
-              WordsLoaded={WordsLoaded}
-              Word={Word}
-              Link={Link}
-              BackButtonClick={BackButtonClick}
-              ReturnedWord={ReturnedWord}
-              PartOfSpeech={PartOfSpeech}
-              ShortDef={ShortDef}
-              ReactHtmlParser={ReactHtmlParser}
-              WordExample={WordExample}
-              getPathName={getPathName}
-            />
+            {ThesaurusPageFunc()}
           </Presets.TransitionFade>
         );
       } else if (Error) {
@@ -258,23 +265,7 @@ const App = () => {
       } else {
         ThesaurusPageCondition = (
           <Presets.TransitionFade>
-            <ThesaurusPage
-              AvailableWordType={AvailableWordType}
-              onTabClick={onTabClick}
-              PathName={PathName}
-              Ants={Ants}
-              Syns={Syns}
-              WordsLoaded={WordsLoaded}
-              Word={Word}
-              Link={Link}
-              BackButtonClick={BackButtonClick}
-              ReturnedWord={ReturnedWord}
-              PartOfSpeech={PartOfSpeech}
-              ShortDef={ShortDef}
-              ReactHtmlParser={ReactHtmlParser}
-              WordExample={WordExample}
-              getPathName={getPathName}
-            />
+            {ThesaurusPageFunc()}
           </Presets.TransitionFade>
         );
       }
@@ -296,6 +287,13 @@ const App = () => {
       history.push('/thesaurus');
     }
   };
+
+  // TODO Add keyboard shortcuts
+
+  // const onCtrlShiftSpace = (event) => {
+  //   if (event.which === 30) {
+  //   }
+  // };
 
   useEffect(() => {
     if (PathName !== '/thesaurus' && ShortDef.length) {
