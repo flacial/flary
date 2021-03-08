@@ -89,7 +89,7 @@ const SearchPage = ({
       </Box>
       <Box display={{ sm: 'flex', md: 'flex' }} justifyContent={[null, 'center', null]}>
         <Box>
-          <Input focusBorderColor={focusBorderColorInput} onKeyPress={onEnterKeyPress} variant="filled" w={['16rem', 'xs', null]} rounded="xl" mr={[null, null, '2rem']} onChange={getInputValue} placeholder="Type your word" />
+          <Input focusBorderColor={focusBorderColorInput} onKeyPress={onEnterKeyPress} variant="filled" w={['16rem', 'xs', null]} rounded="xl" mr={[null, null, '2rem']} onChange={getInputValue} placeholder="Search for words" />
           {WordFind
                 && (
                 <Fade in={isOpen}>
