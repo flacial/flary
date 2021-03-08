@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import React from 'react';
 import { Presets } from 'react-component-transition';
-import SearchPage from '../components/RequestPage/SearchPage/SearchPage';
+import SearchPage from '../pages/SearchPage/SearchPage';
 
 function Routes({ ThesaurusPageComponent, ...props }) {
   const location = useLocation();

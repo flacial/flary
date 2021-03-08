@@ -21,7 +21,7 @@ import {
   Presets,
 } from 'react-component-transition';
 import getRequest from '../services/getRequest';
-import ThesaurusPage from '../components/ResponsePage/ThesaurusPage/ThesaurusPage';
+import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
 import Routes from '../Routes/Routes';
 
 // TODO understand wth is your state doing

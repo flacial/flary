@@ -22,7 +22,7 @@ import {
   TabPanel,
 } from '@chakra-ui/react';
 import { Presets } from 'react-component-transition';
-import WordsContainer from './words-container/words-container-component';
+import WordsContainer from '../../components/words-container/words.container.component';
 
 const ThesaurusHeader = tw.h1`
     italic
