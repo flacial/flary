@@ -27,7 +27,7 @@ import Routes from '../Routes/Routes';
 // TODO understand wth is your state doing
 // TODO add a way to double click a word on ThesaurusPage and then it searches for it
 
-const App = (props) => {
+const App = () => {
   const [Word, setWord] = useState('');
   const [ReturnedWord, setReturnedWord] = useState('');
   const [ShortDef, setShortDef] = useState('');
@@ -48,8 +48,6 @@ const App = (props) => {
   const [AvailableWordType, setAvailableWordType] = useState({});
   const [isNounFound, setIsNounFound] = useState(false);
   const history = useHistory();
-
-  console.log(props);
 
   // Used as a condition to render the values or skeleton in ThesaurusPage
   useEffect(() => {
