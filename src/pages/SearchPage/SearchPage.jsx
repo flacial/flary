@@ -58,6 +58,7 @@ const SearchPage = ({
   const fontColorMain = useColorModeValue('#edf2f7', 'gray.800');
   const focusBorderColorInput = useColorModeValue('#3B82F6', '#ffa500');
   const focusBorderColorGeneral = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
+
   useEffect(() => {
     getPathName(location.pathname);
   });
