@@ -23,6 +23,8 @@ import {
 import getRequest from '../services/getRequest';
 import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
 import Routes from '../Routes/Routes';
+import NavBar from '../pages/NavBar/NavBar';
+// import Help from '../components/help/help.component';
 
 // TODO understand wth is your state doing
 // TODO add a way to double click a word on ThesaurusPage and then it searches for it
@@ -62,8 +64,8 @@ const App = () => {
     setWord(event.target.value);
   };
 
-  const WordArrayFilter = (word, type) => {
-    const filteredArray = word.filter((arr) => arr.fl === type);
+  const WordArrayFilter = (wordObjects, type) => {
+    const filteredArray = wordObjects.filter((word) => word.fl === type);
     return filteredArray[0];
   };
 
@@ -84,20 +86,19 @@ const App = () => {
         ants,
       },
     } = wordArray;
-    const WordExampleForState = dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1];
-    const WordExampleSlicedIt = WordExampleForState.replace('{it}', '<em>').replace('{/it}', '</em>');
+    const Example = dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1];
+    const ExampleModified = Example.replace('{it}', '<em>').replace('{/it}', '</em>');
     setAnts(ants[0]);
     setSyns(syns[0]);
     setReturnedWord(hw);
     setPartOfSpeech(fl);
     setShortDef(shortdef[0]);
-    setWordExample(WordExampleSlicedIt);
+    setWordExample(ExampleModified);
   };
 
-  const RequestedThesaurus = (word) => {
+  const PartOfSpeechChecker = (wordObjects) => {
     try {
-      setWordArray(word);
-      word.forEach((arr) => {
+      wordObjects.forEach((arr) => {
         switch (arr.fl) {
           case 'noun':
             setAvailableWordType((prevState) => ({ ...prevState, noun: true }));
@@ -112,51 +113,60 @@ const App = () => {
             break;
         }
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const InitialWord = (wordObjects) => {
+    try {
       MainLoop:
       for (let index = 0; index < 4; index++) {
         // eslint-disable-next-line no-shadow
-        for (let index = 0; index < word.length; index++) {
-          const element = word[index];
+        for (let index = 0; index < wordObjects.length; index++) {
+          const element = wordObjects[index];
           if (element.fl === 'noun') {
-            WordArraySetState(WordArrayFilter(word, 'noun'));
+            WordArraySetState(WordArrayFilter(wordObjects, 'noun'));
             setIsNounFound(true);
             break MainLoop;
           }
         }
         // eslint-disable-next-line no-shadow
-        for (let index = 0; index < word.length; index++) {
-          const element = word[index];
+        for (let index = 0; index < wordObjects.length; index++) {
+          const element = wordObjects[index];
           if (element.fl === 'verb' && !isNounFound) {
-            WordArraySetState(WordArrayFilter(word, 'verb'));
+            WordArraySetState(WordArrayFilter(wordObjects, 'verb'));
             break MainLoop;
           }
         }
         // eslint-disable-next-line no-shadow
-        for (let index = 0; index < word.length; index++) {
-          const element = word[index];
+        for (let index = 0; index < wordObjects.length; index++) {
+          const element = wordObjects[index];
           if (element.fl === 'adjective' && !isNounFound) {
-            WordArraySetState(WordArrayFilter(word, 'adjective'));
+            WordArraySetState(WordArrayFilter(wordObjects, 'adjective'));
             break MainLoop;
           }
         }
         // eslint-disable-next-line no-shadow
-        for (let index = 0; index < word.length; index++) {
-          const element = word[index];
+        for (let index = 0; index < wordObjects.length; index++) {
+          const element = wordObjects[index];
           if (element.fl !== 'noun' && 'verb' && 'adjective' && !isNounFound) {
-            WordArraySetState(WordArrayFilter(word, element.fl));
+            WordArraySetState(WordArrayFilter(wordObjects, element.fl));
             break MainLoop;
           }
         }
       }
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
 
-  const sendRequstedWord = (word) => {
+  const PassRequstedWords = (wordObjects) => {
     try {
-      if (word[0].hwi) {
-        RequestedThesaurus(word);
+      if (wordObjects[0].hwi) {
+        setWordArray(wordObjects);
+        InitialWord(wordObjects);
+        PartOfSpeechChecker(wordObjects);
       } else {
         setError(true);
         setWordFind(true);
@@ -177,17 +187,17 @@ const App = () => {
       onOpen();
     } else {
       getRequest(Word)
-        .then((data) => sendRequstedWord(data));
+        .then((data) => PassRequstedWords(data));
       setWordFind(false);
       setWordFindType('');
     }
   };
 
-  const getButtonClick = () => {
+  const HandleSearchButtonClick = () => {
     getWords();
   };
 
-  const BackButtonClick = () => {
+  const HandleBackButtonClick = () => {
     setWord('');
     setReturnedWord('');
     setPartOfSpeech('');
@@ -201,11 +211,11 @@ const App = () => {
   useEffect(() => {
     if (PathName !== '/thesaurus' && Object.keys(AvailableWordType).length !== 0) {
       setAvailableWordType({});
-      BackButtonClick();
+      HandleBackButtonClick();
     }
   }, [PathName]);
 
-  const onTabClick = (type) => {
+  const HandleTabClick = (type) => {
     switch (type) {
       case 'verb':
         WordArraySetState(WordArrayFilter(WordArray, 'verb'));
@@ -234,14 +244,14 @@ const App = () => {
   const ThesaurusPageFunc = () => (
     <ThesaurusPage
       AvailableWordType={AvailableWordType}
-      onTabClick={onTabClick}
+      HandleTabClick={HandleTabClick}
       PathName={PathName}
       Ants={Ants}
       Syns={Syns}
       WordsLoaded={WordsLoaded}
       Word={Word}
       Link={Link}
-      BackButtonClick={BackButtonClick}
+      HandleBackButtonClick={HandleBackButtonClick}
       ReturnedWord={ReturnedWord}
       PartOfSpeech={PartOfSpeech}
       ShortDef={ShortDef}
@@ -281,7 +291,8 @@ const App = () => {
     return ThesaurusPageCondition;
   };
 
-  const onEnterKeyPress = (event) => {
+  const HandleEnterKey = (event) => {
+    // console.log(event);
     if (event.which === 13) {
       getWords();
       history.push('/thesaurus');
@@ -297,22 +308,26 @@ const App = () => {
 
   useEffect(() => {
     if (PathName !== '/thesaurus' && ShortDef.length) {
-      BackButtonClick();
+      HandleBackButtonClick();
     }
   }, [PathName]);
 
   return (
-    <Routes
-      ThesaurusPageComponent={ThesaurusPageComponent}
-      WordFindType={WordFindType}
-      onEnterKeyPress={onEnterKeyPress}
-      WordFind={WordFind}
-      isOpen={isOpen}
-      getInputValue={getInputValue}
-      getButtonClick={getButtonClick}
-      Link={Link}
-      getPathName={getPathName}
-    />
+    <>
+      <NavBar />
+      <Routes
+        ThesaurusPageComponent={ThesaurusPageComponent}
+        WordFindType={WordFindType}
+        HandleEnterKey={HandleEnterKey}
+        WordFind={WordFind}
+        isOpen={isOpen}
+        getInputValue={getInputValue}
+        HandleSearchButtonClick={HandleSearchButtonClick}
+        Link={Link}
+        getPathName={getPathName}
+      />
+      {/* <Help /> */}
+    </>
   );
 };
 

@@ -2,11 +2,25 @@ import {
   chakra, Box, Button, useColorMode, useColorModeValue,
 } from '@chakra-ui/react';
 import { MoonIcon } from '@chakra-ui/icons';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const focusBorderColorInput = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
+  const ThemeButton = useRef(null);
+  const HandleKeyDownThemeIcon = (event) => {
+    if (event.key === 'X' && event.ctrlKey) {
+      event.preventDefault();
+      ThemeButton.current.click();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', HandleKeyDownThemeIcon);
+    return () => {
+      document.removeEventListener('keydown', HandleKeyDownThemeIcon);
+    };
+  }, []);
 
   return (
     <Box
@@ -19,7 +33,7 @@ const NavBar = () => {
       display="flex"
       justifyContent="flex-end"
     >
-      <Button _focus={focusBorderColorInput} focusBorderColor={focusBorderColorInput} boxShadow="lg" outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }} m="4" mr={[null, '40', null]} rounded="xl" onClick={toggleColorMode}>
+      <Button ref={ThemeButton} _focus={focusBorderColorInput} focusBorderColor={focusBorderColorInput} boxShadow="lg" outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }} m="4" mr={[null, '40', null]} rounded="xl" onClick={toggleColorMode}>
         {colorMode === 'light'
           ? <MoonIcon />
           : (

@@ -2,7 +2,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 import {
-  useEffect, React,
+  useEffect, React, useState, useRef,
 } from 'react';
 import { useLocation } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
@@ -97,7 +97,7 @@ const LinkCSS = `
 const ThesaurusPage = (
   {
     Link,
-    BackButtonClick,
+    HandleBackButtonClick,
     ReturnedWord,
     PartOfSpeech,
     ShortDef,
@@ -107,7 +107,7 @@ const ThesaurusPage = (
     WordsLoaded,
     Syns,
     Ants,
-    onTabClick,
+    HandleTabClick,
     AvailableWordType,
   },
 ) => {
@@ -149,6 +149,56 @@ const ThesaurusPage = (
   const fallbackBackground = useColorModeValue('rgba(255, 255, 255, .9)', 'rgba(0, 0, 0, 0.26)');
   const gradientbg = useColorModeValue('linear(to-l, gray.200, white)');
   const boxShadow = useColorModeValue('0px 0px 25px #a1a1a1, -10px -10px 0px #3B82F6', '0px 0px 11px #1c1c1c, -10px -10px 0px orange');
+  // eslint-disable-next-line no-unused-vars
+  const [isLoaded, setIsLoaded] = useState(false);
+  const NounTabButton = useRef(null);
+  const VerbTabButton = useRef(null);
+  const AdjectiveTabButton = useRef(null);
+
+  const HandleKeyDownBackButtonQctrl = (event) => {
+    if (event.key === 'Q' && event.ctrlKey) {
+      HandleBackButtonClick();
+    }
+  };
+
+  const HandleKeyDownTabsButton123 = (event) => {
+    switch (event.key) {
+      case '!':
+        event.preventDefault();
+        NounTabButton.current.click();
+        break;
+      case '@':
+        event.preventDefault();
+        VerbTabButton.current.click();
+        break;
+      case '#':
+        event.preventDefault();
+        AdjectiveTabButton.current.click();
+        break;
+      default:
+        break;
+    }
+  };
+
+  // const didSkeletonLoad = () => {
+  //   setIsLoaded(true);
+  // };
+
+  useEffect(() => {
+    document.addEventListener('keydown', HandleKeyDownTabsButton123);
+    return () => {
+      document.removeEventListener('keydown', HandleKeyDownTabsButton123);
+      // setIsLoaded(false);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('keydown', HandleKeyDownBackButtonQctrl);
+    return () => {
+      document.removeEventListener('keydown', HandleKeyDownBackButtonQctrl);
+      setIsLoaded(false);
+    };
+  }, []);
 
   const TheWholeThesaurus = () => (
     <WordsContainer boxShadow={boxShadow} gradientbg={gradientbg} m={(isLargerthan440) && '5'} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
@@ -223,7 +273,7 @@ const ThesaurusPage = (
       {ReturnedWord.length
         ? (
           <Box zIndex="9991" className="fixed top-0" left={[null, '32', null]}>
-            <LinkChak _focus={focusBorderColorGeneral} bg={bg} color={color} _hover={hover} onClick={BackButtonClick} className={LinkCSS} to="/">
+            <LinkChak _focus={focusBorderColorGeneral} bg={bg} color={color} _hover={hover} onClick={HandleBackButtonClick} className={LinkCSS} to="/">
               Back to search
             </LinkChak>
           </Box>
@@ -253,15 +303,15 @@ const ThesaurusPage = (
          justifyContent='center' h='22' width='full'  position='fixed' bottom='0'> */}
         <TabList marginTop={['4', 0, null]}>
           {(AvailableWordType.noun) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
-            : <Tab onClick={() => onTabClick('noun')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
+            : <Tab ref={NounTabButton} onClick={() => HandleTabClick('noun')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
           )
             : <></>}
           {(AvailableWordType.verb) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
-            : <Tab onClick={() => onTabClick('verb')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Verb</Tab>
+            : <Tab ref={VerbTabButton} onClick={() => HandleTabClick('verb')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Verb</Tab>
           )
             : <></>}
           {(AvailableWordType.adjective) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
-            : <Tab onClick={() => onTabClick('adjective')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adjective</Tab>
+            : <Tab ref={AdjectiveTabButton} onClick={() => HandleTabClick('adjective')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adjective</Tab>
           )
             : <></>}
         </TabList>

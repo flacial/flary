@@ -2,7 +2,7 @@
 /* eslint-disable no-nested-ternary */
 import tw from 'tailwind-styled-components';
 import { useLocation } from 'react-router-dom';
-import { useEffect, React } from 'react';
+import { useEffect, React, useRef } from 'react';
 import {
   Heading,
   Input,
@@ -20,7 +20,7 @@ import {
   IconButton,
   useMediaQuery,
 } from '@chakra-ui/react';
-import { QuestionIcon } from '@chakra-ui/icons';
+import { InfoIcon } from '@chakra-ui/icons';
 
 const MainContainer = tw.div`
    text-center
@@ -47,8 +47,8 @@ transition duration-200 ease-in-out
 `;
 
 const SearchPage = ({
-  WordFindType, onEnterKeyPress, WordFind, isOpen,
-  getInputValue, getButtonClick, Link, getPathName,
+  WordFindType, HandleEnterKey, WordFind, isOpen,
+  getInputValue, HandleSearchButtonClick, Link, getPathName,
 }) => {
   const [isMoreThan420px] = useMediaQuery('(max-width: 420px)');
   const location = useLocation();
@@ -58,6 +58,21 @@ const SearchPage = ({
   const fontColorMain = useColorModeValue('#edf2f7', 'gray.800');
   const focusBorderColorInput = useColorModeValue('#3B82F6', '#ffa500');
   const focusBorderColorGeneral = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
+  const inputField = useRef(null);
+
+  const HandleFocusOnInputEnterCtrlShift = (event) => {
+    if (event.key === 'A' && event.ctrlKey) {
+      event.preventDefault();
+      inputField.current.focus();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', HandleFocusOnInputEnterCtrlShift);
+    return () => {
+      document.removeEventListener('keydown', HandleFocusOnInputEnterCtrlShift);
+    };
+  });
 
   useEffect(() => {
     getPathName(location.pathname);
@@ -74,7 +89,7 @@ const SearchPage = ({
           <PopoverTrigger>
             {(isMoreThan420px)
               ? <Heading textDecoration={`underline wavy ${fontColorDarkWhiteSmallWords}`} _hover={[null, null, hover]} cursor="pointer" fontFamily="Playfair Display" fontSize={['3xl', '5xl', '6xl']} whiteSpace="nowrap">thesaurused</Heading>
-              : <IconButton variant="ghost" outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }} _focus={focusBorderColorGeneral} ml="2" size="sm" icon={<QuestionIcon w="5" h="5" />} />}
+              : <IconButton variant="ghost" outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }} _focus={focusBorderColorGeneral} ml="2" size="sm" icon={<InfoIcon w="5" h="5" />} />}
           </PopoverTrigger>
           <PopoverContent outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }} _focus={focusBorderColorGeneral} background={fontColorMain}>
             <PopoverArrow />
@@ -89,7 +104,7 @@ const SearchPage = ({
       </Box>
       <Box display={{ sm: 'flex', md: 'flex' }} justifyContent={[null, 'center', null]}>
         <Box>
-          <Input focusBorderColor={focusBorderColorInput} onKeyPress={onEnterKeyPress} variant="filled" w={['16rem', 'xs', null]} rounded="xl" mr={[null, null, '2rem']} onChange={getInputValue} placeholder="Search for words" />
+          <Input ref={inputField} focusBorderColor={focusBorderColorInput} onKeyPress={HandleEnterKey} variant="filled" w={['16rem', 'xs', null]} rounded="xl" mr={[null, null, '2rem']} onChange={getInputValue} placeholder="Search for words" />
           {WordFind
                 && (
                 <Fade in={isOpen}>
@@ -119,7 +134,7 @@ const SearchPage = ({
                     : 'gray.100'
                   }
             fontWeight="semibold"
-            onClick={getButtonClick}
+            onClick={HandleSearchButtonClick}
             className={LinkCSS}
             to="/thesaurus"
           >

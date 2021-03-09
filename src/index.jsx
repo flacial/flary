@@ -5,7 +5,6 @@ import './index.css';
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './containers/App';
-import NavBar from './pages/NavBar/NavBar';
 import theme from './theme';
 
 ReactDOM.render(
@@ -13,7 +12,6 @@ ReactDOM.render(
     <ChakraProvider>
       <Router basename="/wordsapiproject">
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <NavBar />
         <App />
       </Router>
     </ChakraProvider>
