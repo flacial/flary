@@ -220,6 +220,13 @@ const ThesaurusPage = (props) => {
     };
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
+
   const TheWholeThesaurus = () => (
     <WordsContainer boxShadow={boxShadow} gradientbg={gradientbg} m={(isLargerthan440) && '5'} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
       <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
