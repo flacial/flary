@@ -24,9 +24,11 @@ import {
   TabPanel,
   Skeleton,
   Stack,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { Presets } from 'react-component-transition';
 import WordsContainer from '../../components/words-container/words.container.component';
+import PopUpSearchBar from '../../components/popup-search-bar/popup-search-bar.component';
 
 const ThesaurusHeader = tw.h1`
     italic
@@ -113,10 +115,12 @@ const ThesaurusPage = (props) => {
     Ants,
     HandleTabClick,
     AvailableWordType,
-    HandleSynAntClick,
     // eslint-disable-next-line no-unused-vars
     getWords,
     history,
+    HandleEnterKey,
+    getInputValue,
+    setWordsLoaded,
   } = props;
   const LinkChak = chakra(Link);
   const bg = useColorModeValue('#edf2f7', 'rgba(255, 255, 255, 0.08)');
@@ -135,6 +139,7 @@ const ThesaurusPage = (props) => {
   const fallbackBackground = useColorModeValue('rgba(255, 255, 255, .9)', 'rgba(0, 0, 0, 0.26)');
   const gradientbg = useColorModeValue('linear(to-l, gray.200, white)');
   const boxShadow = useColorModeValue('0px 0px 25px #a1a1a1, -10px -10px 0px #3B82F6', '0px 0px 11px #1c1c1c, -10px -10px 0px orange');
+  const { isOpen, onOpen } = useDisclosure();
   // eslint-disable-next-line no-unused-vars
   const [isLoaded, setIsLoaded] = useState(false);
   const NounTabButton = useRef(null);
@@ -143,7 +148,6 @@ const ThesaurusPage = (props) => {
 
   const onClickWords = (event) => {
     HandleBackButtonClick();
-    HandleSynAntClick(event.target.textContent);
     getWords(event.target.textContent);
     history.push('/thesaurus');
   };
@@ -153,7 +157,7 @@ const ThesaurusPage = (props) => {
     if (MainObj !== undefined) {
       ReturnedObj = MainObj.map((word, index) => {
         if (MainObj[index + 1] === undefined) {
-          return <ListItem _hover={hoverSynAntItems} className="cursor-pointer" onClick={onClickWords} listStyleType="none" display="inline-block" key={word}>{word}</ListItem>;
+          return <ListItem _hover={hoverSynAntItems} className="cursor-pointer" onClick={onClickWords} listStyleType="none" display="inline-block" key={index}>{word}</ListItem>;
         }
         return (
           <>
@@ -199,10 +203,6 @@ const ThesaurusPage = (props) => {
         break;
     }
   };
-
-  // const didSkeletonLoad = () => {
-  //   setIsLoaded(true);
-  // };
 
   useEffect(() => {
     document.addEventListener('keydown', HandleKeyDownTabsButton123);
@@ -309,6 +309,13 @@ const ThesaurusPage = (props) => {
 
   return (
     <>
+      {/* <PopUpSearchBar
+        HandleBackButtonClick={HandleBackButtonClick}
+        HandleEnterKey={HandleEnterKey}
+        getInputValue={getInputValue}
+        getWords={getWords}
+        setWordsLoaded={setWordsLoaded}
+      /> */}
       {ReturnedWord.length
         ? (
           <Box zIndex="9991" className="fixed top-0" left={[null, '32', null]}>

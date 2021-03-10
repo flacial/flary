@@ -24,6 +24,7 @@ import getRequest from '../services/getRequest';
 import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
 import Routes from '../Routes/Routes';
 import NavBar from '../pages/NavBar/NavBar';
+import PopUpSearchBar from '../components/popup-search-bar/popup-search-bar.component';
 // import Help from '../components/help/help.component';
 
 // TODO understand wth is your state doing
@@ -193,17 +194,15 @@ const App = () => {
     }
   };
 
-  const HandleSynAntClick = (word) => {
-    setWord(word);
-  };
-
   const HandleSearchButtonClick = () => {
     getWords();
   };
 
-  const HandleBackButtonClick = () => {
+  const HandleBackButtonClick = (isSetword) => {
     setWordsLoaded(false);
-    setWord('');
+    if (isSetword) {
+      setWord('');
+    }
     setReturnedWord('');
     setPartOfSpeech('');
     setShortDef('');
@@ -246,9 +245,18 @@ const App = () => {
     setPathName(Path);
   };
 
+  const HandleEnterKey = (event) => {
+    if (event.which === 13) {
+      getWords();
+      history.push('/thesaurus');
+    }
+  };
+
   const ThesaurusPageFunc = () => (
     <ThesaurusPage
-      HandleSynAntClick={HandleSynAntClick}
+      setWordsLoaded={setWordsLoaded}
+      HandleEnterKey={HandleEnterKey}
+      getInputValue={getInputValue}
       getWords={getWords}
       AvailableWordType={AvailableWordType}
       HandleTabClick={HandleTabClick}
@@ -298,13 +306,6 @@ const App = () => {
     return ThesaurusPageCondition;
   };
 
-  const HandleEnterKey = (event) => {
-    if (event.which === 13) {
-      getWords();
-      history.push('/thesaurus');
-    }
-  };
-
   useEffect(() => {
     if (PathName !== '/thesaurus' && ShortDef.length) {
       HandleBackButtonClick();
@@ -313,6 +314,13 @@ const App = () => {
 
   return (
     <>
+      <PopUpSearchBar
+        HandleBackButtonClick={HandleBackButtonClick}
+        HandleEnterKey={HandleEnterKey}
+        getInputValue={getInputValue}
+        getWords={getWords}
+        setWordsLoaded={setWordsLoaded}
+      />
       <NavBar />
       <Routes
         ThesaurusPageComponent={ThesaurusPageComponent}
