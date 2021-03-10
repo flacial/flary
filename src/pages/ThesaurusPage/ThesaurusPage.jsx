@@ -1,10 +1,12 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 import {
   useEffect, React, useState, useRef,
 } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, withRouter } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 import {
   chakra,
@@ -20,6 +22,8 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Skeleton,
+  Stack,
 } from '@chakra-ui/react';
 import { Presets } from 'react-component-transition';
 import WordsContainer from '../../components/words-container/words.container.component';
@@ -94,8 +98,8 @@ const LinkCSS = `
   m-4
 `;
 
-const ThesaurusPage = (
-  {
+const ThesaurusPage = (props) => {
+  const {
     Link,
     HandleBackButtonClick,
     ReturnedWord,
@@ -109,30 +113,11 @@ const ThesaurusPage = (
     Ants,
     HandleTabClick,
     AvailableWordType,
-  },
-) => {
-  const turnWordInToList = (MainObj) => {
-    let ReturnedObj = [];
-    if (MainObj !== undefined) {
-      ReturnedObj = MainObj.map((word, index) => {
-        if (MainObj[index + 1] === undefined) {
-          return <ListItem listStyleType="none" display="inline-block" key={word}>{`${word}`}</ListItem>;
-        }
-        return <ListItem listStyleType="none" display="inline-block" key={word}>{`${word},\u00A0`}</ListItem>;
-      });
-    }
-    return ReturnedObj;
-  };
-
-  // Change synonyms and antonyms words to list items
-  const OrderSynonyms = () => turnWordInToList(Syns);
-  const OrderAntonyms = () => turnWordInToList(Ants);
-
-  const location = useLocation();
-  useEffect(() => {
-    getPathName(location.pathname);
-  });
-
+    HandleSynAntClick,
+    // eslint-disable-next-line no-unused-vars
+    getWords,
+    history,
+  } = props;
   const LinkChak = chakra(Link);
   const bg = useColorModeValue('#edf2f7', 'rgba(255, 255, 255, 0.08)');
   const color = useColorModeValue('#252d3d', '#edf2f7');
@@ -141,6 +126,7 @@ const ThesaurusPage = (
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange');
   const fontColorSynAnt = useColorModeValue('#3B82F6', 'orange.300');
   const hover = useColorModeValue({ background: 'gray.200' }, { background: 'gray.700' });
+  const hoverSynAntItems = useColorModeValue({ textDecoration: 'underline' }, { textDecoration: 'underline' });
   const SkeletonStartColor = useColorModeValue('#3B82F6', 'orange.200');
   const SkeletonEndColor = useColorModeValue('gray.700', 'orange.500');
   const focusBorderColorGeneral = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
@@ -154,6 +140,40 @@ const ThesaurusPage = (
   const NounTabButton = useRef(null);
   const VerbTabButton = useRef(null);
   const AdjectiveTabButton = useRef(null);
+
+  const onClickWords = (event) => {
+    HandleBackButtonClick();
+    HandleSynAntClick(event.target.textContent);
+    getWords(event.target.textContent);
+    history.push('/thesaurus');
+  };
+
+  const turnWordInToList = (MainObj) => {
+    let ReturnedObj = [];
+    if (MainObj !== undefined) {
+      ReturnedObj = MainObj.map((word, index) => {
+        if (MainObj[index + 1] === undefined) {
+          return <ListItem _hover={hoverSynAntItems} className="cursor-pointer" onClick={onClickWords} listStyleType="none" display="inline-block" key={word}>{word}</ListItem>;
+        }
+        return (
+          <>
+            <ListItem _hover={hoverSynAntItems} className="cursor-pointer" onClick={onClickWords} listStyleType="none" display="inline-block" key={word}>{word}</ListItem>
+            <span key={index}>{',\u00A0'}</span>
+          </>
+        );
+      });
+    }
+    return ReturnedObj;
+  };
+
+  // Change synonyms and antonyms words to list items
+  const OrderSynonyms = () => turnWordInToList(Syns);
+  const OrderAntonyms = () => turnWordInToList(Ants);
+
+  const location = useLocation();
+  useEffect(() => {
+    getPathName(location.pathname);
+  });
 
   const HandleKeyDownBackButtonQctrl = (event) => {
     if (event.key === 'Q' && event.ctrlKey) {
@@ -239,6 +259,7 @@ const ThesaurusPage = (
                 )}
               <Heading mb="1" mt="2" fontSize="2xl" fontFamily="sans-serif" color={fontColorHeaders}>
                 Synonyms for
+                {' '}
                 <chakra.span fontStyle="italic">{ReturnedWord}</chakra.span>
               </Heading>
               <Box w={['100%', '70%', null]}>
@@ -249,6 +270,7 @@ const ThesaurusPage = (
                   <div>
                     <Heading mb="1" mt="4" fontSize="2xl" fontFamily="sans-serif" color={fontColorHeaders}>
                       Antonyms for
+                      {' '}
                       <chakra.span fontStyle="italic">{ReturnedWord}</chakra.span>
                     </Heading>
                     <Box w={['100%', '70%', null]}>
@@ -262,7 +284,17 @@ const ThesaurusPage = (
         )
         : (
           <Presets.TransitionFade>
-            <SkeletonText mt="4" mb="3" noOfLines={11} spacing="4" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
+            <Stack>
+              <Skeleton height="9px" mt="4" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
+              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
+              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
+              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
+              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
+              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
+              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
+              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
+              <Skeleton height="9px" w="80%" mb="3" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
+            </Stack>
           </Presets.TransitionFade>
         )}
     </WordsContainer>
@@ -332,4 +364,4 @@ const ThesaurusPage = (
   );
 };
 
-export default ThesaurusPage;
+export default withRouter(ThesaurusPage);

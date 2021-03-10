@@ -180,17 +180,21 @@ const App = () => {
     }
   };
 
-  const getWords = () => {
+  const getWords = (word = Word) => {
     if (Word === '') {
       setWordFind(true);
       setWordFindType('no input');
       onOpen();
     } else {
-      getRequest(Word)
+      getRequest(word)
         .then((data) => PassRequstedWords(data));
       setWordFind(false);
       setWordFindType('');
     }
+  };
+
+  const HandleSynAntClick = (word) => {
+    setWord(word);
   };
 
   const HandleSearchButtonClick = () => {
@@ -198,6 +202,7 @@ const App = () => {
   };
 
   const HandleBackButtonClick = () => {
+    setWordsLoaded(false);
     setWord('');
     setReturnedWord('');
     setPartOfSpeech('');
@@ -205,7 +210,7 @@ const App = () => {
     setWordExample('');
     setSyns([]);
     setAnts([]);
-    setWordsLoaded(false);
+    setAvailableWordType({});
   };
 
   useEffect(() => {
@@ -243,6 +248,8 @@ const App = () => {
 
   const ThesaurusPageFunc = () => (
     <ThesaurusPage
+      HandleSynAntClick={HandleSynAntClick}
+      getWords={getWords}
       AvailableWordType={AvailableWordType}
       HandleTabClick={HandleTabClick}
       PathName={PathName}
@@ -292,19 +299,11 @@ const App = () => {
   };
 
   const HandleEnterKey = (event) => {
-    // console.log(event);
     if (event.which === 13) {
       getWords();
       history.push('/thesaurus');
     }
   };
-
-  // TODO Add keyboard shortcuts
-
-  // const onCtrlShiftSpace = (event) => {
-  //   if (event.which === 30) {
-  //   }
-  // };
 
   useEffect(() => {
     if (PathName !== '/thesaurus' && ShortDef.length) {

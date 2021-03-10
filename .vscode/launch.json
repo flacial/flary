@@ -16,7 +16,7 @@
             "type": "firefox",
             "request": "launch",
             "reAttach": true,
-            "url": "http://localhost/index.html",
+            "url": "http://localhost:3000/wordsapiproject/",
             "webRoot": "${workspaceFolder}"
         },
         {
