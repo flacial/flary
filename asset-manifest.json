@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/wordsapiproject/static/css/main.52731f7d.chunk.css",
-    "main.js": "/wordsapiproject/static/js/main.54021822.chunk.js",
-    "main.js.map": "/wordsapiproject/static/js/main.54021822.chunk.js.map",
+    "main.js": "/wordsapiproject/static/js/main.904c77c9.chunk.js",
+    "main.js.map": "/wordsapiproject/static/js/main.904c77c9.chunk.js.map",
     "runtime-main.js": "/wordsapiproject/static/js/runtime-main.1fdbffaf.js",
     "runtime-main.js.map": "/wordsapiproject/static/js/runtime-main.1fdbffaf.js.map",
     "static/js/2.f62dfbc1.chunk.js": "/wordsapiproject/static/js/2.f62dfbc1.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.1fdbffaf.js",
     "static/js/2.f62dfbc1.chunk.js",
     "static/css/main.52731f7d.chunk.css",
-    "static/js/main.54021822.chunk.js"
+    "static/js/main.904c77c9.chunk.js"
   ]
 }
