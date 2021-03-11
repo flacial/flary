@@ -182,6 +182,7 @@ const ThesaurusPage = (props) => {
   const HandleKeyDownBackButtonQctrl = (event) => {
     if (event.key === 'Q' && event.ctrlKey) {
       HandleBackButtonClick();
+      history.push('/');
     }
   };
 
@@ -309,13 +310,6 @@ const ThesaurusPage = (props) => {
 
   return (
     <>
-      {/* <PopUpSearchBar
-        HandleBackButtonClick={HandleBackButtonClick}
-        HandleEnterKey={HandleEnterKey}
-        getInputValue={getInputValue}
-        getWords={getWords}
-        setWordsLoaded={setWordsLoaded}
-      /> */}
       {ReturnedWord.length
         ? (
           <Box zIndex="9991" className="fixed top-0" left={[null, '32', null]}>

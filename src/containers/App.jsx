@@ -28,7 +28,6 @@ import PopUpSearchBar from '../components/popup-search-bar/popup-search-bar.comp
 // import Help from '../components/help/help.component';
 
 // TODO understand wth is your state doing
-// TODO add a way to double click a word on ThesaurusPage and then it searches for it
 
 const App = () => {
   const [Word, setWord] = useState('');
@@ -41,6 +40,12 @@ const App = () => {
   const {
     isOpen,
     onOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isOpen2,
+    onOpen: onOpen2,
+    onClose: onClose2,
+    onToggle: onToggle2,
   } = useDisclosure();
   const [WordFind, setWordFind] = useState(false);
   const [WordFindType, setWordFindType] = useState('');
@@ -314,14 +319,28 @@ const App = () => {
 
   return (
     <>
-      <PopUpSearchBar
-        HandleBackButtonClick={HandleBackButtonClick}
-        HandleEnterKey={HandleEnterKey}
-        getInputValue={getInputValue}
-        getWords={getWords}
-        setWordsLoaded={setWordsLoaded}
+      {(PathName === '/thesaurus')
+        ? (
+          <PopUpSearchBar
+            isOpen2={isOpen2}
+            onOpen2={onOpen2}
+            onClose2={onClose2}
+            onToggle2={onToggle2}
+            HandleBackButtonClick={HandleBackButtonClick}
+            HandleEnterKey={HandleEnterKey}
+            getInputValue={getInputValue}
+            getWords={getWords}
+            setWordsLoaded={setWordsLoaded}
+          />
+        )
+        : <></>}
+      <NavBar
+        PathName={PathName}
+        isOpen2={isOpen2}
+        onOpen2={onOpen2}
+        onClose2={onClose2}
+        onToggle2={onToggle2}
       />
-      <NavBar />
       <Routes
         ThesaurusPageComponent={ThesaurusPageComponent}
         WordFindType={WordFindType}

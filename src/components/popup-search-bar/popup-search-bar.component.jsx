@@ -9,15 +9,23 @@ import {
   Input,
   useDisclosure,
   useColorModeValue,
+  Portal,
+  Fade,
+  ScaleFade,
+  InputGroup,
+  InputLeftElement,
 } from '@chakra-ui/react';
+import { SearchIcon } from '@chakra-ui/icons';
 
 const PopUpSearchBar = ({
-  history, HandleBackButtonClick, setWordsLoaded, getWords, location, match,
+  history, HandleBackButtonClick, setWordsLoaded,
+  getWords, location, match, isOpen2, onToggle2, onClose2, onOpen2,
 }) => {
   const [Word, setWord] = useState('');
   const [PathName, setPathName] = useState('');
-  const { isOpen, onToggle } = useDisclosure();
   const focusBorderColorInput = useColorModeValue('#3B82F6', '#ffa500');
+  const bg = useColorModeValue('#edf2f7', 'rgba(255, 255, 255, 0.08)');
+  const color = useColorModeValue('#252d3d', '#edf2f7');
 
   useEffect(() => {
     setPathName(location.pathname);
@@ -29,7 +37,7 @@ const PopUpSearchBar = ({
   const HandleKeyDownOpenSearchBar = (event) => {
     if (event.key === 'E' && event.ctrlKey && event.shiftKey) {
       event.preventDefault();
-      onToggle();
+      onToggle2();
     }
   };
 
@@ -38,14 +46,24 @@ const PopUpSearchBar = ({
     return () => {
       document.removeEventListener('keydown', HandleKeyDownOpenSearchBar);
     };
-  }, [isOpen]);
+  }, [isOpen2]);
+
+  useEffect(() => {
+    if (isOpen2) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen2]);
 
   const HandleEnterKeyPopUpSearchBar = (event) => {
-    if (event.which === 13) {
+    if (event.key === 'Enter') {
       //   setWordsLoaded(false);
       HandleBackButtonClick(false);
       getWords(Word);
       history.push('/thesaurus');
+      onClose2();
     }
   };
 
@@ -55,15 +73,26 @@ const PopUpSearchBar = ({
 
   return (
     <>
-      {(isOpen)
+      {(isOpen2)
         ? (
           <>
             <Box position="fixed" zIndex="9999" background="gray.800" opacity="0.6" style={{ height: '100vh', width: '100vw' }} />
             <Box>
-              <Box position="absolute" display="flex" alignItems="center" justifyContent="center" zIndex="sticky" w="full" style={{ height: '100vh', zIndex: 9999 }}>
-                <Box className="relative">
-                  <Input style={{ zIndex: 9992 }} placeholder="Search a word" focusBorderColor={focusBorderColorInput} onKeyDown={HandleEnterKeyPopUpSearchBar} background="gray.700" color="white" w={['16rem', 'xs', null]} rounded="xl" onChange={getInputValue} />
-                </Box>
+              <Box position="fixed" display="flex" alignItems="flex-start" justifyContent="center" zIndex="9999" w="full" style={{ height: '100vh' }}>
+                <ScaleFade in={isOpen2}>
+                  <Box className="relative">
+                    <InputGroup mt="32">
+                      <InputLeftElement
+                        zIndex="9999999"
+                        pointerEvents="none"
+                        // eslint-disable-next-line react/no-children-prop
+                        children={<SearchIcon zIndex="9999999" color={color} />}
+                      />
+                      <Input style={{ zIndex: 999999 }} placeholder="Search a word" focusBorderColor={focusBorderColorInput} onKeyDown={HandleEnterKeyPopUpSearchBar} background={bg} color={color} w={['16rem', 'xs', null]} rounded="xl" onChange={getInputValue} />
+                    </InputGroup>
+                  </Box>
+                </ScaleFade>
+                <Box position="absolute" w="full" h="full" background="transparent" onClick={onClose2} />
               </Box>
             </Box>
           </>

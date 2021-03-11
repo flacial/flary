@@ -1,49 +1,38 @@
-import {
-  chakra, Box, Button, useColorMode, useColorModeValue,
-} from '@chakra-ui/react';
-import { MoonIcon } from '@chakra-ui/icons';
-import React, { useEffect, useRef } from 'react';
+/* eslint-disable react/prop-types */
+import { Box } from '@chakra-ui/react';
+// eslint-disable-next-line no-unused-vars
+import { MoonIcon, QuestionIcon } from '@chakra-ui/icons';
+import React from 'react';
+import Help from '../../components/help/help.component';
+import ThemeButton from '../../components/theme-button/theme-button.component';
+import SearchButtonHeader from '../../components/search-button/search-button.component';
 
-const NavBar = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const focusBorderColorInput = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
-  const ThemeButton = useRef(null);
-  const HandleKeyDownThemeIcon = (event) => {
-    if (event.key === 'X' && event.ctrlKey) {
-      event.preventDefault();
-      ThemeButton.current.click();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('keydown', HandleKeyDownThemeIcon);
-    return () => {
-      document.removeEventListener('keydown', HandleKeyDownThemeIcon);
-    };
-  }, []);
-
-  return (
-    <Box
-      zIndex="9991"
-      position="sticky"
-      top="0"
-      h="70px"
-      w="full"
-      borderRadius="0 0 20px 20px"
-      display="flex"
-      justifyContent="flex-end"
-    >
-      <Button ref={ThemeButton} _focus={focusBorderColorInput} focusBorderColor={focusBorderColorInput} boxShadow="lg" outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }} m="4" mr={[null, '40', null]} rounded="xl" onClick={toggleColorMode}>
-        {colorMode === 'light'
-          ? <MoonIcon />
-          : (
-            <chakra.svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-              <path d="M256 160c-52.9 0-96 43.1-96 96s43.1 96 96 96 96-43.1 96-96-43.1-96-96-96zm246.4 80.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.4-94.8c-6.4-12.8-24.6-12.8-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4c-12.8 6.4-12.8 24.6 0 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.4-33.5 47.3 94.7c6.4 12.8 24.6 12.8 31 0l47.3-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3c13-6.5 13-24.7.2-31.1zm-155.9 106c-49.9 49.9-131.1 49.9-181 0-49.9-49.9-49.9-131.1 0-181 49.9-49.9 131.1-49.9 181 0 49.9 49.9 49.9 131.1 0 181z" />
-            </chakra.svg>
-          )}
-      </Button>
-    </Box>
-  );
-};
+const NavBar = ({
+  isOpen2, onToggle2, onClose2, onOpen2, PathName,
+}) => (
+  <Box
+    zIndex="9991"
+    position="sticky"
+    top="0"
+    h="70px"
+    w="full"
+    borderRadius="0 0 20px 20px"
+    display="flex"
+    justifyContent="flex-end"
+  >
+    {(PathName === '/thesaurus')
+      ? (
+        <SearchButtonHeader
+          isOpen2={isOpen2}
+          onToggle2={onToggle2}
+          onClose2={onClose2}
+          onOpen2={onOpen2}
+        />
+      )
+      : <></>}
+    <ThemeButton />
+    <Help />
+  </Box>
+);
 
 export default NavBar;
