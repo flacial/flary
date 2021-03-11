@@ -87,9 +87,9 @@ const PopUpSearchBar = ({
       {(isOpen2)
         ? (
           <>
-            <Box position="fixed" zIndex="9999" background="gray.800" opacity="0.6" style={{ height: '100vh', width: '100vw' }} />
+            <Box position="absolute" zIndex="9999" background="gray.800" opacity="0.6" style={{ height: '100vh', width: '100vw' }} />
             <Box>
-              <Box position="fixed" display="flex" alignItems="flex-start" justifyContent="center" zIndex="9999" w="full" style={{ height: '100vh' }}>
+              <Box position="absolute" display="flex" alignItems="flex-start" justifyContent="center" zIndex="9999" style={{ height: '100vh', width: '100vw' }}>
                 <ScaleFade in={isOpen2}>
                   <Box className="relative">
                     <InputGroup mt="32">
@@ -103,7 +103,7 @@ const PopUpSearchBar = ({
                     </InputGroup>
                   </Box>
                 </ScaleFade>
-                <Box position="absolute" w="full" h="full" background="transparent" onClick={onClose2} />
+                <Box position="absolute" style={{ height: '100vh', width: '100vw' }} background="transparent" onClick={onClose2} />
               </Box>
             </Box>
           </>
