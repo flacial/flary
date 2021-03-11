@@ -118,7 +118,6 @@ const ThesaurusPage = (props) => {
     // eslint-disable-next-line no-unused-vars
     getWords,
     history,
-    HandleEnterKey,
     getInputValue,
     setWordsLoaded,
   } = props;

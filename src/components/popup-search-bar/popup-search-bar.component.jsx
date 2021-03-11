@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Presets } from 'react-component-transition';
 import {
@@ -26,6 +26,7 @@ const PopUpSearchBar = ({
   const focusBorderColorInput = useColorModeValue('#3B82F6', '#ffa500');
   const bg = useColorModeValue('#edf2f7', 'rgba(255, 255, 255, 0.08)');
   const color = useColorModeValue('#252d3d', '#edf2f7');
+  const InputField = useRef(null);
 
   useEffect(() => {
     setPathName(location.pathname);
@@ -34,10 +35,20 @@ const PopUpSearchBar = ({
     };
   }, []);
 
+  const HandleSearchButtonClickHeader = () => {
+    onToggle2();
+    if (InputField?.current) {
+      InputField.current.focus();
+    }
+  };
+
   const HandleKeyDownOpenSearchBar = (event) => {
     if (event.key === 'E' && event.ctrlKey && event.shiftKey) {
       event.preventDefault();
       onToggle2();
+      if (InputField?.current) {
+        InputField.current.focus();
+      }
     }
   };
 
@@ -88,7 +99,7 @@ const PopUpSearchBar = ({
                         // eslint-disable-next-line react/no-children-prop
                         children={<SearchIcon zIndex="9999999" color={color} />}
                       />
-                      <Input style={{ zIndex: 999999 }} placeholder="Search a word" focusBorderColor={focusBorderColorInput} onKeyDown={HandleEnterKeyPopUpSearchBar} background={bg} color={color} w={['16rem', 'xs', null]} rounded="xl" onChange={getInputValue} />
+                      <Input ref={InputField} style={{ zIndex: 999999 }} placeholder="Search a word" focusBorderColor={focusBorderColorInput} onKeyDown={HandleEnterKeyPopUpSearchBar} background={bg} color={color} w={['16rem', 'xs', null]} rounded="xl" onChange={getInputValue} />
                     </InputGroup>
                   </Box>
                 </ScaleFade>

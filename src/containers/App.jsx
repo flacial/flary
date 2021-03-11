@@ -25,7 +25,6 @@ import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
 import Routes from '../Routes/Routes';
 import NavBar from '../pages/NavBar/NavBar';
 import PopUpSearchBar from '../components/popup-search-bar/popup-search-bar.component';
-// import Help from '../components/help/help.component';
 
 // TODO understand wth is your state doing
 
@@ -260,7 +259,6 @@ const App = () => {
   const ThesaurusPageFunc = () => (
     <ThesaurusPage
       setWordsLoaded={setWordsLoaded}
-      HandleEnterKey={HandleEnterKey}
       getInputValue={getInputValue}
       getWords={getWords}
       AvailableWordType={AvailableWordType}

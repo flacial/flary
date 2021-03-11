@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Box } from '@chakra-ui/react';
 // eslint-disable-next-line no-unused-vars
@@ -8,7 +9,7 @@ import ThemeButton from '../../components/theme-button/theme-button.component';
 import SearchButtonHeader from '../../components/search-button/search-button.component';
 
 const NavBar = ({
-  isOpen2, onToggle2, onClose2, onOpen2, PathName,
+  isOpen2, onToggle2, onClose2, onOpen2, PathName, InputFiledSearchBarPopUp,
 }) => (
   <Box
     zIndex="9991"
@@ -23,10 +24,8 @@ const NavBar = ({
     {(PathName === '/thesaurus')
       ? (
         <SearchButtonHeader
-          isOpen2={isOpen2}
-          onToggle2={onToggle2}
-          onClose2={onClose2}
           onOpen2={onOpen2}
+          InputFiledSearchBarPopUp={InputFiledSearchBarPopUp}
         />
       )
       : <></>}
