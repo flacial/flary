@@ -118,8 +118,6 @@ const ThesaurusPage = (props) => {
     // eslint-disable-next-line no-unused-vars
     getWords,
     history,
-    getInputValue,
-    setWordsLoaded,
   } = props;
   const LinkChak = chakra(Link);
   const bg = useColorModeValue('#edf2f7', 'rgba(255, 255, 255, 0.08)');
@@ -228,7 +226,7 @@ const ThesaurusPage = (props) => {
   }, []);
 
   const TheWholeThesaurus = () => (
-    <WordsContainer boxShadow={boxShadow} gradientbg={gradientbg} m={(isLargerthan440) && '5'} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
+    <WordsContainer boxShadow={boxShadow} gradientbg={gradientbg} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
       <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
         Thesaurus
       </ChakraThesaurusHeader>
@@ -337,7 +335,7 @@ const ThesaurusPage = (props) => {
       <Tabs align="center" variant="soft-rounded">
         {/* <Box className='backdrop-blur z-50' display='flex'
          justifyContent='center' h='22' width='full'  position='fixed' bottom='0'> */}
-        <TabList marginTop={['4', 0, null]}>
+        <TabList marginTop={['4', '2', null]}>
           {(AvailableWordType.noun) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
             : <Tab ref={NounTabButton} onClick={() => HandleTabClick('noun')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
           )

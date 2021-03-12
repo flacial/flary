@@ -9,7 +9,7 @@ import React from 'react';
 import { Presets } from 'react-component-transition';
 import SearchPage from '../pages/SearchPage/SearchPage';
 
-function Routes({ ThesaurusPageComponent, ...props }) {
+function Routes({ Thesaurus, ...props }) {
   const location = useLocation();
   return (
     <Switch key={location.key} location={location}>
@@ -18,7 +18,7 @@ function Routes({ ThesaurusPageComponent, ...props }) {
       </Route>
       <Route exact path="/thesaurus">
         <Presets.TransitionFade>
-          {ThesaurusPageComponent()}
+          {Thesaurus()}
         </Presets.TransitionFade>
       </Route>
     </Switch>

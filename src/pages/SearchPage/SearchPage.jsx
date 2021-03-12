@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 import tw from 'tailwind-styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, withRouter } from 'react-router-dom';
 import { useEffect, React, useRef } from 'react';
 import {
   Heading,
@@ -47,8 +47,8 @@ transition duration-200 ease-in-out
 `;
 
 const SearchPage = ({
-  WordFindType, HandleEnterKey, WordFind, isOpen,
-  getInputValue, HandleSearchButtonClick, Link, getPathName,
+  WordFindType, WordFind, isOpen,
+  getInputValue, HandleSearchButtonClick, Link, getPathName, getWords, history,
 }) => {
   const [isMoreThan420px] = useMediaQuery('(max-width: 420px)');
   const location = useLocation();
@@ -64,6 +64,13 @@ const SearchPage = ({
     if (event.key === 'A' && event.ctrlKey) {
       event.preventDefault();
       inputField.current.focus();
+    }
+  };
+
+  const HandleEnterKey = (event) => {
+    if (event.which === 13) {
+      getWords();
+      history.push('/thesaurus');
     }
   };
 
@@ -146,4 +153,4 @@ const SearchPage = ({
   );
 };
 
-export default SearchPage;
+export default withRouter(SearchPage);

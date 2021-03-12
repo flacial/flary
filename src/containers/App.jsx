@@ -6,7 +6,6 @@ import './App.css';
 import {
   Link,
   Redirect,
-  useHistory,
 } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
 import {
@@ -53,8 +52,6 @@ const App = () => {
   const [Ants, setAnts] = useState([]);
   const [WordArray, setWordArray] = useState([]);
   const [AvailableWordType, setAvailableWordType] = useState({});
-  const [isNounFound, setIsNounFound] = useState(false);
-  const history = useHistory();
 
   // Used as a condition to render the values or skeleton in ThesaurusPage
   useEffect(() => {
@@ -69,7 +66,7 @@ const App = () => {
     setWord(event.target.value);
   };
 
-  const WordArrayFilter = (wordObjects, type) => {
+  const WordsArrayFilter = (wordObjects, type) => {
     const filteredArray = wordObjects.filter((word) => word.fl === type);
     return filteredArray[0];
   };
@@ -131,32 +128,31 @@ const App = () => {
         for (let index = 0; index < wordObjects.length; index++) {
           const element = wordObjects[index];
           if (element.fl === 'noun') {
-            WordArraySetState(WordArrayFilter(wordObjects, 'noun'));
-            setIsNounFound(true);
+            WordArraySetState(WordsArrayFilter(wordObjects, 'noun'));
             break MainLoop;
           }
         }
         // eslint-disable-next-line no-shadow
         for (let index = 0; index < wordObjects.length; index++) {
           const element = wordObjects[index];
-          if (element.fl === 'verb' && !isNounFound) {
-            WordArraySetState(WordArrayFilter(wordObjects, 'verb'));
+          if (element.fl === 'verb') {
+            WordArraySetState(WordsArrayFilter(wordObjects, 'verb'));
             break MainLoop;
           }
         }
         // eslint-disable-next-line no-shadow
         for (let index = 0; index < wordObjects.length; index++) {
           const element = wordObjects[index];
-          if (element.fl === 'adjective' && !isNounFound) {
-            WordArraySetState(WordArrayFilter(wordObjects, 'adjective'));
+          if (element.fl === 'adjective') {
+            WordArraySetState(WordsArrayFilter(wordObjects, 'adjective'));
             break MainLoop;
           }
         }
         // eslint-disable-next-line no-shadow
         for (let index = 0; index < wordObjects.length; index++) {
           const element = wordObjects[index];
-          if (element.fl !== 'noun' && 'verb' && 'adjective' && !isNounFound) {
-            WordArraySetState(WordArrayFilter(wordObjects, element.fl));
+          if (element.fl !== 'noun' && 'verb' && 'adjective') {
+            WordArraySetState(WordsArrayFilter(wordObjects, element.fl));
             break MainLoop;
           }
         }
@@ -216,6 +212,7 @@ const App = () => {
     setAvailableWordType({});
   };
 
+  // Sets AvailableWordType to an empty object
   useEffect(() => {
     if (PathName !== '/thesaurus' && Object.keys(AvailableWordType).length !== 0) {
       setAvailableWordType({});
@@ -226,37 +223,24 @@ const App = () => {
   const HandleTabClick = (type) => {
     switch (type) {
       case 'verb':
-        WordArraySetState(WordArrayFilter(WordArray, 'verb'));
+        WordArraySetState(WordsArrayFilter(WordArray, 'verb'));
         break;
       case 'noun':
-        WordArraySetState(WordArrayFilter(WordArray, 'noun'));
+        WordArraySetState(WordsArrayFilter(WordArray, 'noun'));
         break;
       case 'adjective':
-        WordArraySetState(WordArrayFilter(WordArray, 'adjective'));
+        WordArraySetState(WordsArrayFilter(WordArray, 'adjective'));
         break;
       default:
         break;
     }
   };
 
-  useEffect(() => {
-    if (PathName !== '/thesaurus' && isNounFound) {
-      setIsNounFound(false);
-    }
-  }, [PathName]);
-
   const getPathName = (Path) => {
     setPathName(Path);
   };
 
-  const HandleEnterKey = (event) => {
-    if (event.which === 13) {
-      getWords();
-      history.push('/thesaurus');
-    }
-  };
-
-  const ThesaurusPageFunc = () => (
+  const ThesaurusStore = () => (
     <ThesaurusPage
       setWordsLoaded={setWordsLoaded}
       getInputValue={getInputValue}
@@ -279,26 +263,26 @@ const App = () => {
     />
   );
 
-  const ThesaurusPageComponent = () => {
-    let ThesaurusPageCondition;
+  const Thesaurus = () => {
+    let ThesaurusComponent;
     if (Word.length) {
       if (ReturnedWord.length) {
-        ThesaurusPageCondition = (
+        ThesaurusComponent = (
           <Presets.TransitionFade>
-            {ThesaurusPageFunc()}
+            {ThesaurusStore()}
           </Presets.TransitionFade>
         );
       } else if (Error) {
-        ThesaurusPageCondition = <Redirect to="/" />;
+        ThesaurusComponent = <Redirect to="/" />;
       } else {
-        ThesaurusPageCondition = (
+        ThesaurusComponent = (
           <Presets.TransitionFade>
-            {ThesaurusPageFunc()}
+            {ThesaurusStore()}
           </Presets.TransitionFade>
         );
       }
     } else {
-      ThesaurusPageCondition = <Redirect to="/" />;
+      ThesaurusComponent = <Redirect to="/" />;
     }
     useEffect(() => {
       if (Error) {
@@ -306,9 +290,10 @@ const App = () => {
         setError(false);
       }
     }, [Error]);
-    return ThesaurusPageCondition;
+    return ThesaurusComponent;
   };
 
+  // Clear all stored states if the pathName isn't thesaurus
   useEffect(() => {
     if (PathName !== '/thesaurus' && ShortDef.length) {
       HandleBackButtonClick();
@@ -325,7 +310,6 @@ const App = () => {
             onClose2={onClose2}
             onToggle2={onToggle2}
             HandleBackButtonClick={HandleBackButtonClick}
-            HandleEnterKey={HandleEnterKey}
             getInputValue={getInputValue}
             getWords={getWords}
             setWordsLoaded={setWordsLoaded}
@@ -334,15 +318,12 @@ const App = () => {
         : <></>}
       <NavBar
         PathName={PathName}
-        isOpen2={isOpen2}
         onOpen2={onOpen2}
-        onClose2={onClose2}
-        onToggle2={onToggle2}
       />
       <Routes
-        ThesaurusPageComponent={ThesaurusPageComponent}
+        getWords={getWords}
+        Thesaurus={Thesaurus}
         WordFindType={WordFindType}
-        HandleEnterKey={HandleEnterKey}
         WordFind={WordFind}
         isOpen={isOpen}
         getInputValue={getInputValue}
@@ -350,7 +331,6 @@ const App = () => {
         Link={Link}
         getPathName={getPathName}
       />
-      {/* <Help /> */}
     </>
   );
 };

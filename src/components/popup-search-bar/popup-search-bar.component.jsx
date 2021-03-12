@@ -18,22 +18,14 @@ import {
 import { SearchIcon } from '@chakra-ui/icons';
 
 const PopUpSearchBar = ({
-  history, HandleBackButtonClick, setWordsLoaded,
-  getWords, location, match, isOpen2, onToggle2, onClose2, onOpen2,
+  history, HandleBackButtonClick,
+  getWords, isOpen2, onToggle2, onClose2, onOpen2,
 }) => {
   const [Word, setWord] = useState('');
-  const [PathName, setPathName] = useState('');
   const focusBorderColorInput = useColorModeValue('#3B82F6', '#ffa500');
   const bg = useColorModeValue('#edf2f7', 'rgba(255, 255, 255, 0.08)');
   const color = useColorModeValue('#252d3d', '#edf2f7');
   const InputField = useRef(null);
-
-  useEffect(() => {
-    setPathName(location.pathname);
-    return () => {
-      setPathName('');
-    };
-  }, []);
 
   const HandleSearchButtonClickHeader = () => {
     onToggle2();
@@ -70,7 +62,6 @@ const PopUpSearchBar = ({
 
   const HandleEnterKeyPopUpSearchBar = (event) => {
     if (event.key === 'Enter') {
-      //   setWordsLoaded(false);
       HandleBackButtonClick(false);
       getWords(Word);
       history.push('/thesaurus');

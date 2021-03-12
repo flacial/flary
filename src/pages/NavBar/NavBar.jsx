@@ -9,7 +9,7 @@ import ThemeButton from '../../components/theme-button/theme-button.component';
 import SearchButtonHeader from '../../components/search-button/search-button.component';
 
 const NavBar = ({
-  isOpen2, onToggle2, onClose2, onOpen2, PathName, InputFiledSearchBarPopUp,
+  onOpen2, PathName, InputFiledSearchBarPopUp,
 }) => (
   <Box
     zIndex="9991"

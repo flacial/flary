@@ -28,7 +28,13 @@ const WordsContainer = (props) => {
   } = props;
 
   return (
-    <ChakraWordTypeContainer boxShadow={boxShadow} bgGradient={gradientbg} m={(isLargerthan440) && '5'} ml={ml} mr={mr} marginTop={marginTop}>
+    <ChakraWordTypeContainer
+      boxShadow={boxShadow}
+      bgGradient={gradientbg}
+      ml={ml}
+      mr={mr}
+      marginTop={marginTop}
+    >
       {children}
     </ChakraWordTypeContainer>
   );
