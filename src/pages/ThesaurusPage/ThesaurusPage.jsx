@@ -319,21 +319,18 @@ const ThesaurusPage = (props) => {
         )
         : <></>}
       {(location.pathname === '/thesaurus')
-        ? ((isLargerthan440[0])
-          ? (
-            <Box
-              background={!(CSS.supports('backdrop-filter', 'blur(5px)'))
+        ? (
+          <Box
+            background={!(CSS.supports('backdrop-filter', 'blur(5px)'))
                   && fallbackBackground}
-              className="backdrop-blur"
-              zIndex="9990"
-              position="fixed"
-              top="0"
-              h="70px"
-              w="full"
-              borderRadius="0 0 20px 20px"
-            />
-          )
-          : <></>
+            className="backdrop-blur"
+            zIndex="9990"
+            position="fixed"
+            top="0"
+            h="70px"
+            w="full"
+            borderRadius="0 0 20px 20px"
+          />
         )
         : <></>}
 
