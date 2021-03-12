@@ -16,8 +16,6 @@ const NavBar = ({
     position="sticky"
     top="0"
     h="70px"
-    w="100vw"
-    borderRadius="0 0 20px 20px"
     display="flex"
     justifyContent="flex-end"
   >
