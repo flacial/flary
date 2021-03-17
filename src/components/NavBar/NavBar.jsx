@@ -1,10 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Box } from '@chakra-ui/react';
+// eslint-disable-next-line no-unused-vars
+import { MoonIcon, QuestionIcon } from '@chakra-ui/icons';
 import React from 'react';
-import Help from '../../components/help-button/help-button.component';
-import ThemeButton from '../../components/theme-button/theme-button.component';
-import SearchButtonHeader from '../../components/search-button/search-button.component';
+import Help from '../help-button/help-button.component';
+import ThemeButton from '../theme-button/theme-button.component';
+import SearchButtonHeader from '../search-button/search-button.component';
 
 const NavBar = ({
   onOpen2, PathName, InputFiledSearchBarPopUp,

@@ -22,7 +22,7 @@ import {
 import getRequest from '../services/getRequest';
 import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
 import Routes from '../Routes/Routes';
-import NavBar from '../pages/NavBar/NavBar';
+import NavBar from '../components/NavBar/NavBar';
 import PopUpSearchBar from '../components/popup-search-bar/popup-search-bar.component';
 
 // TODO understand wth is your state doing
