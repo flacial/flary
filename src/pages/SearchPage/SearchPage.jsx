@@ -126,16 +126,8 @@ const SearchPage = ({
               <Button
                 _hover={{ background: 'gray.200' }}
                 _focus={focusBorderColorGeneral}
-                color={
-                  (isMoreThan420px)
-                    ? fontColorMain
-                    : 'gray.800'
-                }
-                bgColor={
-                  (isMoreThan420px)
-                    ? fontColorDarkWhiteSmallWords
-                    : 'gray.100'
-                  }
+                color="gray.800"
+                bgColor="gray.100"
                 as={ReachLink}
                 onClick={HandleSearchButtonClick}
                 to="/thesaurus"
