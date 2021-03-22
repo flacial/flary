@@ -1,7 +1,9 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 import tw from 'tailwind-styled-components';
-import { useLocation, withRouter } from 'react-router-dom';
+import { useLocation, withRouter, Link as ReachLink } from 'react-router-dom';
 import { useEffect, React, useRef } from 'react';
 import {
   Heading,
@@ -19,8 +21,11 @@ import {
   useColorModeValue,
   IconButton,
   useMediaQuery,
+  Button,
+  InputLeftElement,
+  InputGroup,
 } from '@chakra-ui/react';
-import { InfoIcon } from '@chakra-ui/icons';
+import { InfoIcon, SearchIcon } from '@chakra-ui/icons';
 
 const MainContainer = tw.div`
    text-center
@@ -30,29 +35,12 @@ const MainContainer = tw.div`
    lg:mt-32
 `;
 
-const LinkCSS = `
-py-1
-px-3
-rounded-xl
-shadow-2xl
-inline-block
-md:py-1
-md:h-8
-md:mt-1
-md:px-4
-focus:outline-none
-focus:ring-2 focus:ring-blue-400
-hover:bg-gray-200
-transition duration-200 ease-in-out
-`;
-
 const SearchPage = ({
   WordFindType, WordFind, isOpen,
-  getInputValue, HandleSearchButtonClick, Link, getPathName, getWords, history,
+  getInputValue, HandleSearchButtonClick, getPathName, getWords, history,
 }) => {
   const [isMoreThan420px] = useMediaQuery('(max-width: 420px)');
   const location = useLocation();
-  const LinkChak = chakra(Link);
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange');
   const hover = useColorModeValue({ color: '#3B82F6' }, { color: 'orange' });
   const fontColorMain = useColorModeValue('#edf2f7', 'gray.800');
@@ -111,7 +99,12 @@ const SearchPage = ({
       </Box>
       <Box display={{ sm: 'flex', md: 'flex' }} justifyContent={[null, 'center', null]}>
         <Box>
-          <Input ref={inputField} focusBorderColor={focusBorderColorInput} onKeyPress={HandleEnterKey} variant="filled" w={['16rem', 'xs', null]} rounded="xl" mr={[null, null, '2rem']} onChange={getInputValue} placeholder="Search for words" />
+          <Box justifyContent="center" display="flex" w={['100%', 'xs', null]}>
+            <Box w={['18rem', 'xs', null]} position="relative">
+              <Input ref={inputField} focusBorderColor={focusBorderColorInput} onKeyPress={HandleEnterKey} variant="filled" w={['18rem', 'xs', null]} rounded="xl" mr={[null, null, '2rem']} onChange={getInputValue} paddingY="5" placeholder="Search for words" paddingLeft="9" />
+              <SearchIcon color="gray.300" position="absolute" left="3" top="3.5" />
+            </Box>
+          </Box>
           {WordFind
                 && (
                 <Fade in={isOpen}>
@@ -126,28 +119,34 @@ const SearchPage = ({
                 </Fade>
                 )}
         </Box>
-        <Box ml={[0, 5, 0]} mt={[5, 1, 0]}>
-          <LinkChak
-            _hover={{ background: 'gray.200' }}
-            _focus={focusBorderColorGeneral}
-            color={
+
+        {
+          !isMoreThan420px && (
+            <Box ml={[0, 6, null]} mt={[5, 1, 0]}>
+              <Button
+                _hover={{ background: 'gray.200' }}
+                _focus={focusBorderColorGeneral}
+                color={
                   (isMoreThan420px)
                     ? fontColorMain
                     : 'gray.800'
                 }
-            bgColor={
+                bgColor={
                   (isMoreThan420px)
                     ? fontColorDarkWhiteSmallWords
                     : 'gray.100'
                   }
-            fontWeight="semibold"
-            onClick={HandleSearchButtonClick}
-            className={LinkCSS}
-            to="/thesaurus"
-          >
-            Search
-          </LinkChak>
-        </Box>
+                as={ReachLink}
+                onClick={HandleSearchButtonClick}
+                to="/thesaurus"
+                borderRadius="xl"
+              >
+                Search
+              </Button>
+            </Box>
+          )
+        }
+
       </Box>
     </MainContainer>
   );

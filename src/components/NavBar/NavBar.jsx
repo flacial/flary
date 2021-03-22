@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Box } from '@chakra-ui/react';
-// eslint-disable-next-line no-unused-vars
-import { MoonIcon, QuestionIcon } from '@chakra-ui/icons';
 import React from 'react';
 import Help from '../help-button/help-button.component';
 import ThemeButton from '../theme-button/theme-button.component';

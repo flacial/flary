@@ -115,7 +115,6 @@ const ThesaurusPage = (props) => {
     Ants,
     HandleTabClick,
     AvailableWordType,
-    // eslint-disable-next-line no-unused-vars
     getWords,
     history,
   } = props;
@@ -137,8 +136,6 @@ const ThesaurusPage = (props) => {
   const gradientbg = useColorModeValue('linear(to-l, gray.200, white)');
   const boxShadow = useColorModeValue('0px 0px 25px #a1a1a1, -10px -10px 0px #3B82F6', '0px 0px 11px #1c1c1c, -10px -10px 0px orange');
   const { isOpen, onOpen } = useDisclosure();
-  // eslint-disable-next-line no-unused-vars
-  const [isLoaded, setIsLoaded] = useState(false);
   const NounTabButton = useRef(null);
   const VerbTabButton = useRef(null);
   const AdjectiveTabButton = useRef(null);
@@ -206,7 +203,6 @@ const ThesaurusPage = (props) => {
     document.addEventListener('keydown', HandleKeyDownTabsButton123);
     return () => {
       document.removeEventListener('keydown', HandleKeyDownTabsButton123);
-      // setIsLoaded(false);
     };
   }, []);
 
@@ -214,7 +210,6 @@ const ThesaurusPage = (props) => {
     document.addEventListener('keydown', HandleKeyDownBackButtonQctrl);
     return () => {
       document.removeEventListener('keydown', HandleKeyDownBackButtonQctrl);
-      setIsLoaded(false);
     };
   }, []);
 
