@@ -169,6 +169,23 @@ const ThesaurusPage = (props) => {
   const OrderAntonyms = () => turnWordInToList(Ants);
 
   const location = useLocation();
+
+  const changeTitle = (ComponentState) => {
+    const initialTitle = 'Thesaurus By Flary';
+    if (ComponentState === 'mount') {
+      document.title = ReturnedWord.length ? `${ReturnedWord[0].toUpperCase() + ReturnedWord.slice(1)} Synonyms, ${ReturnedWord} Antonyms | Flary Thesaurus` : initialTitle;
+    } else {
+      document.title = initialTitle;
+    }
+  };
+
+  useEffect(() => {
+    changeTitle('mount');
+    return () => {
+      changeTitle();
+    };
+  }, [ReturnedWord]);
+
   useEffect(() => {
     getPathName(location.pathname);
   });
