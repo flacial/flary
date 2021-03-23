@@ -10,7 +10,7 @@ import theme from './theme';
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider>
-      <Router basename="/wordsapiproject">
+      <Router basename="/flary">
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <App />
       </Router>
