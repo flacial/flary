@@ -319,6 +319,7 @@ const App = () => {
       <NavBar
         PathName={PathName}
         onOpen2={onOpen2}
+        ReturnedWord={ReturnedWord}
       />
       <Routes
         getWords={getWords}

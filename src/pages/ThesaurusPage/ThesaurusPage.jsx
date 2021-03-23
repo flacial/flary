@@ -139,6 +139,11 @@ const ThesaurusPage = (props) => {
   const NounTabButton = useRef(null);
   const VerbTabButton = useRef(null);
   const AdjectiveTabButton = useRef(null);
+  const hoverShadowNeonDark = useColorModeValue({ background: 'gray.200' }, { boxShadow: '0 0 5px #FFF, 0 0 10px #FFF, 0 0 7px #FFF, 0 0 3px #49ff18, 0 0 5px #c75600, 0 0 10px #c75600, 0 0 10px #c75600, 0 0 20px #c75600' });
+  const textShadow = useColorModeValue('0 1px 0 #CCCCCC, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.1), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.10);', '0 0 15px rgba(255,255,255,.5), 0 0 10px rgba(255,255,255,.5);');
+  const onFocusTextShadow = useColorModeValue('0 1px 0 #CCCCCC, 0 1px 0 #c9c9c9, 0 1px 0 #bbb, 0 1px 0 #b9b9b9, 0 1px 0 #aaa, 0 1px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.3), 0 1px 2px rgba(0,0,0,.2), 0 1px 2px rgba(0,0,0,.1), 0 2px 2px rgba(0,0,0,.2), 0 5px 5px rgba(0,0,0,.10);',
+
+    '0 0 15px rgba(255,255,255,.5), 0 0 10px rgba(255,255,255,.5);');
 
   const onClickWords = (event) => {
     HandleBackButtonClick();
@@ -192,6 +197,7 @@ const ThesaurusPage = (props) => {
 
   const HandleKeyDownBackButtonQctrl = (event) => {
     if (event.key === 'Q' && event.ctrlKey) {
+      event.preventDefault();
       HandleBackButtonClick();
       history.push('/');
     }
@@ -322,7 +328,7 @@ const ThesaurusPage = (props) => {
       {ReturnedWord.length
         ? (
           <Box zIndex="9991" className="fixed top-0" left={[null, '32', null]}>
-            <LinkChak _focus={focusBorderColorGeneral} bg={bg} color={color} _hover={hover} onClick={HandleBackButtonClick} className={LinkCSS} to="/">
+            <LinkChak _focus={hoverShadowNeonDark} bg={bg} color={color} boxShadow={textShadow} _hover={hoverShadowNeonDark} onClick={HandleBackButtonClick} className={LinkCSS} to="/">
               Back to search
             </LinkChak>
           </Box>
@@ -349,15 +355,15 @@ const ThesaurusPage = (props) => {
          justifyContent='center' h='22' width='full'  position='fixed' bottom='0'> */}
         <TabList marginTop={['4', '2', null]}>
           {(AvailableWordType.noun) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
-            : <Tab ref={NounTabButton} onClick={() => HandleTabClick('noun')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
+            : <Tab mr="4" boxShadow={textShadow} ref={NounTabButton} onClick={() => HandleTabClick('noun')} _hover={Tabshover} _selected={{ color, bg }} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
           )
             : <></>}
           {(AvailableWordType.verb) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
-            : <Tab ref={VerbTabButton} onClick={() => HandleTabClick('verb')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Verb</Tab>
+            : <Tab mr="4" boxShadow={textShadow} ref={VerbTabButton} onClick={() => HandleTabClick('verb')} _hover={Tabshover} _selected={{ color, bg }} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Verb</Tab>
           )
             : <></>}
           {(AvailableWordType.adjective) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
-            : <Tab ref={AdjectiveTabButton} onClick={() => HandleTabClick('adjective')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adjective</Tab>
+            : <Tab boxShadow={textShadow} ref={AdjectiveTabButton} onClick={() => HandleTabClick('adjective')} _hover={Tabshover} _selected={{ color, bg }} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adjective</Tab>
           )
             : <></>}
         </TabList>

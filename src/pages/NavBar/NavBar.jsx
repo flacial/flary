@@ -7,7 +7,7 @@ import ThemeButton from '../../components/theme-button/theme-button.component';
 import SearchButtonHeader from '../../components/search-button/search-button.component';
 
 const NavBar = ({
-  onOpen2, PathName, InputFiledSearchBarPopUp,
+  onOpen2, PathName, InputFiledSearchBarPopUp, ReturnedWord,
 }) => (
   <Box
     zIndex="9991"
@@ -17,7 +17,7 @@ const NavBar = ({
     display="flex"
     justifyContent="flex-end"
   >
-    {(PathName === '/thesaurus')
+    {(PathName === '/thesaurus' && ReturnedWord.length)
       ? (
         <SearchButtonHeader
           onOpen2={onOpen2}
