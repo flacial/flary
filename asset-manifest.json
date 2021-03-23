@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/flary/static/css/main.c9cffd5f.chunk.css",
-    "main.js": "/flary/static/js/main.d874194a.chunk.js",
-    "main.js.map": "/flary/static/js/main.d874194a.chunk.js.map",
+    "main.js": "/flary/static/js/main.ba07dd40.chunk.js",
+    "main.js.map": "/flary/static/js/main.ba07dd40.chunk.js.map",
     "runtime-main.js": "/flary/static/js/runtime-main.c750414e.js",
     "runtime-main.js.map": "/flary/static/js/runtime-main.c750414e.js.map",
     "static/js/2.fffbd11b.chunk.js": "/flary/static/js/2.fffbd11b.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.c750414e.js",
     "static/js/2.fffbd11b.chunk.js",
     "static/css/main.c9cffd5f.chunk.css",
-    "static/js/main.d874194a.chunk.js"
+    "static/js/main.ba07dd40.chunk.js"
   ]
 }
