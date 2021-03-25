@@ -4,7 +4,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React from 'react';
-import { Presets } from 'react-component-transition';
+// import { Presets } from 'react-component-transition';
 import tw from 'tailwind-styled-components';
 import ReactHtmlParser from 'react-html-parser';
 import { withRouter } from 'react-router-dom';
@@ -113,13 +113,11 @@ const WordsContainerContent = (
   const OrderAntonyms = () => turnWordInToList(Ants);
 
   return (
-    <Presets.TransitionFade>
+    <>
       <WordAndType>
-        <Presets.TransitionFade>
-          <ChakraTheWord color={fontColorMain}>
-            {ReturnedWord}
-          </ChakraTheWord>
-        </Presets.TransitionFade>
+        <ChakraTheWord color={fontColorMain}>
+          {ReturnedWord}
+        </ChakraTheWord>
         <ChakraTheType color={fontColorDarkWhiteSmallWords}>
           {PartOfSpeech}
         </ChakraTheType>
@@ -166,7 +164,7 @@ const WordsContainerContent = (
           )
           : <></>}
       </SynAntContainer>
-    </Presets.TransitionFade>
+    </>
   );
 };
 
