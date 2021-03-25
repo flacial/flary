@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable no-nested-ternary */
@@ -11,20 +13,16 @@ import {
   chakra,
   Box,
   useColorModeValue,
-  Heading,
-  ListItem,
-  UnorderedList,
   Tabs,
   TabList,
   TabPanels,
   Tab,
   TabPanel,
-  Skeleton,
-  Stack,
 } from '@chakra-ui/react';
-import { Presets } from 'react-component-transition';
 import WordsContainer from '../../components/words-container/words.container.component';
 // import PopUpSearchBar from '../../components/popup-search-bar/popup-search-bar.component';
+import LoadingSkeleton from '../../components/loading-skeleton/loading-skeleton.component';
+import WordsContainerContent from '../../components/words-container-content/words-container-content';
 
 const ThesaurusHeader = tw.h1`
     italic
@@ -34,54 +32,6 @@ const ThesaurusHeader = tw.h1`
     inline-block
 `;
 const ChakraThesaurusHeader = chakra(ThesaurusHeader);
-
-const WordAndType = tw.div`
-    mt-1
-`;
-
-const TheWord = tw.h1`
-    text-5xl
-    font-serif
-    font-bold
-    inline-block
-`;
-
-const ChakraTheWord = chakra(TheWord);
-
-const TheType = tw.span`
-    text-xl
-    font-bold
-    font-serif
-`;
-
-const ChakraTheType = chakra(TheType);
-
-const SynAntHeader = tw.h2`
-    font-bold
-    text-2xl
-    mt-3
-`;
-
-const ChakraSynAntHeader = chakra(SynAntHeader);
-
-const SynAntContainer = tw.div`
-    mt-2
-    relative pl-6
-`;
-
-const Example = tw.span`
-    text-xl
-    block
-`;
-
-const ChakraExample = chakra(Example);
-
-const Text = tw.span`
-    text-gray-700
-    text-xl
-`;
-
-const ChakraText = chakra(Text);
 
 const LinkCSS = `
   py-2
@@ -103,7 +53,6 @@ const ThesaurusPage = (props) => {
     ReturnedWord,
     PartOfSpeech,
     ShortDef,
-    ReactHtmlParser,
     WordExample,
     getPathName,
     WordsLoaded,
@@ -114,54 +63,21 @@ const ThesaurusPage = (props) => {
     getWords,
     history,
   } = props;
+
   const LinkChak = chakra(Link);
   const bg = useColorModeValue('#edf2f7', 'rgba(255, 255, 255, 0.08)');
   const color = useColorModeValue('#252d3d', '#edf2f7');
-  const fontColorMain = useColorModeValue('gray.700', '#edf2f7');
-  const fontColorHeaders = useColorModeValue('#2563EB', '#db8b02');
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange');
-  const fontColorSynAnt = useColorModeValue('#3B82F6', 'orange.300');
-  const hoverSynAntItems = useColorModeValue({ textDecoration: 'underline' }, { textDecoration: 'underline' });
-  const SkeletonStartColor = useColorModeValue('#3B82F6', 'orange.200');
-  const SkeletonEndColor = useColorModeValue('gray.700', 'orange.500');
   const Tabshover = useColorModeValue({ color: '#3B82F6' }, { color: 'orange', boxShadow: '0 0 5px #FFF, 0 0 10px #FFF, 0 0 7px #FFF, 0 0 3px #49ff18, 0 0 5px #c75600, 0 0 10px #c75600, 0 0 10px #c75600, 0 0 20px #c75600' });
   const TabsSelected = useColorModeValue({ background: '#edf2f7', color: '#252d3d' }, { color: '#edf2f7', background: 'rgba(255, 255, 255, 0.08)', boxShadow: '0 0 5px #FFF, 0 0 10px #FFF, 0 0 7px #FFF, 0 0 3px #49ff18, 0 0 5px #c75600, 0 0 10px #c75600, 0 0 10px #c75600, 0 0 20px #c75600' });
   const fallbackBackground = useColorModeValue('rgba(255, 255, 255, .9)', 'rgba(0, 0, 0, 0.26)');
   const gradientbg = useColorModeValue('linear(to-l, gray.200, white)');
-  const NounTabButton = useRef(null);
-  const VerbTabButton = useRef(null);
-  const AdjectiveTabButton = useRef(null);
   const hoverShadowNeonDark = useColorModeValue({ background: 'gray.200' }, { boxShadow: '0 0 5px #FFF, 0 0 10px #FFF, 0 0 7px #FFF, 0 0 3px #49ff18, 0 0 5px #c75600, 0 0 10px #c75600, 0 0 10px #c75600, 0 0 20px #c75600' });
   const textShadow = useColorModeValue('0 1px 0 #CCCCCC, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.1), 0 10px 10px rgba(0,0,0,.2), 0 10px 10px rgba(0,0,0,.10);', '0 0 7px rgba(255,255,255,.5), 0 0 5px rgba(255,255,255,.5);');
   const WordsContainerShadow = useColorModeValue('-1px -1px 0 #CCCCCC, -1px -1px 0 #c9c9c9, -3px -3px 0 #bbb, -5px -5px 0 #b9b9b9, -5px -5px 0 #aaa, -6px -6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), -1px -1px 3px rgba(0,0,0,.3), -3px -3px 5px rgba(0,0,0,.2), -5px -5px 10px rgba(0,0,0,.1), -10px -10px 10px rgba(0,0,0,.2), -20px -20px 20px rgba(0,0,0,.10);', '0 0 7px rgba(255,255,255,.5), 0 0 5px rgba(255,255,255,.5);');
-
-  const onClickWords = (event) => {
-    HandleBackButtonClick();
-    getWords(event.target.textContent);
-    history.push('/thesaurus');
-  };
-
-  const turnWordInToList = (MainObj) => {
-    let ReturnedObj = [];
-    if (MainObj !== undefined) {
-      ReturnedObj = MainObj.map((word, index) => {
-        if (MainObj[index + 1] === undefined) {
-          return <ListItem _hover={hoverSynAntItems} className="cursor-pointer" onClick={onClickWords} listStyleType="none" display="inline-block" key={index}>{word}</ListItem>;
-        }
-        return (
-          <>
-            <ListItem _hover={hoverSynAntItems} className="cursor-pointer" onClick={onClickWords} listStyleType="none" display="inline-block" key={word}>{word}</ListItem>
-            <span key={index}>{',\u00A0'}</span>
-          </>
-        );
-      });
-    }
-    return ReturnedObj;
-  };
-
-  // Change synonyms and antonyms words to list items
-  const OrderSynonyms = () => turnWordInToList(Syns);
-  const OrderAntonyms = () => turnWordInToList(Ants);
+  const NounTabButton = useRef(null);
+  const AdjectiveTabButton = useRef(null);
+  const VerbTabButton = useRef(null);
 
   const location = useLocation();
 
@@ -197,15 +113,15 @@ const ThesaurusPage = (props) => {
     switch (event.key) {
       case '!':
         event.preventDefault();
-        NounTabButton.current.click();
+        NounTabButton?.current?.click();
         break;
       case '@':
         event.preventDefault();
-        VerbTabButton.current.click();
+        VerbTabButton?.current?.click();
         break;
       case '#':
         event.preventDefault();
-        AdjectiveTabButton.current.click();
+        AdjectiveTabButton?.current?.click();
         break;
       default:
         break;
@@ -240,75 +156,11 @@ const ThesaurusPage = (props) => {
       </ChakraThesaurusHeader>
       {(WordsLoaded)
         ? (
-          <Presets.TransitionFade>
-            <WordAndType>
-              <Presets.TransitionFade>
-                <ChakraTheWord color={fontColorMain}>
-                  {ReturnedWord}
-                </ChakraTheWord>
-              </Presets.TransitionFade>
-              <ChakraTheType color={fontColorDarkWhiteSmallWords}>
-                {PartOfSpeech}
-              </ChakraTheType>
-            </WordAndType>
-            <ChakraSynAntHeader color={fontColorHeaders}>
-              Synonyms & Antonyms of
-              {' '}
-              <em>{ReturnedWord}</em>
-            </ChakraSynAntHeader>
-            <SynAntContainer>
-              <ChakraText color={fontColorMain}>
-                {ShortDef}
-              </ChakraText>
-              {(ShortDef.slice(0, 5) === WordExample.slice(0, 5))
-                ? <></>
-                : (
-                  <ChakraExample color={fontColorSynAnt}>
-                    {' '}
-                    <strong>//</strong>
-                    {' '}
-                    {ReactHtmlParser(WordExample)}
-                  </ChakraExample>
-                )}
-              <Heading mb="1" mt="2" fontSize="2xl" fontFamily="sans-serif" color={fontColorHeaders}>
-                Synonyms for
-                {' '}
-                <chakra.span fontStyle="italic">{ReturnedWord}</chakra.span>
-              </Heading>
-              <Box w={['100%', '70%', null]}>
-                <UnorderedList fontFamily="sans" fontSize="lg" ml="0" color={fontColorSynAnt}>{OrderSynonyms()}</UnorderedList>
-              </Box>
-              {(Ants !== undefined)
-                ? (
-                  <div>
-                    <Heading mb="1" mt="4" fontSize="2xl" fontFamily="sans-serif" color={fontColorHeaders}>
-                      Antonyms for
-                      {' '}
-                      <chakra.span fontStyle="italic">{ReturnedWord}</chakra.span>
-                    </Heading>
-                    <Box w={['100%', '70%', null]}>
-                      <UnorderedList fontFamily="sans" fontSize="lg" ml="0" color={fontColorSynAnt}>{OrderAntonyms()}</UnorderedList>
-                    </Box>
-                  </div>
-                )
-                : <></>}
-            </SynAntContainer>
-          </Presets.TransitionFade>
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          <WordsContainerContent {...props} />
         )
         : (
-          <Presets.TransitionFade>
-            <Stack>
-              <Skeleton height="9px" mt="4" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" w="80%" mb="3" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-            </Stack>
-          </Presets.TransitionFade>
+          <LoadingSkeleton />
         )}
     </WordsContainer>
   );
