@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/flary/static/css/main.c9cffd5f.chunk.css",
-    "main.js": "/flary/static/js/main.52aa0488.chunk.js",
-    "main.js.map": "/flary/static/js/main.52aa0488.chunk.js.map",
+    "main.js": "/flary/static/js/main.75f9aa03.chunk.js",
+    "main.js.map": "/flary/static/js/main.75f9aa03.chunk.js.map",
     "runtime-main.js": "/flary/static/js/runtime-main.c750414e.js",
     "runtime-main.js.map": "/flary/static/js/runtime-main.c750414e.js.map",
-    "static/js/2.e95f524b.chunk.js": "/flary/static/js/2.e95f524b.chunk.js",
-    "static/js/2.e95f524b.chunk.js.map": "/flary/static/js/2.e95f524b.chunk.js.map",
+    "static/js/2.0d214b43.chunk.js": "/flary/static/js/2.0d214b43.chunk.js",
+    "static/js/2.0d214b43.chunk.js.map": "/flary/static/js/2.0d214b43.chunk.js.map",
     "index.html": "/flary/index.html",
     "static/css/main.c9cffd5f.chunk.css.map": "/flary/static/css/main.c9cffd5f.chunk.css.map",
-    "static/js/2.e95f524b.chunk.js.LICENSE.txt": "/flary/static/js/2.e95f524b.chunk.js.LICENSE.txt"
+    "static/js/2.0d214b43.chunk.js.LICENSE.txt": "/flary/static/js/2.0d214b43.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c750414e.js",
-    "static/js/2.e95f524b.chunk.js",
+    "static/js/2.0d214b43.chunk.js",
     "static/css/main.c9cffd5f.chunk.css",
-    "static/js/main.52aa0488.chunk.js"
+    "static/js/main.75f9aa03.chunk.js"
   ]
 }
