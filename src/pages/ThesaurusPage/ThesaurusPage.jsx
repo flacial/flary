@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 import {
-  useEffect, React, useRef,
+  useEffect, React, useState, useRef,
 } from 'react';
 import { useLocation, withRouter } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
@@ -11,9 +12,11 @@ import {
   chakra,
   Box,
   useColorModeValue,
+  SkeletonText,
   Heading,
   ListItem,
   UnorderedList,
+  useMediaQuery,
   Tabs,
   TabList,
   TabPanels,
@@ -21,10 +24,11 @@ import {
   TabPanel,
   Skeleton,
   Stack,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { Presets } from 'react-component-transition';
 import WordsContainer from '../../components/words-container/words.container.component';
-// import PopUpSearchBar from '../../components/popup-search-bar/popup-search-bar.component';
+import PopUpSearchBar from '../../components/popup-search-bar/popup-search-bar.component';
 
 const ThesaurusHeader = tw.h1`
     italic
@@ -121,19 +125,25 @@ const ThesaurusPage = (props) => {
   const fontColorHeaders = useColorModeValue('#2563EB', '#db8b02');
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange');
   const fontColorSynAnt = useColorModeValue('#3B82F6', 'orange.300');
+  const hover = useColorModeValue({ background: 'gray.200' }, { background: 'gray.700' });
   const hoverSynAntItems = useColorModeValue({ textDecoration: 'underline' }, { textDecoration: 'underline' });
   const SkeletonStartColor = useColorModeValue('#3B82F6', 'orange.200');
   const SkeletonEndColor = useColorModeValue('gray.700', 'orange.500');
-  const Tabshover = useColorModeValue({ color: '#3B82F6' }, { color: 'orange', boxShadow: '0 0 5px #FFF, 0 0 10px #FFF, 0 0 7px #FFF, 0 0 3px #49ff18, 0 0 5px #c75600, 0 0 10px #c75600, 0 0 10px #c75600, 0 0 20px #c75600' });
-  const TabsSelected = useColorModeValue({ background: '#edf2f7', color: '#252d3d' }, { color: '#edf2f7', background: 'rgba(255, 255, 255, 0.08)', boxShadow: '0 0 5px #FFF, 0 0 10px #FFF, 0 0 7px #FFF, 0 0 3px #49ff18, 0 0 5px #c75600, 0 0 10px #c75600, 0 0 10px #c75600, 0 0 20px #c75600' });
+  const focusBorderColorGeneral = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
+  const isLargerthan440 = useMediaQuery('(max-width: 440px)');
+  const Tabshover = useColorModeValue({ color: '#3B82F6' }, { color: 'orange' });
   const fallbackBackground = useColorModeValue('rgba(255, 255, 255, .9)', 'rgba(0, 0, 0, 0.26)');
   const gradientbg = useColorModeValue('linear(to-l, gray.200, white)');
+  const boxShadow = useColorModeValue('0px 0px 25px #a1a1a1, -10px -10px 0px #3B82F6', '0px 0px 11px #1c1c1c, -10px -10px 0px orange');
+  const { isOpen, onOpen } = useDisclosure();
   const NounTabButton = useRef(null);
   const VerbTabButton = useRef(null);
   const AdjectiveTabButton = useRef(null);
   const hoverShadowNeonDark = useColorModeValue({ background: 'gray.200' }, { boxShadow: '0 0 5px #FFF, 0 0 10px #FFF, 0 0 7px #FFF, 0 0 3px #49ff18, 0 0 5px #c75600, 0 0 10px #c75600, 0 0 10px #c75600, 0 0 20px #c75600' });
-  const textShadow = useColorModeValue('0 1px 0 #CCCCCC, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.1), 0 10px 10px rgba(0,0,0,.2), 0 10px 10px rgba(0,0,0,.10);', '0 0 7px rgba(255,255,255,.5), 0 0 5px rgba(255,255,255,.5);');
-  const WordsContainerShadow = useColorModeValue('-1px -1px 0 #CCCCCC, -1px -1px 0 #c9c9c9, -3px -3px 0 #bbb, -5px -5px 0 #b9b9b9, -5px -5px 0 #aaa, -6px -6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), -1px -1px 3px rgba(0,0,0,.3), -3px -3px 5px rgba(0,0,0,.2), -5px -5px 10px rgba(0,0,0,.1), -10px -10px 10px rgba(0,0,0,.2), -20px -20px 20px rgba(0,0,0,.10);', '0 0 7px rgba(255,255,255,.5), 0 0 5px rgba(255,255,255,.5);');
+  const textShadow = useColorModeValue('0 1px 0 #CCCCCC, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.1), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.10);', '0 0 15px rgba(255,255,255,.5), 0 0 10px rgba(255,255,255,.5);');
+  const onFocusTextShadow = useColorModeValue('0 1px 0 #CCCCCC, 0 1px 0 #c9c9c9, 0 1px 0 #bbb, 0 1px 0 #b9b9b9, 0 1px 0 #aaa, 0 1px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.3), 0 1px 2px rgba(0,0,0,.2), 0 1px 2px rgba(0,0,0,.1), 0 2px 2px rgba(0,0,0,.2), 0 5px 5px rgba(0,0,0,.10);',
+
+    '0 0 15px rgba(255,255,255,.5), 0 0 10px rgba(255,255,255,.5);');
 
   const onClickWords = (event) => {
     HandleBackButtonClick();
@@ -234,7 +244,7 @@ const ThesaurusPage = (props) => {
   }, []);
 
   const TheWholeThesaurus = () => (
-    <WordsContainer boxShadow={WordsContainerShadow} gradientbg={gradientbg} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
+    <WordsContainer boxShadow={boxShadow} gradientbg={gradientbg} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
       <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
         Thesaurus
       </ChakraThesaurusHeader>
@@ -346,15 +356,15 @@ const ThesaurusPage = (props) => {
          justifyContent='center' h='22' width='full'  position='fixed' bottom='0'> */}
         <TabList marginTop={['4', '2', null]}>
           {(AvailableWordType.noun) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
-            : <Tab mr="4" boxShadow={textShadow} ref={NounTabButton} onClick={() => HandleTabClick('noun')} _hover={Tabshover} _selected={TabsSelected} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
+            : <Tab mr="4" boxShadow={textShadow} ref={NounTabButton} onClick={() => HandleTabClick('noun')} _hover={Tabshover} _selected={{ color, bg }} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
           )
             : <></>}
           {(AvailableWordType.verb) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
-            : <Tab mr="4" boxShadow={textShadow} ref={VerbTabButton} onClick={() => HandleTabClick('verb')} _hover={Tabshover} _selected={TabsSelected} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Verb</Tab>
+            : <Tab mr="4" boxShadow={textShadow} ref={VerbTabButton} onClick={() => HandleTabClick('verb')} _hover={Tabshover} _selected={{ color, bg }} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Verb</Tab>
           )
             : <></>}
           {(AvailableWordType.adjective) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
-            : <Tab boxShadow={textShadow} ref={AdjectiveTabButton} onClick={() => HandleTabClick('adjective')} _hover={Tabshover} _selected={TabsSelected} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adjective</Tab>
+            : <Tab boxShadow={textShadow} ref={AdjectiveTabButton} onClick={() => HandleTabClick('adjective')} _hover={Tabshover} _selected={{ color, bg }} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adjective</Tab>
           )
             : <></>}
         </TabList>
