@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable react/no-array-index-key */
@@ -8,7 +7,6 @@
 import {
   useEffect, React, useRef,
 } from 'react';
-import { Presets, ComponentTransition, AnimationTypes } from 'react-component-transition';
 import { useLocation, withRouter } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 import {
@@ -152,23 +150,19 @@ const ThesaurusPage = (props) => {
   }, []);
 
   const TheWholeThesaurus = () => (
-    <Presets.TransitionFade>
-      <WordsContainer boxShadow={WordsContainerShadow} gradientbg={gradientbg} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
-        <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
-          Thesaurus
-        </ChakraThesaurusHeader>
-        <Presets.TransitionFade>
-          {(WordsLoaded)
-            ? (
-              <WordsContainerContent {...props} />
-            )
-
-            : (
-              <LoadingSkeleton />
-            )}
-        </Presets.TransitionFade>
-      </WordsContainer>
-    </Presets.TransitionFade>
+    <WordsContainer boxShadow={WordsContainerShadow} gradientbg={gradientbg} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
+      <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
+        Thesaurus
+      </ChakraThesaurusHeader>
+      {(WordsLoaded)
+        ? (
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          <WordsContainerContent {...props} />
+        )
+        : (
+          <LoadingSkeleton />
+        )}
+    </WordsContainer>
   );
 
   return (
@@ -198,38 +192,37 @@ const ThesaurusPage = (props) => {
         )
         // TODO Break tabs into its own compoonent
         : <></>}
-      <Presets.TransitionFade>
-        <Tabs align="center" variant="soft-rounded">
-          {/* <Box className='backdrop-blur z-50' display='flex'
+
+      <Tabs align="center" variant="soft-rounded">
+        {/* <Box className='backdrop-blur z-50' display='flex'
          justifyContent='center' h='22' width='full'  position='fixed' bottom='0'> */}
-          <TabList marginTop={['4', '2', null]}>
-            {(AvailableWordType.noun) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
-              : <Tab mr="4" boxShadow={textShadow} ref={NounTabButton} onClick={() => HandleTabClick('noun')} _hover={Tabshover} _selected={TabsSelected} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
-            )
-              : <></>}
-            {(AvailableWordType.verb) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
-              : <Tab mr="4" boxShadow={textShadow} ref={VerbTabButton} onClick={() => HandleTabClick('verb')} _hover={Tabshover} _selected={TabsSelected} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Verb</Tab>
-            )
-              : <></>}
-            {(AvailableWordType.adjective) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
-              : <Tab boxShadow={textShadow} ref={AdjectiveTabButton} onClick={() => HandleTabClick('adjective')} _hover={Tabshover} _selected={TabsSelected} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adjective</Tab>
-            )
-              : <></>}
-          </TabList>
-          {/* </Box> */}
-          <TabPanels>
-            <TabPanel>
-              {TheWholeThesaurus()}
-            </TabPanel>
-            <TabPanel>
-              {TheWholeThesaurus()}
-            </TabPanel>
-            <TabPanel>
-              {TheWholeThesaurus()}
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-      </Presets.TransitionFade>
+        <TabList marginTop={['4', '2', null]}>
+          {(AvailableWordType.noun) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
+            : <Tab mr="4" boxShadow={textShadow} ref={NounTabButton} onClick={() => HandleTabClick('noun')} _hover={Tabshover} _selected={TabsSelected} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
+          )
+            : <></>}
+          {(AvailableWordType.verb) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
+            : <Tab mr="4" boxShadow={textShadow} ref={VerbTabButton} onClick={() => HandleTabClick('verb')} _hover={Tabshover} _selected={TabsSelected} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Verb</Tab>
+          )
+            : <></>}
+          {(AvailableWordType.adjective) ? ((Object.keys(AvailableWordType).length === 1) ? <></>
+            : <Tab boxShadow={textShadow} ref={AdjectiveTabButton} onClick={() => HandleTabClick('adjective')} _hover={Tabshover} _selected={TabsSelected} _focus={{ color }} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adjective</Tab>
+          )
+            : <></>}
+        </TabList>
+        {/* </Box> */}
+        <TabPanels>
+          <TabPanel>
+            {TheWholeThesaurus()}
+          </TabPanel>
+          <TabPanel>
+            {TheWholeThesaurus()}
+          </TabPanel>
+          <TabPanel>
+            {TheWholeThesaurus()}
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </>
   );
 };
