@@ -21,7 +21,7 @@ import {
 } from 'react-component-transition';
 import getRequest from '../services/getRequest';
 import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
-import Routes from '../Routes/Routes';
+import Routes from '../routes/routes';
 import NavBar from '../components/NavBar/NavBar';
 import PopUpSearchBar from '../components/popup-search-bar/popup-search-bar.component';
 

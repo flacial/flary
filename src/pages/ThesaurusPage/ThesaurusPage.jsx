@@ -196,6 +196,7 @@ const ThesaurusPage = (props) => {
             borderRadius="0 0 20px 20px"
           />
         )
+        // TODO Break tabs into its own compoonent
         : <></>}
       <Presets.TransitionFade>
         <Tabs align="center" variant="soft-rounded">
