@@ -9,7 +9,6 @@ import {
   Redirect,
   withRouter,
 } from 'react-router-dom';
-import ReactHtmlParser from 'react-html-parser';
 import {
   useState,
   useEffect,
@@ -26,8 +25,6 @@ import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
 import Routes from '../routes/routes';
 import NavBar from '../components/NavBar/NavBar';
 import PopUpSearchBar from '../components/popup-search-bar/popup-search-bar.component';
-
-// TODO understand wth is your state doing
 
 const App = ({ location }) => {
   const [Word, setWord] = useState('');
@@ -240,22 +237,18 @@ const App = ({ location }) => {
 
   const ThesaurusStore = () => (
     <ThesaurusPage
-      setWordsLoaded={setWordsLoaded}
       getInputValue={getInputValue}
       getWords={getWords}
       AvailableWordType={AvailableWordType}
       HandleTabClick={HandleTabClick}
-      PathName={PathName}
       Ants={Ants}
       Syns={Syns}
       WordsLoaded={WordsLoaded}
-      Word={Word}
       Link={Link}
       HandleBackButtonClick={HandleBackButtonClick}
       ReturnedWord={ReturnedWord}
       PartOfSpeech={PartOfSpeech}
       ShortDef={ShortDef}
-      ReactHtmlParser={ReactHtmlParser}
       WordExample={WordExample}
     />
   );
