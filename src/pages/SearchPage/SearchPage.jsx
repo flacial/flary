@@ -4,10 +4,11 @@
 /* eslint-disable no-nested-ternary */
 import tw from 'tailwind-styled-components';
 import { useLocation, withRouter, Link as ReachLink } from 'react-router-dom';
-import { useEffect, React, useRef } from 'react';
+import React, {
+  useEffect,
+} from 'react';
 import {
   Heading,
-  Input,
   Box,
   chakra,
   Fade,
@@ -22,10 +23,9 @@ import {
   IconButton,
   useMediaQuery,
   Button,
-  InputLeftElement,
-  InputGroup,
 } from '@chakra-ui/react';
 import { InfoIcon, SearchIcon } from '@chakra-ui/icons';
+import SearchInput from '../../components/search-input/search-input.component';
 
 const MainContainer = tw.div`
    text-center
@@ -37,41 +37,14 @@ const MainContainer = tw.div`
 
 const SearchPage = ({
   WordFindType, WordFind, isOpen,
-  getInputValue, HandleSearchButtonClick, getPathName, getWords, history,
+  getInputValue, HandleSearchButtonClick, getPathName, getWords,
 }) => {
   const [isMoreThan420px] = useMediaQuery('(max-width: 420px)');
   const location = useLocation();
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange');
   const hover = useColorModeValue({ color: '#3B82F6' }, { color: 'orange' });
   const fontColorMain = useColorModeValue('#edf2f7', 'gray.800');
-  const focusBorderColorInput = useColorModeValue('#3B82F6', '#ffa500');
   const focusBorderColorGeneral = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
-  const inputField = useRef(null);
-
-  const HandleFocusOnInputEnterCtrlShift = (event) => {
-    if (event.key === 'A' && event.ctrlKey) {
-      event.preventDefault();
-      inputField.current.focus();
-    }
-  };
-
-  const HandleEnterKey = (event) => {
-    if (event.which === 13) {
-      getWords();
-      history.push('/thesaurus');
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('keydown', HandleFocusOnInputEnterCtrlShift);
-    return () => {
-      document.removeEventListener('keydown', HandleFocusOnInputEnterCtrlShift);
-    };
-  });
-
-  useEffect(() => {
-    getPathName(location.pathname);
-  });
 
   return (
     <MainContainer>
@@ -101,7 +74,7 @@ const SearchPage = ({
         <Box>
           <Box justifyContent="center" display="flex" w={['100%', 'xs', null]}>
             <Box w={['18rem', 'xs', null]} position="relative">
-              <Input ref={inputField} focusBorderColor={focusBorderColorInput} onKeyPress={HandleEnterKey} variant="filled" w={['18rem', 'xs', null]} rounded="xl" mr={[null, null, '2rem']} onChange={getInputValue} paddingY="5" placeholder="Search for words" paddingLeft="9" />
+              <SearchInput getInputValue={getInputValue} getWords={getWords} />
               <SearchIcon color="gray.300" position="absolute" left="3" top="3.5" />
             </Box>
           </Box>
@@ -138,7 +111,6 @@ const SearchPage = ({
             </Box>
           )
         }
-
       </Box>
     </MainContainer>
   );

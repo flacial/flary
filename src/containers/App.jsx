@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-labels */
@@ -6,6 +7,7 @@ import './App.css';
 import {
   Link,
   Redirect,
+  withRouter,
 } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
 import {
@@ -27,14 +29,14 @@ import PopUpSearchBar from '../components/popup-search-bar/popup-search-bar.comp
 
 // TODO understand wth is your state doing
 
-const App = () => {
+const App = ({ location }) => {
   const [Word, setWord] = useState('');
   const [ReturnedWord, setReturnedWord] = useState('');
   const [ShortDef, setShortDef] = useState('');
   const [PartOfSpeech, setPartOfSpeech] = useState('');
   const [WordExample, setWordExample] = useState('');
   const [Error, setError] = useState(false);
-  const [PathName, setPathName] = useState('');
+  const PathName = location.pathname;
   const {
     isOpen,
     onOpen,
@@ -63,7 +65,7 @@ const App = () => {
   });
 
   const getInputValue = (event) => {
-    setWord(event.target.value);
+    setWord(event);
   };
 
   const WordsArrayFilter = (wordObjects, type) => {
@@ -182,7 +184,7 @@ const App = () => {
   };
 
   const getWords = (word = Word) => {
-    if (Word === '') {
+    if (word === '') {
       setWordFind(true);
       setWordFindType('no input');
       onOpen();
@@ -236,10 +238,6 @@ const App = () => {
     }
   };
 
-  const getPathName = (Path) => {
-    setPathName(Path);
-  };
-
   const ThesaurusStore = () => (
     <ThesaurusPage
       setWordsLoaded={setWordsLoaded}
@@ -259,7 +257,6 @@ const App = () => {
       ShortDef={ShortDef}
       ReactHtmlParser={ReactHtmlParser}
       WordExample={WordExample}
-      getPathName={getPathName}
     />
   );
 
@@ -329,10 +326,9 @@ const App = () => {
         getInputValue={getInputValue}
         HandleSearchButtonClick={HandleSearchButtonClick}
         Link={Link}
-        getPathName={getPathName}
       />
     </>
   );
 };
 
-export default App;
+export default withRouter(App);
