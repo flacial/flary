@@ -22,8 +22,10 @@ const SearchInput = ({
     }
   };
 
-  const onBlur = (event) => {
-    setWord(WordValueSP);
+  const onBlur = () => {
+    if (WordValueSP.length) {
+      setWord(WordValueSP);
+    }
   };
 
   const HandleEnterKey = (event) => {
@@ -54,7 +56,6 @@ const mapStateToProps = ({ words }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // eslint-disable-next-line no-undef
   setWord: (word) => dispatch(setWord(word)),
 });
 

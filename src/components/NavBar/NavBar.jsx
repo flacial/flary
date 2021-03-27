@@ -3,12 +3,13 @@
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Help from '../help-button/help-button.component';
 import ThemeButton from '../theme-button/theme-button.component';
 import SearchButtonHeader from '../search-button/search-button.component';
 
 const NavBar = ({
-  onOpen2, InputFiledSearchBarPopUp, location,
+  onOpen2, InputFiledSearchBarPopUp, location, ReturnedWord,
 }) => (
   <Box
     zIndex="9991"
@@ -18,7 +19,7 @@ const NavBar = ({
     display="flex"
     justifyContent="flex-end"
   >
-    {(location.pathname === '/thesaurus')
+    {(location.pathname === '/thesaurus' && ReturnedWord.length)
       ? (
         <SearchButtonHeader
           onOpen2={onOpen2}
@@ -31,4 +32,8 @@ const NavBar = ({
   </Box>
 );
 
-export default withRouter(NavBar);
+const mapStateToProps = ({ words }) => ({
+  ReturnedWord: words.ReturnedWord,
+});
+
+export default connect(mapStateToProps, null)(withRouter(NavBar));
