@@ -113,7 +113,7 @@ const WordsContainerContent = (
   const OrderAntonyms = () => turnWordInToList(Ants);
 
   return (
-    <Presets.TransitionFade>
+    <>
       <WordAndType>
         <Presets.TransitionFade>
           <ChakraTheWord color={fontColorMain}>
@@ -166,7 +166,7 @@ const WordsContainerContent = (
           )
           : <></>}
       </SynAntContainer>
-    </Presets.TransitionFade>
+    </>
   );
 };
 

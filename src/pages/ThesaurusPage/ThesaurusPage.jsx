@@ -27,7 +27,9 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { Presets } from 'react-component-transition';
+import LoadingSkeleton from '../../components/loading-skeleton/loading-skeleton.component';
 import WordsContainer from '../../components/words-container/words.container.component';
+import WordsContainerContent from '../../components/words-container-content/words-container-content';
 import PopUpSearchBar from '../../components/popup-search-bar/popup-search-bar.component';
 
 const ThesaurusHeader = tw.h1`
@@ -161,10 +163,6 @@ const ThesaurusPage = (props) => {
     return ReturnedObj;
   };
 
-  // Change synonyms and antonyms words to list items
-  const OrderSynonyms = () => turnWordInToList(Syns);
-  const OrderAntonyms = () => turnWordInToList(Ants);
-
   const location = useLocation();
 
   const changeTitle = (ComponentState) => {
@@ -235,78 +233,24 @@ const ThesaurusPage = (props) => {
       <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
         Thesaurus
       </ChakraThesaurusHeader>
-      {(WordsLoaded)
-        ? (
-          <Presets.TransitionFade>
-            <WordAndType>
-              <Presets.TransitionFade>
-                <ChakraTheWord color={fontColorMain}>
-                  {ReturnedWord}
-                </ChakraTheWord>
-              </Presets.TransitionFade>
-              <ChakraTheType color={fontColorDarkWhiteSmallWords}>
-                {PartOfSpeech}
-              </ChakraTheType>
-            </WordAndType>
-            <ChakraSynAntHeader color={fontColorHeaders}>
-              Synonyms & Antonyms of
-              {' '}
-              <em>{ReturnedWord}</em>
-            </ChakraSynAntHeader>
-            <SynAntContainer>
-              <ChakraText color={fontColorMain}>
-                {ShortDef}
-              </ChakraText>
-              {(ShortDef.slice(0, 5) === WordExample.slice(0, 5))
-                ? <></>
-                : (
-                  <ChakraExample color={fontColorSynAnt}>
-                    {' '}
-                    <strong>//</strong>
-                    {' '}
-                    {ReactHtmlParser(WordExample)}
-                  </ChakraExample>
-                )}
-              <Heading mb="1" mt="2" fontSize="2xl" fontFamily="sans-serif" color={fontColorHeaders}>
-                Synonyms for
-                {' '}
-                <chakra.span fontStyle="italic">{ReturnedWord}</chakra.span>
-              </Heading>
-              <Box w={['100%', '70%', null]}>
-                <UnorderedList fontFamily="sans" fontSize="lg" ml="0" color={fontColorSynAnt}>{OrderSynonyms()}</UnorderedList>
-              </Box>
-              {(Ants !== undefined)
-                ? (
-                  <div>
-                    <Heading mb="1" mt="4" fontSize="2xl" fontFamily="sans-serif" color={fontColorHeaders}>
-                      Antonyms for
-                      {' '}
-                      <chakra.span fontStyle="italic">{ReturnedWord}</chakra.span>
-                    </Heading>
-                    <Box w={['100%', '70%', null]}>
-                      <UnorderedList fontFamily="sans" fontSize="lg" ml="0" color={fontColorSynAnt}>{OrderAntonyms()}</UnorderedList>
-                    </Box>
-                  </div>
-                )
-                : <></>}
-            </SynAntContainer>
-          </Presets.TransitionFade>
-        )
-        : (
-          <Presets.TransitionFade>
-            <Stack>
-              <Skeleton height="9px" mt="4" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" mb="1" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-              <Skeleton height="9px" w="80%" mb="3" startColor={SkeletonStartColor} endColor={SkeletonEndColor} />
-            </Stack>
-          </Presets.TransitionFade>
-        )}
+      <Presets.TransitionFade>
+        {(WordsLoaded)
+          ? (
+            <WordsContainerContent
+              ReturnedWord={ReturnedWord}
+              PartOfSpeech={PartOfSpeech}
+              ShortDef={ShortDef}
+              WordExample={WordExample}
+              Syns={Syns}
+              Ants={Ants}
+              getWords={getWords}
+              HandleBackButtonClick={HandleBackButtonClick}
+            />
+          )
+          : (
+            <LoadingSkeleton />
+          )}
+      </Presets.TransitionFade>
     </WordsContainer>
   );
 
