@@ -197,7 +197,6 @@ const App = (props) => {
         onOpen();
       }
     } catch (error) {
-      console.log(error);
       setError(true);
       setWordFind(true);
       onOpen();
@@ -205,8 +204,9 @@ const App = (props) => {
   };
 
   const getWords = (word = Word) => {
+    console.log(word, word === '');
     if (word === '') {
-      setWordFind(true);
+      console.log('hello');
       setWordFindType('no input');
       onOpen();
     } else {
@@ -368,7 +368,7 @@ const mapDispatchToProps = (dispatch) => ({
   setWordExample: (word) => dispatch(setWordExample(word)),
   setAnts: (word) => dispatch(setAnts(word)),
   setSyns: (word) => dispatch(setSyns(word)),
-  setWordArray: (word) => dispatch(setWordArray(word)),
+  setsetWordArrayWord: (word) => dispatch(setWordArray(word)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));

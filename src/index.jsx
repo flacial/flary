@@ -4,17 +4,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import App from './containers/App';
+import store from './redux/store';
 import theme from './theme';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ChakraProvider>
-      <Router basename="/flary">
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <App />
-      </Router>
-    </ChakraProvider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <ChakraProvider>
+        <Router basename="/flary">
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+          <App />
+        </Router>
+      </ChakraProvider>
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root'),
 );

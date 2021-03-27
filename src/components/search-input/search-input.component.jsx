@@ -1,9 +1,15 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Input, useColorModeValue } from '@chakra-ui/react';
 import React, { useState, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setWord } from '../../redux/words/words.action';
 
-const SearchInput = ({ getInputValue, getWords, history }) => {
+const SearchInput = ({
+  // eslint-disable-next-line no-shadow
+  setWord, getWords, history, Word,
+}) => {
   const focusBorderColorInput = useColorModeValue('#3B82F6',
     '#ffa500');
   const [WordValueSP, setWordSP] = useState('');
@@ -16,15 +22,13 @@ const SearchInput = ({ getInputValue, getWords, history }) => {
     }
   };
 
-  const onBlur = () => {
-    if (WordValueSP.length) {
-      getInputValue(WordValueSP);
-    }
+  const onBlur = (event) => {
+    setWord(WordValueSP);
   };
 
   const HandleEnterKey = (event) => {
     if (event.which === 13) {
-      getInputValue(WordValueSP);
+      setWord(WordValueSP);
       getWords(WordValueSP);
       history.push('/thesaurus');
     }
@@ -45,5 +49,13 @@ const SearchInput = ({ getInputValue, getWords, history }) => {
     <Input ref={inputField} focusBorderColor={focusBorderColorInput} onKeyPress={HandleEnterKey} variant="filled" w={['18rem', 'xs', null]} rounded="xl" mr={[null, null, '2rem']} value={WordValueSP} onBlur={onBlur} onChange={onInputChange} paddingY="5" placeholder="Search for words" paddingLeft="9" />
   );
 };
+const mapStateToProps = ({ words }) => ({
+  Word: words.Word,
+});
 
-export default withRouter(SearchInput);
+const mapDispatchToProps = (dispatch) => ({
+  // eslint-disable-next-line no-undef
+  setWord: (word) => dispatch(setWord(word)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SearchInput));

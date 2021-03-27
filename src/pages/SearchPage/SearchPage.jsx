@@ -37,10 +37,9 @@ const MainContainer = tw.div`
 
 const SearchPage = ({
   WordFindType, WordFind, isOpen,
-  getInputValue, HandleSearchButtonClick, getPathName, getWords,
+  getInputValue, HandleSearchButtonClick, getWords,
 }) => {
   const [isMoreThan420px] = useMediaQuery('(max-width: 420px)');
-  const location = useLocation();
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange');
   const hover = useColorModeValue({ color: '#3B82F6' }, { color: 'orange' });
   const fontColorMain = useColorModeValue('#edf2f7', 'gray.800');
