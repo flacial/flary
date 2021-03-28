@@ -11,6 +11,7 @@ import {
   Box,
   useColorModeValue,
 } from '@chakra-ui/react';
+import { connect } from 'react-redux';
 import WordsTabs from '../../components/tabs/tabs.component';
 
 const LinkCSS = `
@@ -31,13 +32,7 @@ const ThesaurusPage = (props) => {
     Link,
     HandleBackButtonClick,
     ReturnedWord,
-    PartOfSpeech,
-    ShortDef,
-    WordExample,
     WordsLoaded,
-    Syns,
-    Ants,
-    HandleTabClick,
     AvailableWordType,
     getWords,
     history,
@@ -116,19 +111,16 @@ const ThesaurusPage = (props) => {
         : <></>}
       <WordsTabs
         AvailableWordType={AvailableWordType}
-        HandleTabClick={HandleTabClick}
-        PartOfSpeech={PartOfSpeech}
-        ShortDef={ShortDef}
-        WordExample={WordExample}
         WordsLoaded={WordsLoaded}
-        Syns={Syns}
-        Ants={Ants}
         getWords={getWords}
         HandleBackButtonClick={HandleBackButtonClick}
-        ReturnedWord={ReturnedWord}
       />
     </>
   );
 };
 
-export default withRouter(ThesaurusPage);
+const mapStateToProps = ({ words }) => ({
+  ReturnedWord: words.ReturnedWord,
+});
+
+export default connect(mapStateToProps, null)(withRouter(ThesaurusPage));

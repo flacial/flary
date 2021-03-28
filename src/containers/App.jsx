@@ -15,6 +15,8 @@ import {
   useState,
   useEffect,
   React,
+  lazy,
+  Suspense,
 } from 'react';
 import {
   useDisclosure,
@@ -26,7 +28,6 @@ import getRequest from '../services/getRequest';
 import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
 import Routes from '../routes/routes';
 import NavBar from '../components/NavBar/NavBar';
-import PopUpSearchBar from '../components/popup-search-bar/popup-search-bar.component';
 import {
   setWord,
   setReturnedWord,
@@ -37,6 +38,9 @@ import {
   setSyns,
   setWordArray,
 } from '../redux/words/words.action';
+import ErrorBoundary from '../components/error-boundary/error-boundary.component';
+
+const PopUpSearchBar = lazy(() => import('../components/popup-search-bar/popup-search-bar.component'));
 
 const App = (props) => {
   const {
@@ -47,15 +51,12 @@ const App = (props) => {
     setReturnedWord,
     ShortDef,
     setShortDef,
-    PartOfSpeech,
     setPartOfSpeech,
-    WordExample,
     setWordExample,
     Ants,
     setAnts,
     Syns,
     setSyns,
-    WordArray,
     setWordArray,
   } = props;
   const [Error, setError] = useState(false);
@@ -243,37 +244,15 @@ const App = (props) => {
     }
   }, [PathName]);
 
-  const HandleTabClick = (type) => {
-    switch (type) {
-      case 'verb':
-        WordArraySetState(WordsArrayFilter(WordArray, 'verb'));
-        break;
-      case 'noun':
-        WordArraySetState(WordsArrayFilter(WordArray, 'noun'));
-        break;
-      case 'adjective':
-        WordArraySetState(WordsArrayFilter(WordArray, 'adjective'));
-        break;
-      default:
-        break;
-    }
-  };
-
   const ThesaurusStore = () => (
     <ThesaurusPage
-      getInputValue={getInputValue}
       getWords={getWords}
       AvailableWordType={AvailableWordType}
-      HandleTabClick={HandleTabClick}
       Ants={Ants}
       Syns={Syns}
       WordsLoaded={WordsLoaded}
       Link={Link}
       HandleBackButtonClick={HandleBackButtonClick}
-      ReturnedWord={ReturnedWord}
-      PartOfSpeech={PartOfSpeech}
-      ShortDef={ShortDef}
-      WordExample={WordExample}
     />
   );
 
@@ -307,7 +286,7 @@ const App = (props) => {
     return ThesaurusComponent;
   };
 
-  // Clear all stored states if the pathName isn't thesaurus
+  // Clear all stored states if the pathName is not thesaurus
   useEffect(() => {
     if (PathName !== '/thesaurus' && ShortDef.length) {
       HandleBackButtonClick();
@@ -316,18 +295,22 @@ const App = (props) => {
 
   return (
     <>
-      {(PathName === '/thesaurus')
+      {(PathName === '/thesaurus' && ReturnedWord.length)
         ? (
-          <PopUpSearchBar
-            isOpen2={isOpen2}
-            onOpen2={onOpen2}
-            onClose2={onClose2}
-            onToggle2={onToggle2}
-            HandleBackButtonClick={HandleBackButtonClick}
-            getInputValue={getInputValue}
-            getWords={getWords}
-            setWordsLoaded={setWordsLoaded}
-          />
+          <ErrorBoundary>
+            <Suspense fallback={null}>
+              <PopUpSearchBar
+                isOpen2={isOpen2}
+                onOpen2={onOpen2}
+                onClose2={onClose2}
+                onToggle2={onToggle2}
+                HandleBackButtonClick={HandleBackButtonClick}
+                getInputValue={getInputValue}
+                getWords={getWords}
+                setWordsLoaded={setWordsLoaded}
+              />
+            </Suspense>
+          </ErrorBoundary>
         )
         : <></>}
       <NavBar

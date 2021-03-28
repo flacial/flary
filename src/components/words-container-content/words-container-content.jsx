@@ -8,6 +8,7 @@ import { Presets } from 'react-component-transition';
 import tw from 'tailwind-styled-components';
 import ReactHtmlParser from 'react-html-parser';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
   chakra,
   Heading,
@@ -170,4 +171,15 @@ const WordsContainerContent = (
   );
 };
 
-export default withRouter(WordsContainerContent);
+const mapStateToProps = ({ words }) => ({
+  Word: words.Word,
+  ReturnedWord: words.ReturnedWord,
+  ShortDef: words.ShortDef,
+  PartOfSpeech: words.PartOfSpeech,
+  WordExample: words.WordExample,
+  Syns: words.Syns,
+  Ants: words.Ants,
+  WordArray: words.WordArray,
+});
+
+export default connect(mapStateToProps, null)(withRouter(WordsContainerContent));

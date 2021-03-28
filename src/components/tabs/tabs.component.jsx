@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -8,9 +9,20 @@ import {
 } from '@chakra-ui/react';
 import React, { useRef, useEffect } from 'react';
 import { Presets } from 'react-component-transition';
+import { connect } from 'react-redux';
 import LoadingSkeleton from '../loading-skeleton/loading-skeleton.component';
 import WordsContainer from '../words-container/words.container.component';
 import WordsContainerContent from '../words-container-content/words-container-content';
+import {
+  setWord,
+  setReturnedWord,
+  setShortDef,
+  setPartOfSpeech,
+  setWordExample,
+  setAnts,
+  setSyns,
+  setWordArray,
+} from '../../redux/words/words.action';
 
 const ThesaurusHeader = tw.h1`
 italic
@@ -24,16 +36,17 @@ const ChakraThesaurusHeader = chakra(ThesaurusHeader);
 
 const WordsTabs = ({
   AvailableWordType,
-  HandleTabClick,
-  PartOfSpeech,
-  ShortDef,
-  WordExample,
   WordsLoaded,
-  Syns,
-  Ants,
   getWords,
+  WordExample,
   HandleBackButtonClick,
-  ReturnedWord,
+  WordArray,
+  setReturnedWord,
+  setShortDef,
+  setPartOfSpeech,
+  setWordExample,
+  setAnts,
+  setSyns,
 }) => {
   const boxShadow = useColorModeValue('0px 0px 25px #a1a1a1, -10px -10px 0px #3B82F6', '0px 0px 11px #1c1c1c, -10px -10px 0px orange');
   const gradientbg = useColorModeValue('linear(to-l, gray.200, white)');
@@ -46,6 +59,54 @@ const WordsTabs = ({
   const NounTabButton = useRef(null);
   const VerbTabButton = useRef(null);
   const AdjectiveTabButton = useRef(null);
+
+  const WordsArrayFilter = (wordObjects, type) => {
+    const filteredArray = wordObjects.filter((word) => word.fl === type);
+    return filteredArray[0];
+  };
+
+  const WordArraySetState = (wordArray) => {
+    const {
+      fl,
+      hwi: {
+        hw,
+      },
+      shortdef,
+      def: [{
+        sseq: dt,
+      }],
+      meta: {
+        syns,
+      },
+      meta: {
+        ants,
+      },
+    } = wordArray;
+    const Example = dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1];
+    const ExampleModified = Example.replace('{it}', '<em>').replace('{/it}', '</em>');
+    setAnts(ants[0]);
+    setSyns(syns[0]);
+    setReturnedWord(hw);
+    setPartOfSpeech(fl);
+    setShortDef(shortdef[0]);
+    setWordExample(ExampleModified);
+  };
+
+  const HandleTabClick = (type) => {
+    switch (type) {
+      case 'verb':
+        WordArraySetState(WordsArrayFilter(WordArray, 'verb'));
+        break;
+      case 'noun':
+        WordArraySetState(WordsArrayFilter(WordArray, 'noun'));
+        break;
+      case 'adjective':
+        WordArraySetState(WordsArrayFilter(WordArray, 'adjective'));
+        break;
+      default:
+        break;
+    }
+  };
 
   const HandleKeyDownTabsButton123 = (event) => {
     switch (event.key) {
@@ -82,12 +143,6 @@ const WordsTabs = ({
         {(WordsLoaded)
           ? (
             <WordsContainerContent
-              ReturnedWord={ReturnedWord}
-              PartOfSpeech={PartOfSpeech}
-              ShortDef={ShortDef}
-              WordExample={WordExample}
-              Syns={Syns}
-              Ants={Ants}
               getWords={getWords}
               HandleBackButtonClick={HandleBackButtonClick}
             />
@@ -138,4 +193,27 @@ const WordsTabs = ({
   );
 };
 
-export default WordsTabs;
+const mapStateToProps = ({ words }) => ({
+  Word: words.Word,
+  ReturnedWord: words.ReturnedWord,
+  ShortDef: words.ShortDef,
+  PartOfSpeech: words.PartOfSpeech,
+  WordExample: words.WordExample,
+  Syns: words.Syns,
+  Ants: words.Ants,
+  WordArray: words.WordArray,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  // eslint-disable-next-line no-undef
+  setWord: (word) => dispatch(setWord(word)),
+  setReturnedWord: (word) => dispatch(setReturnedWord(word)),
+  setShortDef: (word) => dispatch(setShortDef(word)),
+  setPartOfSpeech: (word) => dispatch(setPartOfSpeech(word)),
+  setWordExample: (word) => dispatch(setWordExample(word)),
+  setAnts: (word) => dispatch(setAnts(word)),
+  setSyns: (word) => dispatch(setSyns(word)),
+  setWordArray: (word) => dispatch(setWordArray(word)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(WordsTabs));

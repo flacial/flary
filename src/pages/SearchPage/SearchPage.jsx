@@ -3,7 +3,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 import tw from 'tailwind-styled-components';
-import { useLocation, withRouter, Link as ReachLink } from 'react-router-dom';
+import { withRouter, Link as ReachLink } from 'react-router-dom';
 import React, {
   useEffect,
 } from 'react';
@@ -25,6 +25,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { InfoIcon, SearchIcon } from '@chakra-ui/icons';
+import { connect } from 'react-redux';
 import SearchInput from '../../components/search-input/search-input.component';
 
 const MainContainer = tw.div`
@@ -37,7 +38,7 @@ const MainContainer = tw.div`
 
 const SearchPage = ({
   WordFindType, WordFind, isOpen,
-  getInputValue, HandleSearchButtonClick, getWords,
+  getInputValue, HandleSearchButtonClick, getWords, Word,
 }) => {
   const [isMoreThan420px] = useMediaQuery('(max-width: 420px)');
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange');
@@ -114,5 +115,8 @@ const SearchPage = ({
     </MainContainer>
   );
 };
+const mapStateToProps = ({ words }) => ({
+  Word: words.Word,
+});
 
-export default withRouter(SearchPage);
+export default connect(mapStateToProps, null)(withRouter(SearchPage));
