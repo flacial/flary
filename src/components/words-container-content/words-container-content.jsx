@@ -113,8 +113,21 @@ const WordsContainerContent = (
   const OrderSynonyms = () => turnWordInToList(Syns);
   const OrderAntonyms = () => turnWordInToList(Ants);
 
+  const ThesaurusHeader = tw.h1`
+italic
+font-serif
+text-3xl
+font-bold
+inline-block
+`;
+
+  const ChakraThesaurusHeader = chakra(ThesaurusHeader);
+
   return (
     <>
+      <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
+        Thesaurus
+      </ChakraThesaurusHeader>
       <WordAndType>
         <Presets.TransitionFade>
           <ChakraTheWord color={fontColorMain}>

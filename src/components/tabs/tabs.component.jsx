@@ -136,9 +136,6 @@ const WordsTabs = ({
 
   const TheWholeThesaurus = () => (
     <WordsContainer boxShadow={boxShadow} gradientbg={gradientbg} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
-      <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
-        Thesaurus
-      </ChakraThesaurusHeader>
       <Presets.TransitionFade>
         {(WordsLoaded)
           ? (
