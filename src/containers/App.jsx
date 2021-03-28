@@ -1,17 +1,22 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-labels */
 /* eslint-disable no-restricted-syntax */
+import { connect } from 'react-redux';
 import './App.css';
 import {
   Link,
   Redirect,
+  withRouter,
 } from 'react-router-dom';
-import ReactHtmlParser from 'react-html-parser';
 import {
   useState,
   useEffect,
   React,
+  lazy,
+  Suspense,
 } from 'react';
 import {
   useDisclosure,
@@ -21,20 +26,41 @@ import {
 } from 'react-component-transition';
 import getRequest from '../services/getRequest';
 import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
-import Routes from '../Routes/Routes';
+import Routes from '../routes/routes';
 import NavBar from '../components/NavBar/NavBar';
-import PopUpSearchBar from '../components/popup-search-bar/popup-search-bar.component';
+import {
+  setWord,
+  setReturnedWord,
+  setShortDef,
+  setPartOfSpeech,
+  setWordExample,
+  setAnts,
+  setSyns,
+  setWordArray,
+} from '../redux/words/words.action';
+import ErrorBoundary from '../components/error-boundary/error-boundary.component';
 
-// TODO understand wth is your state doing
+const PopUpSearchBar = lazy(() => import('../components/popup-search-bar/popup-search-bar.component'));
 
-const App = () => {
-  const [Word, setWord] = useState('');
-  const [ReturnedWord, setReturnedWord] = useState('');
-  const [ShortDef, setShortDef] = useState('');
-  const [PartOfSpeech, setPartOfSpeech] = useState('');
-  const [WordExample, setWordExample] = useState('');
+const App = (props) => {
+  const {
+    location,
+    Word,
+    setWord,
+    ReturnedWord,
+    setReturnedWord,
+    ShortDef,
+    setShortDef,
+    setPartOfSpeech,
+    setWordExample,
+    Ants,
+    setAnts,
+    Syns,
+    setSyns,
+    setWordArray,
+  } = props;
   const [Error, setError] = useState(false);
-  const [PathName, setPathName] = useState('');
+  const PathName = location.pathname;
   const {
     isOpen,
     onOpen,
@@ -48,9 +74,6 @@ const App = () => {
   const [WordFind, setWordFind] = useState(false);
   const [WordFindType, setWordFindType] = useState('');
   const [WordsLoaded, setWordsLoaded] = useState(false);
-  const [Syns, setSyns] = useState([]);
-  const [Ants, setAnts] = useState([]);
-  const [WordArray, setWordArray] = useState([]);
   const [AvailableWordType, setAvailableWordType] = useState({});
 
   // Used as a condition to render the values or skeleton in ThesaurusPage
@@ -63,7 +86,7 @@ const App = () => {
   });
 
   const getInputValue = (event) => {
-    setWord(event.target.value);
+    setWord(event);
   };
 
   const WordsArrayFilter = (wordObjects, type) => {
@@ -175,6 +198,7 @@ const App = () => {
         onOpen();
       }
     } catch (error) {
+      console.log(error);
       setError(true);
       setWordFind(true);
       onOpen();
@@ -182,7 +206,7 @@ const App = () => {
   };
 
   const getWords = (word = Word) => {
-    if (Word === '') {
+    if (word === '') {
       setWordFind(true);
       setWordFindType('no input');
       onOpen();
@@ -220,46 +244,15 @@ const App = () => {
     }
   }, [PathName]);
 
-  const HandleTabClick = (type) => {
-    switch (type) {
-      case 'verb':
-        WordArraySetState(WordsArrayFilter(WordArray, 'verb'));
-        break;
-      case 'noun':
-        WordArraySetState(WordsArrayFilter(WordArray, 'noun'));
-        break;
-      case 'adjective':
-        WordArraySetState(WordsArrayFilter(WordArray, 'adjective'));
-        break;
-      default:
-        break;
-    }
-  };
-
-  const getPathName = (Path) => {
-    setPathName(Path);
-  };
-
   const ThesaurusStore = () => (
     <ThesaurusPage
-      setWordsLoaded={setWordsLoaded}
-      getInputValue={getInputValue}
       getWords={getWords}
       AvailableWordType={AvailableWordType}
-      HandleTabClick={HandleTabClick}
-      PathName={PathName}
       Ants={Ants}
       Syns={Syns}
       WordsLoaded={WordsLoaded}
-      Word={Word}
       Link={Link}
       HandleBackButtonClick={HandleBackButtonClick}
-      ReturnedWord={ReturnedWord}
-      PartOfSpeech={PartOfSpeech}
-      ShortDef={ShortDef}
-      ReactHtmlParser={ReactHtmlParser}
-      WordExample={WordExample}
-      getPathName={getPathName}
     />
   );
 
@@ -293,7 +286,7 @@ const App = () => {
     return ThesaurusComponent;
   };
 
-  // Clear all stored states if the pathName isn't thesaurus
+  // Clear all stored states if the pathName is not thesaurus
   useEffect(() => {
     if (PathName !== '/thesaurus' && ShortDef.length) {
       HandleBackButtonClick();
@@ -302,24 +295,27 @@ const App = () => {
 
   return (
     <>
-      {(PathName === '/thesaurus')
+      {(PathName === '/thesaurus' && ReturnedWord.length)
         ? (
-          <PopUpSearchBar
-            isOpen2={isOpen2}
-            onOpen2={onOpen2}
-            onClose2={onClose2}
-            onToggle2={onToggle2}
-            HandleBackButtonClick={HandleBackButtonClick}
-            getInputValue={getInputValue}
-            getWords={getWords}
-            setWordsLoaded={setWordsLoaded}
-          />
+          <ErrorBoundary>
+            <Suspense fallback={null}>
+              <PopUpSearchBar
+                isOpen2={isOpen2}
+                onOpen2={onOpen2}
+                onClose2={onClose2}
+                onToggle2={onToggle2}
+                HandleBackButtonClick={HandleBackButtonClick}
+                getInputValue={getInputValue}
+                getWords={getWords}
+                setWordsLoaded={setWordsLoaded}
+              />
+            </Suspense>
+          </ErrorBoundary>
         )
         : <></>}
       <NavBar
         PathName={PathName}
         onOpen2={onOpen2}
-        ReturnedWord={ReturnedWord}
       />
       <Routes
         getWords={getWords}
@@ -330,10 +326,32 @@ const App = () => {
         getInputValue={getInputValue}
         HandleSearchButtonClick={HandleSearchButtonClick}
         Link={Link}
-        getPathName={getPathName}
       />
     </>
   );
 };
 
-export default App;
+const mapStateToProps = ({ words }) => ({
+  Word: words.Word,
+  ReturnedWord: words.ReturnedWord,
+  ShortDef: words.ShortDef,
+  PartOfSpeech: words.PartOfSpeech,
+  WordExample: words.WordExample,
+  Syns: words.Syns,
+  Ants: words.Ants,
+  WordArray: words.WordArray,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  // eslint-disable-next-line no-undef
+  setWord: (word) => dispatch(setWord(word)),
+  setReturnedWord: (word) => dispatch(setReturnedWord(word)),
+  setShortDef: (word) => dispatch(setShortDef(word)),
+  setPartOfSpeech: (word) => dispatch(setPartOfSpeech(word)),
+  setWordExample: (word) => dispatch(setWordExample(word)),
+  setAnts: (word) => dispatch(setAnts(word)),
+  setSyns: (word) => dispatch(setSyns(word)),
+  setWordArray: (word) => dispatch(setWordArray(word)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));

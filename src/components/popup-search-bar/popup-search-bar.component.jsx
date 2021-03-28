@@ -2,15 +2,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Presets } from 'react-component-transition';
 import {
-  chakra,
   Box,
   Input,
-  useDisclosure,
   useColorModeValue,
-  Portal,
-  Fade,
   ScaleFade,
   InputGroup,
   InputLeftElement,
@@ -19,20 +14,13 @@ import { SearchIcon } from '@chakra-ui/icons';
 
 const PopUpSearchBar = ({
   history, HandleBackButtonClick,
-  getWords, isOpen2, onToggle2, onClose2, onOpen2,
+  getWords, isOpen2, onToggle2, onClose2,
 }) => {
   const [Word, setWord] = useState('');
   const focusBorderColorInput = useColorModeValue('#3B82F6', '#ffa500');
   const bg = useColorModeValue('#edf2f7', 'rgba(255, 255, 255, 0.08)');
   const color = useColorModeValue('#252d3d', '#edf2f7');
   const InputField = useRef(null);
-
-  const HandleSearchButtonClickHeader = () => {
-    onToggle2();
-    if (InputField?.current) {
-      InputField.current.focus();
-    }
-  };
 
   const HandleKeyDownOpenSearchBar = (event) => {
     if (event.key === 'E' && event.ctrlKey && event.shiftKey) {

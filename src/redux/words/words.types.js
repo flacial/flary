@@ -1,0 +1,11 @@
+/* eslint-disable import/prefer-default-export */
+export const wordsTypes = {
+  SET_WORD: 'SET_WORD',
+  SET_RETURNED_WORD: 'SET_RETURNED_WORD',
+  SET_SHORTDEF: 'SET_SHORTDEF',
+  SET_PART_OF_SPEECH: 'SET_PART_OF_SPEECH',
+  SET_WORD_EXAMPLE: 'SET_WORD_EXAMPLE',
+  SET_SYNS: 'SET_SYNS',
+  SET_ANTS: 'SET_ANTS',
+  SET_WORD_ARRAY: 'SET_WORD_ARRAY',
+};

@@ -4,10 +4,11 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React from 'react';
-// import { Presets } from 'react-component-transition';
+import { Presets } from 'react-component-transition';
 import tw from 'tailwind-styled-components';
 import ReactHtmlParser from 'react-html-parser';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
   chakra,
   Heading,
@@ -115,9 +116,11 @@ const WordsContainerContent = (
   return (
     <>
       <WordAndType>
-        <ChakraTheWord color={fontColorMain}>
-          {ReturnedWord}
-        </ChakraTheWord>
+        <Presets.TransitionFade>
+          <ChakraTheWord color={fontColorMain}>
+            {ReturnedWord}
+          </ChakraTheWord>
+        </Presets.TransitionFade>
         <ChakraTheType color={fontColorDarkWhiteSmallWords}>
           {PartOfSpeech}
         </ChakraTheType>
@@ -168,4 +171,15 @@ const WordsContainerContent = (
   );
 };
 
-export default withRouter(WordsContainerContent);
+const mapStateToProps = ({ words }) => ({
+  Word: words.Word,
+  ReturnedWord: words.ReturnedWord,
+  ShortDef: words.ShortDef,
+  PartOfSpeech: words.PartOfSpeech,
+  WordExample: words.WordExample,
+  Syns: words.Syns,
+  Ants: words.Ants,
+  WordArray: words.WordArray,
+});
+
+export default connect(mapStateToProps, null)(withRouter(WordsContainerContent));
