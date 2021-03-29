@@ -70,16 +70,36 @@ const WordsContainerContent = (
   props,
 ) => {
   const {
-    ReturnedWord,
-    PartOfSpeech,
-    ShortDef,
-    WordExample,
-    Syns,
-    Ants,
     getWords,
     HandleBackButtonClick,
     history,
+    WordsArray,
   } = props;
+
+  const {
+    fl,
+    hwi: {
+      hw,
+    },
+    shortdef,
+    def: [{
+      sseq: dt,
+    }],
+    meta: {
+      syns,
+    },
+    meta: {
+      ants,
+    },
+  } = WordsArray;
+  const ExampleSentence = dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1];
+  const ExampleModified = ExampleSentence.replace('{it}', '<em>').replace('{/it}', '</em>');
+  const Ants = ants[0];
+  const Syns = syns[0];
+  const ReturnedWord = hw;
+  const PartOfSpeech = fl;
+  const ShortDef = shortdef[0];
+  const WordExample = ExampleModified;
 
   const fontColorMain = useColorModeValue('gray.700', '#edf2f7');
   const fontColorHeaders = useColorModeValue('#2563EB', '#db8b02');

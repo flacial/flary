@@ -84,7 +84,7 @@ const ThesaurusPage = (props) => {
 
   return (
     <>
-      {ReturnedWord.length
+      {WordsLoaded
         ? (
           <Box zIndex="9991" className="fixed top-0" left={[null, '32', null]}>
             <LinkChak _focus={focusBorderColorGeneral} bg={bg} color={color} _hover={hover} onClick={HandleBackButtonClick} className={LinkCSS} to="/">

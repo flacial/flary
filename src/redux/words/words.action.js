@@ -1,6 +1,31 @@
 /* eslint-disable import/prefer-default-export */
 import { wordsTypes } from './words.types';
 
+export const setPhraseArray = (word) => ({
+  type: wordsTypes.SET_PHRASE_ARRAY,
+  payload: word,
+});
+
+export const setAdverbArray = (word) => ({
+  type: wordsTypes.SET_ADVERB_ARRAY,
+  payload: word,
+});
+
+export const setNounArray = (word) => ({
+  type: wordsTypes.SET_NOUN_ARRAY,
+  payload: word,
+});
+
+export const setVerbArray = (word) => ({
+  type: wordsTypes.SET_VERB_ARRAY,
+  payload: word,
+});
+
+export const setAdjArray = (word) => ({
+  type: wordsTypes.SET_ADJ_ARRAY,
+  payload: word,
+});
+
 export const setWord = (word) => ({
   type: wordsTypes.SET_WORD,
   payload: word,

@@ -23,6 +23,7 @@ const NavBar = ({
   onClose2,
   isOpen2,
   getInputValue,
+  WordsLoaded,
 }) => (
   <Box
     zIndex="9991"
@@ -32,7 +33,7 @@ const NavBar = ({
     display="flex"
     justifyContent="flex-end"
   >
-    {(location.pathname === '/thesaurus' && ReturnedWord.length)
+    {(location.pathname === '/thesaurus' && WordsLoaded)
       ? (
         <>
           {/* <ErrorBoundary>

@@ -27,10 +27,40 @@ const INITIAL_STATE = {
   Syns: [],
   Ants: [],
   WordArray: [],
+  NounArray: [],
+  VerbArray: [],
+  AdjArray: [],
+  PhraseArray: [],
+  AdverbArray: [],
 };
 
 const wordsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case wordsTypes.SET_NOUN_ARRAY:
+      return {
+        ...state,
+        NounArray: action.payload,
+      };
+    case wordsTypes.SET_ADVERB_ARRAY:
+      return {
+        ...state,
+        AdverbArray: action.payload,
+      };
+    case wordsTypes.SET_PHRASE_ARRAY:
+      return {
+        ...state,
+        PhraseArray: action.payload,
+      };
+    case wordsTypes.SET_VERB_ARRAY:
+      return {
+        ...state,
+        VerbArray: action.payload,
+      };
+    case wordsTypes.SET_ADJ_ARRAY:
+      return {
+        ...state,
+        AdjArray: action.payload,
+      };
     case wordsTypes.SET_WORD:
       return {
         ...state,

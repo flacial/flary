@@ -1,5 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 export const wordsTypes = {
+  SET_PHRASE_ARRAY: 'SET_PHRASE_ARRAY',
+  SET_ADVERB_ARRAY: 'SET_ADVERB_ARRAY',
   SET_WORD: 'SET_WORD',
   SET_RETURNED_WORD: 'SET_RETURNED_WORD',
   SET_SHORTDEF: 'SET_SHORTDEF',
@@ -8,4 +10,7 @@ export const wordsTypes = {
   SET_SYNS: 'SET_SYNS',
   SET_ANTS: 'SET_ANTS',
   SET_WORD_ARRAY: 'SET_WORD_ARRAY',
+  SET_NOUN_ARRAY: 'SET_NOUN_ARRAY',
+  SET_VERB_ARRAY: 'SET_VERB_ARRAY',
+  SET_ADJ_ARRAY: 'SET_ADJ_ARRAY',
 };

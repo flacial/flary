@@ -1,13 +1,12 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
-import tw from 'tailwind-styled-components';
 import {
-  TabList, Tab, Tabs, TabPanels, TabPanel, useColorModeValue, chakra,
+  TabList, Tab, Tabs, TabPanels, TabPanel, useColorModeValue,
 } from '@chakra-ui/react';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Presets } from 'react-component-transition';
 import { connect } from 'react-redux';
 import LoadingSkeleton from '../loading-skeleton/loading-skeleton.component';
@@ -23,35 +22,23 @@ import {
   setSyns,
   setWordArray,
 } from '../../redux/words/words.action';
-
-const ThesaurusHeader = tw.h1`
-italic
-font-serif
-text-3xl
-font-bold
-inline-block
-`;
-
-const ChakraThesaurusHeader = chakra(ThesaurusHeader);
+import ErrorBoundary from '../error-boundary/error-boundary.component';
 
 const WordsTabs = ({
   AvailableWordType,
   WordsLoaded,
   getWords,
-  WordExample,
   HandleBackButtonClick,
-  WordArray,
-  setReturnedWord,
-  setShortDef,
-  setPartOfSpeech,
-  setWordExample,
-  setAnts,
-  setSyns,
+  NounArray,
+  VerbArray,
+  AdjArray,
+  PhraseArray,
+  AdverbArray,
+  // WordArray,
 }) => {
   const boxShadow = useColorModeValue('0px 0px 25px #a1a1a1, -10px -10px 0px #3B82F6', '0px 0px 11px #1c1c1c, -10px -10px 0px orange');
   const gradientbg = useColorModeValue('linear(to-l, gray.200, white)');
   const Tabshover = useColorModeValue({ color: '#3B82F6' }, { color: 'orange' });
-  const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange');
   const bg = useColorModeValue('#edf2f7', 'rgba(255, 255, 255, 0.08)');
   const color = useColorModeValue('#252d3d', '#edf2f7');
   const focusBorderColorGeneral = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
@@ -59,54 +46,45 @@ const WordsTabs = ({
   const NounTabButton = useRef(null);
   const VerbTabButton = useRef(null);
   const AdjectiveTabButton = useRef(null);
+  const [isThere, setisThere] = useState({});
 
-  const WordsArrayFilter = (wordObjects, type) => {
-    const filteredArray = wordObjects.filter((word) => word.fl === type);
-    return filteredArray[0];
-  };
-
-  const WordArraySetState = (wordArray) => {
-    const {
-      fl,
-      hwi: {
-        hw,
-      },
-      shortdef,
-      def: [{
-        sseq: dt,
-      }],
-      meta: {
-        syns,
-      },
-      meta: {
-        ants,
-      },
-    } = wordArray;
-    const Example = dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1];
-    const ExampleModified = Example.replace('{it}', '<em>').replace('{/it}', '</em>');
-    setAnts(ants[0]);
-    setSyns(syns[0]);
-    setReturnedWord(hw);
-    setPartOfSpeech(fl);
-    setShortDef(shortdef[0]);
-    setWordExample(ExampleModified);
-  };
-
-  const HandleTabClick = (type) => {
-    switch (type) {
-      case 'verb':
-        WordArraySetState(WordsArrayFilter(WordArray, 'verb'));
-        break;
-      case 'noun':
-        WordArraySetState(WordsArrayFilter(WordArray, 'noun'));
-        break;
-      case 'adjective':
-        WordArraySetState(WordsArrayFilter(WordArray, 'adjective'));
-        break;
-      default:
-        break;
+  // eslint-disable-next-line consistent-return
+  const InitialWordArray = () => {
+    if (Object.keys(NounArray).length) {
+      return NounArray;
+    }
+    if (Object.keys(VerbArray).length) {
+      return VerbArray;
+    }
+    if (Object.keys(AdjArray).length) {
+      return AdjArray;
+    }
+    if (Object.keys(PhraseArray).length) {
+      return PhraseArray;
+    }
+    if (Object.keys(AdverbArray).length) {
+      return AdverbArray;
     }
   };
+
+  // useEffect(() => {
+  //   console.warn('ran');
+  //   if (Object.keys(NounArray).length) {
+  //     setisThere((ps) => ({ ...ps, noun: true }));
+  //   }
+  //   if (Object.keys(VerbArray).length) {
+  //     setisThere((ps) => ({ ...ps, verb: true }));
+  //   }
+  //   if (Object.keys(AdjArray).length) {
+  //     setisThere((ps) => ({ ...ps, adj: true }));
+  //   }
+  //   if (Object.keys(PhraseArray).length) {
+  //     setisThere((ps) => ({ ...ps, phrase: true }));
+  //   }
+  //   if (Object.keys(AdverbArray).length) {
+  //     setisThere((ps) => ({ ...ps, adverb: true }));
+  //   }
+  // }, [AvailableWordType]);
 
   const HandleKeyDownTabsButton123 = (event) => {
     switch (event.key) {
@@ -134,15 +112,18 @@ const WordsTabs = ({
     };
   }, []);
 
-  const TheWholeThesaurus = () => (
+  const TheWholeThesaurus = (WordsArray) => (
     <WordsContainer boxShadow={boxShadow} gradientbg={gradientbg} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
       <Presets.TransitionFade>
         {(WordsLoaded)
           ? (
-            <WordsContainerContent
-              getWords={getWords}
-              HandleBackButtonClick={HandleBackButtonClick}
-            />
+            <ErrorBoundary>
+              <WordsContainerContent
+                getWords={getWords}
+                HandleBackButtonClick={HandleBackButtonClick}
+                WordsArray={WordsArray}
+              />
+            </ErrorBoundary>
           )
           : (
             <LoadingSkeleton />
@@ -156,34 +137,93 @@ const WordsTabs = ({
       <Tabs align="center" variant="soft-rounded">
         {/* <Box className='backdrop-blur z-50' display='flex'
          justifyContent='center' h='22' width='full'  position='fixed' bottom='0'> */}
-        <TabList marginTop={['4', '2', null]}>
-          {(AvailableWordType.noun) ? ((Object.keys(AvailableWordType).length)
-            ? <Tab ref={NounTabButton} onClick={() => HandleTabClick('noun')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
-            : <></>
-          )
-            : <></>}
-          {(AvailableWordType.verb) ? ((Object.keys(AvailableWordType).length)
-            ? <Tab ref={VerbTabButton} onClick={() => HandleTabClick('verb')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Verb</Tab>
-            : <></>
-          )
-            : <></>}
-          {(AvailableWordType.adjective) ? ((Object.keys(AvailableWordType).length)
-            ? <Tab ref={AdjectiveTabButton} onClick={() => HandleTabClick('adjective')} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adjective</Tab>
-            : <></>
-          )
-            : <></>}
-        </TabList>
+        <Presets.TransitionFade>
+          <TabList marginTop={['4', '2', null]}>
+            {(AvailableWordType.noun) ? ((Object.keys(AvailableWordType).length)
+              ? <Tab ref={NounTabButton} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
+              : null
+            )
+              : null}
+            {(AvailableWordType.verb) ? ((Object.keys(AvailableWordType).length)
+              ? <Tab ref={VerbTabButton} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Verb</Tab>
+              : null
+            )
+              : null}
+            {(AvailableWordType.adjective) ? ((Object.keys(AvailableWordType).length)
+              ? <Tab ref={AdjectiveTabButton} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adjective</Tab>
+              : <></>
+            )
+              : null}
+            {(AvailableWordType.phrase) ? ((Object.keys(AvailableWordType).length)
+              ? <Tab ref={AdjectiveTabButton} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Phrase</Tab>
+              : null
+            )
+              : null}
+            {(AvailableWordType.adverb) ? ((Object.keys(AvailableWordType).length)
+              ? <Tab ref={AdjectiveTabButton} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adverb</Tab>
+              : null
+            )
+              : null}
+          </TabList>
+        </Presets.TransitionFade>
         {/* </Box> */}
         <TabPanels>
+          {/* {
+          WordArray.length
+            ? null
+            : (
+              <WordsContainer boxShadow={boxShadow} gradientbg={gradientbg} ml={['0', '9em', null]} mr={['0', '9em', null]} marginTop={['3', null, null]}>
+                <Presets.TransitionFade>
+                  <LoadingSkeleton />
+                </Presets.TransitionFade>
+              </WordsContainer>
+            )
+        } */}
+          {/* {
+            Object.keys(NounArray).length
+              ? ( */}
           <TabPanel>
-            {TheWholeThesaurus()}
+            {TheWholeThesaurus(InitialWordArray())}
           </TabPanel>
-          <TabPanel>
-            {TheWholeThesaurus()}
-          </TabPanel>
-          <TabPanel>
-            {TheWholeThesaurus()}
-          </TabPanel>
+          {/* )
+              : null
+          } */}
+          {
+            Object.keys(VerbArray).length
+              ? (
+                <TabPanel>
+                  {TheWholeThesaurus(VerbArray)}
+                </TabPanel>
+              )
+              : null
+          }
+          {
+            Object.keys(AdjArray).length
+              ? (
+                <TabPanel>
+                  {TheWholeThesaurus(AdjArray)}
+                </TabPanel>
+              )
+              : null
+          }
+          {
+            Object.keys(PhraseArray).length
+              ? (
+                <TabPanel>
+                  {TheWholeThesaurus(PhraseArray)}
+                </TabPanel>
+              )
+              : null
+          }
+          {
+            Object.keys(AdverbArray).length
+              ? (
+                <TabPanel>
+                  {TheWholeThesaurus(AdverbArray)}
+                </TabPanel>
+              )
+              : null
+          }
         </TabPanels>
       </Tabs>
     </>
@@ -199,6 +239,11 @@ const mapStateToProps = ({ words }) => ({
   Syns: words.Syns,
   Ants: words.Ants,
   WordArray: words.WordArray,
+  NounArray: words.NounArray,
+  VerbArray: words.VerbArray,
+  AdjArray: words.AdjArray,
+  PhraseArray: words.PhraseArray,
+  AdverbArray: words.AdverbArray,
 });
 
 const mapDispatchToProps = (dispatch) => ({
