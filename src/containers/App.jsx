@@ -320,13 +320,7 @@ const App = (props) => {
   const Thesaurus = () => {
     let ThesaurusComponent;
     if (Word.length) {
-      if (ReturnedWord.length) {
-        ThesaurusComponent = (
-          <Presets.TransitionFade>
-            {ThesaurusStore()}
-          </Presets.TransitionFade>
-        );
-      } else if (Error) {
+      if (Error) {
         ThesaurusComponent = <Redirect to="/" />;
       } else {
         ThesaurusComponent = (
