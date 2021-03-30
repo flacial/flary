@@ -30,13 +30,14 @@ import Routes from '../routes/routes';
 import NavBar from '../components/NavBar/NavBar';
 import {
   setWord,
-  setReturnedWord,
-  setShortDef,
-  setPartOfSpeech,
-  setWordExample,
-  setAnts,
-  setSyns,
   setWordArray,
+  setNounArray,
+  setAdjArray,
+  setVerbArray,
+  setPhraseArray,
+  setAdverbArray,
+  setAvailableWordType,
+  resetAvailableWordType,
 } from '../redux/words/words.action';
 import ErrorBoundary from '../components/error-boundary/error-boundary.component';
 
@@ -47,17 +48,16 @@ const App = (props) => {
     location,
     Word,
     setWord,
-    ReturnedWord,
-    setReturnedWord,
-    ShortDef,
-    setShortDef,
-    setPartOfSpeech,
-    setWordExample,
-    Ants,
-    setAnts,
-    Syns,
-    setSyns,
     setWordArray,
+    setNounArray,
+    WordArray,
+    setVerbArray,
+    setAdjArray,
+    setPhraseArray,
+    setAdverbArray,
+    AvailableWordType,
+    setAvailableWordType,
+    resetAvailableWordType,
   } = props;
   const [Error, setError] = useState(false);
   const PathName = location.pathname;
@@ -65,74 +65,68 @@ const App = (props) => {
     isOpen,
     onOpen,
   } = useDisclosure();
-  const {
-    isOpen: isOpen2,
-    onOpen: onOpen2,
-    onClose: onClose2,
-    onToggle: onToggle2,
-  } = useDisclosure();
   const [WordFind, setWordFind] = useState(false);
   const [WordFindType, setWordFindType] = useState('');
   const [WordsLoaded, setWordsLoaded] = useState(false);
-  const [AvailableWordType, setAvailableWordType] = useState({});
+  const [IsInitialDone, setInitialDone] = useState(false);
 
-  // Used as a condition to render the values or skeleton in ThesaurusPage
-  useEffect(() => {
-    if (PathName === '/thesaurus' && !ShortDef.length) {
-      setWordsLoaded(false);
-    } else if (PathName === '/thesaurus' && ShortDef.length) {
-      setWordsLoaded(true);
+  const setFilterArray = (wordObjects) => {
+    if (AvailableWordType.noun) {
+      const filteredArray = wordObjects.filter((word) => word.fl === 'noun');
+      setNounArray(filteredArray[0]);
     }
-  });
-
-  const getInputValue = (event) => {
-    setWord(event);
+    if (AvailableWordType.verb) {
+      const filteredArray = wordObjects.filter((word) => word.fl === 'verb');
+      setVerbArray(filteredArray[0]);
+    }
+    if (AvailableWordType.adjective) {
+      const filteredArray = wordObjects.filter((word) => word.fl === 'adjective');
+      setAdjArray(filteredArray[0]);
+    }
+    if (AvailableWordType.phrase) {
+      const filteredArray = wordObjects.filter((word) => word.fl === 'phrase');
+      setPhraseArray(filteredArray[0]);
+    }
+    if (AvailableWordType.adverb) {
+      const filteredArray = wordObjects.filter((word) => word.fl === 'adverb');
+      setAdverbArray(filteredArray[0]);
+    }
   };
 
-  const WordsArrayFilter = (wordObjects, type) => {
-    const filteredArray = wordObjects.filter((word) => word.fl === type);
-    return filteredArray[0];
-  };
-
-  const WordArraySetState = (wordArray) => {
-    const {
-      fl,
-      hwi: {
-        hw,
-      },
-      shortdef,
-      def: [{
-        sseq: dt,
-      }],
-      meta: {
-        syns,
-      },
-      meta: {
-        ants,
-      },
-    } = wordArray;
-    const Example = dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1];
-    const ExampleModified = Example.replace('{it}', '<em>').replace('{/it}', '</em>');
-    setAnts(ants[0]);
-    setSyns(syns[0]);
-    setReturnedWord(hw);
-    setPartOfSpeech(fl);
-    setShortDef(shortdef[0]);
-    setWordExample(ExampleModified);
-  };
+  useEffect(() => {
+    if (IsInitialDone) {
+      setFilterArray(WordArray);
+    }
+  }, [AvailableWordType]);
 
   const PartOfSpeechChecker = (wordObjects) => {
     try {
       wordObjects.forEach((arr) => {
         switch (arr.fl) {
           case 'noun':
-            setAvailableWordType((prevState) => ({ ...prevState, noun: true }));
+            setAvailableWordType({ type: 'noun', value: true });
+            setInitialDone(true);
+            setWordsLoaded(true);
             break;
           case 'verb':
-            setAvailableWordType((prevState) => ({ ...prevState, verb: true }));
+            setAvailableWordType({ type: 'verb', value: true });
+            setInitialDone(true);
+            setWordsLoaded(true);
             break;
           case 'adjective':
-            setAvailableWordType((prevState) => ({ ...prevState, adjective: true }));
+            setAvailableWordType({ type: 'adjective', value: true });
+            setInitialDone(true);
+            setWordsLoaded(true);
+            break;
+          case 'phrase':
+            setAvailableWordType({ type: 'phrase', value: true });
+            setInitialDone(true);
+            setWordsLoaded(true);
+            break;
+          case 'adverb':
+            setAvailableWordType({ type: 'adverb', value: true });
+            setInitialDone(true);
+            setWordsLoaded(true);
             break;
           default:
             break;
@@ -143,53 +137,11 @@ const App = (props) => {
     }
   };
 
-  const InitialWord = (wordObjects) => {
-    try {
-      MainLoop:
-      for (let index = 0; index < 4; index++) {
-        // eslint-disable-next-line no-shadow
-        for (let index = 0; index < wordObjects.length; index++) {
-          const element = wordObjects[index];
-          if (element.fl === 'noun') {
-            WordArraySetState(WordsArrayFilter(wordObjects, 'noun'));
-            break MainLoop;
-          }
-        }
-        // eslint-disable-next-line no-shadow
-        for (let index = 0; index < wordObjects.length; index++) {
-          const element = wordObjects[index];
-          if (element.fl === 'verb') {
-            WordArraySetState(WordsArrayFilter(wordObjects, 'verb'));
-            break MainLoop;
-          }
-        }
-        // eslint-disable-next-line no-shadow
-        for (let index = 0; index < wordObjects.length; index++) {
-          const element = wordObjects[index];
-          if (element.fl === 'adjective') {
-            WordArraySetState(WordsArrayFilter(wordObjects, 'adjective'));
-            break MainLoop;
-          }
-        }
-        // eslint-disable-next-line no-shadow
-        for (let index = 0; index < wordObjects.length; index++) {
-          const element = wordObjects[index];
-          if (element.fl !== 'noun' && 'verb' && 'adjective') {
-            WordArraySetState(WordsArrayFilter(wordObjects, element.fl));
-            break MainLoop;
-          }
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const PassRequstedWords = (wordObjects) => {
     try {
       if (wordObjects[0].hwi) {
         setWordArray(wordObjects);
-        InitialWord(wordObjects);
+        // InitialWord(wordObjects);
         PartOfSpeechChecker(wordObjects);
       } else {
         setError(true);
@@ -223,23 +175,23 @@ const App = (props) => {
   };
 
   const HandleBackButtonClick = (isSetword) => {
-    setWordsLoaded(false);
     if (isSetword) {
       setWord('');
     }
-    setReturnedWord('');
-    setPartOfSpeech('');
-    setShortDef('');
-    setWordExample('');
-    setSyns([]);
-    setAnts([]);
-    setAvailableWordType({});
+    setWordsLoaded(false);
+    resetAvailableWordType();
+    setNounArray([]);
+    setVerbArray([]);
+    setAdjArray([]);
+    setPhraseArray([]);
+    setAdverbArray([]);
+    setWordArray([]);
   };
 
   // Sets AvailableWordType to an empty object
   useEffect(() => {
     if (PathName !== '/thesaurus' && Object.keys(AvailableWordType).length !== 0) {
-      setAvailableWordType({});
+      setAvailableWordType([]);
       HandleBackButtonClick();
     }
   }, [PathName]);
@@ -248,8 +200,6 @@ const App = (props) => {
     <ThesaurusPage
       getWords={getWords}
       AvailableWordType={AvailableWordType}
-      Ants={Ants}
-      Syns={Syns}
       WordsLoaded={WordsLoaded}
       Link={Link}
       HandleBackButtonClick={HandleBackButtonClick}
@@ -259,13 +209,7 @@ const App = (props) => {
   const Thesaurus = () => {
     let ThesaurusComponent;
     if (Word.length) {
-      if (ReturnedWord.length) {
-        ThesaurusComponent = (
-          <Presets.TransitionFade>
-            {ThesaurusStore()}
-          </Presets.TransitionFade>
-        );
-      } else if (Error) {
+      if (Error) {
         ThesaurusComponent = <Redirect to="/" />;
       } else {
         ThesaurusComponent = (
@@ -288,24 +232,19 @@ const App = (props) => {
 
   // Clear all stored states if the pathName is not thesaurus
   useEffect(() => {
-    if (PathName !== '/thesaurus' && ShortDef.length) {
+    if (PathName !== '/thesaurus' && WordArray?.[0]?.fl?.length) {
       HandleBackButtonClick();
     }
   }, [PathName]);
 
   return (
     <>
-      {(PathName === '/thesaurus' && ReturnedWord.length)
+      {(PathName === '/thesaurus' && WordsLoaded)
         ? (
           <ErrorBoundary>
             <Suspense fallback={null}>
               <PopUpSearchBar
-                isOpen2={isOpen2}
-                onOpen2={onOpen2}
-                onClose2={onClose2}
-                onToggle2={onToggle2}
                 HandleBackButtonClick={HandleBackButtonClick}
-                getInputValue={getInputValue}
                 getWords={getWords}
                 setWordsLoaded={setWordsLoaded}
               />
@@ -313,17 +252,18 @@ const App = (props) => {
           </ErrorBoundary>
         )
         : <></>}
-      <NavBar
-        PathName={PathName}
-        onOpen2={onOpen2}
-      />
+      <Presets.TransitionFade>
+        <NavBar
+          PathName={PathName}
+          WordsLoaded={WordsLoaded}
+        />
+      </Presets.TransitionFade>
       <Routes
         getWords={getWords}
         Thesaurus={Thesaurus}
         WordFindType={WordFindType}
         WordFind={WordFind}
         isOpen={isOpen}
-        getInputValue={getInputValue}
         HandleSearchButtonClick={HandleSearchButtonClick}
         Link={Link}
       />
@@ -333,25 +273,25 @@ const App = (props) => {
 
 const mapStateToProps = ({ words }) => ({
   Word: words.Word,
-  ReturnedWord: words.ReturnedWord,
-  ShortDef: words.ShortDef,
-  PartOfSpeech: words.PartOfSpeech,
-  WordExample: words.WordExample,
-  Syns: words.Syns,
-  Ants: words.Ants,
   WordArray: words.WordArray,
+  NounArray: words.NounArray,
+  VerbArray: words.VerbArray,
+  AdjArray: words.AdjArray,
+  PhraseArray: words.PhraseArray,
+  AdverbArray: words.AdverbArray,
+  AvailableWordType: words.AvailableWordType,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // eslint-disable-next-line no-undef
   setWord: (word) => dispatch(setWord(word)),
-  setReturnedWord: (word) => dispatch(setReturnedWord(word)),
-  setShortDef: (word) => dispatch(setShortDef(word)),
-  setPartOfSpeech: (word) => dispatch(setPartOfSpeech(word)),
-  setWordExample: (word) => dispatch(setWordExample(word)),
-  setAnts: (word) => dispatch(setAnts(word)),
-  setSyns: (word) => dispatch(setSyns(word)),
   setWordArray: (word) => dispatch(setWordArray(word)),
+  setNounArray: (word) => dispatch(setNounArray(word)),
+  setVerbArray: (word) => dispatch(setVerbArray(word)),
+  setAdjArray: (word) => dispatch(setAdjArray(word)),
+  setPhraseArray: (word) => dispatch(setPhraseArray(word)),
+  setAdverbArray: (word) => dispatch(setAdverbArray(word)),
+  setAvailableWordType: (word) => dispatch(setAvailableWordType(word)),
+  resetAvailableWordType: () => dispatch(resetAvailableWordType()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));

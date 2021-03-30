@@ -1,9 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-restricted-globals */
-/* eslint-disable no-undef */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-comment-textnodes */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Presets } from 'react-component-transition';
 import tw from 'tailwind-styled-components';
 import ReactHtmlParser from 'react-html-parser';
@@ -70,22 +70,60 @@ const WordsContainerContent = (
   props,
 ) => {
   const {
-    ReturnedWord,
-    PartOfSpeech,
-    ShortDef,
-    WordExample,
-    Syns,
-    Ants,
     getWords,
     HandleBackButtonClick,
     history,
+    WordsArray,
   } = props;
+
+  const {
+    fl,
+    hwi: {
+      hw,
+    },
+    shortdef,
+    def: [{
+      sseq: dt,
+    }],
+    meta: {
+      syns,
+    },
+    meta: {
+      ants,
+    },
+  } = WordsArray;
+  const ExampleSentence = dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1];
+  const ExampleModified = ExampleSentence.replace('{it}', '<em>').replace('{/it}', '</em>');
+  const Ants = ants[0];
+  const Syns = syns[0];
+  const ReturnedWord = hw;
+  const PartOfSpeech = fl;
+  const ShortDef = shortdef[0];
+  const WordExample = ExampleModified;
 
   const fontColorMain = useColorModeValue('gray.700', '#edf2f7');
   const fontColorHeaders = useColorModeValue('#2563EB', '#db8b02');
   const fontColorSynAnt = useColorModeValue('#3B82F6', 'orange.300');
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange');
   const hoverSynAntItems = useColorModeValue({ textDecoration: 'underline' }, { textDecoration: 'underline' });
+
+  // TODO fix changetitle
+  // const changeTitle = (ComponentState) => {
+  //   const initialTitle = 'Thesaurus By Flary';
+  //   if (ComponentState === 'mount') {
+  //     document.title = ReturnedWord.length ? `${ReturnedWord[0].toUpperCase()
+  //  + ReturnedWord.slice(1)} Synonyms, ${ReturnedWord} Antonyms | Flary Thesaurus` : initialTitle;
+  //   } else {
+  //     document.title = initialTitle;
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   changeTitle('mount');
+  //   return () => {
+  //     changeTitle();
+  //   };
+  // }, [ReturnedWord]);
 
   const onClickWords = (event) => {
     HandleBackButtonClick();
@@ -113,8 +151,21 @@ const WordsContainerContent = (
   const OrderSynonyms = () => turnWordInToList(Syns);
   const OrderAntonyms = () => turnWordInToList(Ants);
 
+  const ThesaurusHeader = tw.h1`
+italic
+font-serif
+text-3xl
+font-bold
+inline-block
+`;
+
+  const ChakraThesaurusHeader = chakra(ThesaurusHeader);
+
   return (
     <>
+      <ChakraThesaurusHeader color={fontColorDarkWhiteSmallWords}>
+        Thesaurus
+      </ChakraThesaurusHeader>
       <WordAndType>
         <Presets.TransitionFade>
           <ChakraTheWord color={fontColorMain}>

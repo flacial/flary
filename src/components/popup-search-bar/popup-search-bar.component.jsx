@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from 'react';
@@ -11,10 +12,12 @@ import {
   InputLeftElement,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
+import { connect } from 'react-redux';
+import { onToggleSearchBar, onCloseSearchBar } from '../../redux/words/words.action';
 
 const PopUpSearchBar = ({
   history, HandleBackButtonClick,
-  getWords, isOpen2, onToggle2, onClose2,
+  getWords, isOpenSearchBar, onToggleSearchBar, onCloseSearchBar,
 }) => {
   const [Word, setWord] = useState('');
   const focusBorderColorInput = useColorModeValue('#3B82F6', '#ffa500');
@@ -25,10 +28,14 @@ const PopUpSearchBar = ({
   const HandleKeyDownOpenSearchBar = (event) => {
     if (event.key === 'E' && event.ctrlKey && event.shiftKey) {
       event.preventDefault();
-      onToggle2();
+      onToggleSearchBar();
       if (InputField?.current) {
         InputField.current.focus();
       }
+    }
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      onCloseSearchBar();
     }
   };
 
@@ -37,23 +44,23 @@ const PopUpSearchBar = ({
     return () => {
       document.removeEventListener('keydown', HandleKeyDownOpenSearchBar);
     };
-  }, [isOpen2]);
+  }, [isOpenSearchBar]);
 
   useEffect(() => {
-    if (isOpen2) {
+    if (isOpenSearchBar) {
       document.body.style.overflow = 'hidden';
     }
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen2]);
+  }, [isOpenSearchBar]);
 
   const HandleEnterKeyPopUpSearchBar = (event) => {
     if (event.key === 'Enter') {
       HandleBackButtonClick(false);
       getWords(Word);
       history.push('/thesaurus');
-      onClose2();
+      onCloseSearchBar();
     }
   };
 
@@ -63,13 +70,13 @@ const PopUpSearchBar = ({
 
   return (
     <>
-      {(isOpen2)
+      {(isOpenSearchBar)
         ? (
           <>
             <Box position="fixed" zIndex="9999" background="gray.800" opacity="0.6" style={{ height: '100vh', width: '100vw' }} />
             <Box>
               <Box position="fixed" display="flex" alignItems="flex-start" justifyContent="center" zIndex="9999" style={{ height: '100vh', width: '100vw' }}>
-                <ScaleFade in={isOpen2}>
+                <ScaleFade in={isOpenSearchBar}>
                   <Box className="relative">
                     <InputGroup mt="32">
                       <InputLeftElement
@@ -78,11 +85,11 @@ const PopUpSearchBar = ({
                         // eslint-disable-next-line react/no-children-prop
                         children={<SearchIcon zIndex="9999999" color={color} />}
                       />
-                      <Input ref={InputField} style={{ zIndex: 999999 }} placeholder="Search a word" focusBorderColor={focusBorderColorInput} onKeyDown={HandleEnterKeyPopUpSearchBar} background={bg} color={color} w={['16rem', 'xs', null]} rounded="xl" onChange={getInputValue} />
+                      <Input id="InputField2" ref={InputField} style={{ zIndex: 999999 }} placeholder="Search a word" focusBorderColor={focusBorderColorInput} onKeyDown={HandleEnterKeyPopUpSearchBar} background={bg} color={color} w={['xs', 'xs', null]} rounded="xl" onChange={getInputValue} />
                     </InputGroup>
                   </Box>
                 </ScaleFade>
-                <Box position="fixed" style={{ height: '100vh', width: '100vw' }} background="transparent" onClick={onClose2} />
+                <Box position="fixed" style={{ height: '100vh', width: '100vw' }} background="transparent" onClick={onCloseSearchBar} />
               </Box>
             </Box>
           </>
@@ -92,4 +99,20 @@ const PopUpSearchBar = ({
   );
 };
 
-export default withRouter(PopUpSearchBar);
+const mapStateToProps = ({ words }) => ({
+  WordArray: words.WordArray,
+  NounArray: words.NounArray,
+  VerbArray: words.VerbArray,
+  AdjArray: words.AdjArray,
+  PhraseArray: words.PhraseArray,
+  AdverbArray: words.AdverbArray,
+  AvailableWordType: words.AvailableWordType,
+  isOpenSearchBar: words.isOpenSearchBar,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onToggleSearchBar: () => dispatch(onToggleSearchBar()),
+  onCloseSearchBar: () => dispatch(onCloseSearchBar()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PopUpSearchBar));
