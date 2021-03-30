@@ -1,26 +1,26 @@
 {
   "files": {
     "main.css": "/flary/static/css/main.3a5c7593.chunk.css",
-    "main.js": "/flary/static/js/main.d2aedebf.chunk.js",
-    "main.js.map": "/flary/static/js/main.d2aedebf.chunk.js.map",
-    "runtime-main.js": "/flary/static/js/runtime-main.6938c30b.js",
-    "runtime-main.js.map": "/flary/static/js/runtime-main.6938c30b.js.map",
-    "static/js/2.ff7c7bba.chunk.js": "/flary/static/js/2.ff7c7bba.chunk.js",
-    "static/js/2.ff7c7bba.chunk.js.map": "/flary/static/js/2.ff7c7bba.chunk.js.map",
-    "static/js/3.8d142cdd.chunk.js": "/flary/static/js/3.8d142cdd.chunk.js",
-    "static/js/3.8d142cdd.chunk.js.map": "/flary/static/js/3.8d142cdd.chunk.js.map",
-    "static/js/4.50e22bed.chunk.js": "/flary/static/js/4.50e22bed.chunk.js",
-    "static/js/4.50e22bed.chunk.js.map": "/flary/static/js/4.50e22bed.chunk.js.map",
-    "static/js/5.9fbb9f56.chunk.js": "/flary/static/js/5.9fbb9f56.chunk.js",
-    "static/js/5.9fbb9f56.chunk.js.map": "/flary/static/js/5.9fbb9f56.chunk.js.map",
+    "main.js": "/flary/static/js/main.19bae0e4.chunk.js",
+    "main.js.map": "/flary/static/js/main.19bae0e4.chunk.js.map",
+    "runtime-main.js": "/flary/static/js/runtime-main.ac930d44.js",
+    "runtime-main.js.map": "/flary/static/js/runtime-main.ac930d44.js.map",
+    "static/js/2.2a9e369c.chunk.js": "/flary/static/js/2.2a9e369c.chunk.js",
+    "static/js/2.2a9e369c.chunk.js.map": "/flary/static/js/2.2a9e369c.chunk.js.map",
+    "static/js/3.7f2e1d25.chunk.js": "/flary/static/js/3.7f2e1d25.chunk.js",
+    "static/js/3.7f2e1d25.chunk.js.map": "/flary/static/js/3.7f2e1d25.chunk.js.map",
+    "static/js/4.5655495d.chunk.js": "/flary/static/js/4.5655495d.chunk.js",
+    "static/js/4.5655495d.chunk.js.map": "/flary/static/js/4.5655495d.chunk.js.map",
+    "static/js/5.c8744c1d.chunk.js": "/flary/static/js/5.c8744c1d.chunk.js",
+    "static/js/5.c8744c1d.chunk.js.map": "/flary/static/js/5.c8744c1d.chunk.js.map",
     "index.html": "/flary/index.html",
     "static/css/main.3a5c7593.chunk.css.map": "/flary/static/css/main.3a5c7593.chunk.css.map",
-    "static/js/2.ff7c7bba.chunk.js.LICENSE.txt": "/flary/static/js/2.ff7c7bba.chunk.js.LICENSE.txt"
+    "static/js/2.2a9e369c.chunk.js.LICENSE.txt": "/flary/static/js/2.2a9e369c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.6938c30b.js",
-    "static/js/2.ff7c7bba.chunk.js",
+    "static/js/runtime-main.ac930d44.js",
+    "static/js/2.2a9e369c.chunk.js",
     "static/css/main.3a5c7593.chunk.css",
-    "static/js/main.d2aedebf.chunk.js"
+    "static/js/main.19bae0e4.chunk.js"
   ]
 }
