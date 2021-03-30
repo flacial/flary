@@ -139,33 +139,6 @@ const App = (props) => {
     }
   }, [AvailableWordType]);
 
-  const WordArraySetState = (wordArray) => {
-    const {
-      fl,
-      hwi: {
-        hw,
-      },
-      shortdef,
-      def: [{
-        sseq: dt,
-      }],
-      meta: {
-        syns,
-      },
-      meta: {
-        ants,
-      },
-    } = wordArray;
-    const Example = dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1];
-    const ExampleModified = Example.replace('{it}', '<em>').replace('{/it}', '</em>');
-    setAnts(ants[0]);
-    setSyns(syns[0]);
-    setReturnedWord(hw);
-    setPartOfSpeech(fl);
-    setShortDef(shortdef[0]);
-    setWordExample(ExampleModified);
-  };
-
   const PartOfSpeechChecker = (wordObjects) => {
     try {
       wordObjects.forEach((arr) => {

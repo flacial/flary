@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Input, useColorModeValue } from '@chakra-ui/react';
 import React, { useState, useEffect, useRef } from 'react';
@@ -8,7 +7,7 @@ import { setWord } from '../../redux/words/words.action';
 
 const SearchInput = ({
   // eslint-disable-next-line no-shadow
-  setWord, getWords, history, Word,
+  setWord, getWords, history,
 }) => {
   const focusBorderColorInput = useColorModeValue('#3B82F6',
     '#ffa500');
@@ -53,6 +52,7 @@ const SearchInput = ({
 };
 const mapStateToProps = ({ words }) => ({
   Word: words.Word,
+  AvailableWordType: words.AvailableWordType,
 });
 
 const mapDispatchToProps = (dispatch) => ({
