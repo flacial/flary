@@ -61,6 +61,19 @@ const wordsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         NounArray: action.payload,
       };
+    case wordsTypes.SET_AVAILABLE_WORD_TYPES:
+      return {
+        ...state,
+        AvailableWordType: {
+          ...state.AvailableWordType,
+          [Object.keys(action.payload)[0]]: [Object.values(action.payload)[0]],
+        },
+      };
+    case wordsTypes.RESET_AVAILABLE_WORD_TYPES:
+      return {
+        ...state,
+        AvailableWordType: [],
+      };
     case wordsTypes.SET_ADVERB_ARRAY:
       return {
         ...state,
