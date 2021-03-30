@@ -12,6 +12,17 @@ export const setAvailableWordType = (word) => ({
 export const resetAvailableWordType = () => ({
   type: wordsTypes.RESET_AVAILABLE_WORD_TYPES,
 });
+export const onOpenSearchBar = () => ({
+  type: wordsTypes.ON_OPEN_SEARCHBAR,
+});
+
+export const onToggleSearchBar = () => ({
+  type: wordsTypes.ON_TOGGLE_SEARCHBAR,
+});
+
+export const onCloseSearchBar = () => ({
+  type: wordsTypes.ON_CLOSE_SEARCHBAR,
+});
 export const setPhraseArray = (word) => ({
   type: wordsTypes.SET_PHRASE_ARRAY,
   payload: word,
