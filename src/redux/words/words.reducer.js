@@ -32,6 +32,9 @@ const INITIAL_STATE = {
   AdjArray: [],
   PhraseArray: [],
   AdverbArray: [],
+  AvailableWordType: [],
+  isOpenSearchBar: false,
+  isCloseSearchBar: true,
 };
 
 const wordsReducer = (state = INITIAL_STATE, action) => {
@@ -56,6 +59,7 @@ const wordsReducer = (state = INITIAL_STATE, action) => {
         isOpenSearchBar: !state.isOpenSearchBar,
         isCloseSearchBar: !state.isCloseSearchBar,
       };
+
     case wordsTypes.SET_NOUN_ARRAY:
       return {
         ...state,

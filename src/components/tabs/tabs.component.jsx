@@ -123,7 +123,7 @@ const WordsTabs = ({
 
   return (
     <>
-      <Tabs align="center" variant="soft-rounded">
+      <Tabs defaultIndex={0} align="center" variant="soft-rounded">
         {/* <Box className='backdrop-blur z-50' display='flex'
          justifyContent='center' h='22' width='full'  position='fixed' bottom='0'> */}
         <Presets.TransitionFade>

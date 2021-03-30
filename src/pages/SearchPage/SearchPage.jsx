@@ -1,12 +1,9 @@
 /* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 import tw from 'tailwind-styled-components';
 import { withRouter, Link as ReachLink } from 'react-router-dom';
-import React, {
-  useEffect,
-} from 'react';
+import React from 'react';
 import {
   Heading,
   Box,
@@ -30,15 +27,13 @@ import SearchInput from '../../components/search-input/search-input.component';
 
 const MainContainer = tw.div`
    text-center
-   mt-40
-   sm:mt-0
+   mt-24
    md2:mt-38
    lg:mt-32
 `;
 
 const SearchPage = ({
-  WordFindType, WordFind, isOpen,
-  getInputValue, HandleSearchButtonClick, getWords, Word,
+  WordFindType, WordFind, isOpen, HandleSearchButtonClick, getWords,
 }) => {
   const [isMoreThan420px] = useMediaQuery('(max-width: 420px)');
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange');
@@ -74,7 +69,7 @@ const SearchPage = ({
         <Box>
           <Box justifyContent="center" display="flex" w={['100%', 'xs', null]}>
             <Box w={['18rem', 'xs', null]} position="relative">
-              <SearchInput getInputValue={getInputValue} getWords={getWords} />
+              <SearchInput getWords={getWords} />
               <SearchIcon color="gray.300" position="absolute" left="3" top="3.5" />
             </Box>
           </Box>

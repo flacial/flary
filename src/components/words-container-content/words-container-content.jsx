@@ -1,9 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-restricted-globals */
-/* eslint-disable no-undef */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-comment-textnodes */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Presets } from 'react-component-transition';
 import tw from 'tailwind-styled-components';
 import ReactHtmlParser from 'react-html-parser';
@@ -106,6 +106,24 @@ const WordsContainerContent = (
   const fontColorSynAnt = useColorModeValue('#3B82F6', 'orange.300');
   const fontColorDarkWhiteSmallWords = useColorModeValue('#3B82F6', 'orange');
   const hoverSynAntItems = useColorModeValue({ textDecoration: 'underline' }, { textDecoration: 'underline' });
+
+  // TODO fix changetitle
+  // const changeTitle = (ComponentState) => {
+  //   const initialTitle = 'Thesaurus By Flary';
+  //   if (ComponentState === 'mount') {
+  //     document.title = ReturnedWord.length ? `${ReturnedWord[0].toUpperCase()
+  //  + ReturnedWord.slice(1)} Synonyms, ${ReturnedWord} Antonyms | Flary Thesaurus` : initialTitle;
+  //   } else {
+  //     document.title = initialTitle;
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   changeTitle('mount');
+  //   return () => {
+  //     changeTitle();
+  //   };
+  // }, [ReturnedWord]);
 
   const onClickWords = (event) => {
     HandleBackButtonClick();

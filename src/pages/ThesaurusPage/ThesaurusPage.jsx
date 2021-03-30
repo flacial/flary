@@ -11,7 +11,7 @@ import {
   Box,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { connect } from 'react-redux';
+import { Presets } from 'react-component-transition';
 import WordsTabs from '../../components/tabs/tabs.component';
 
 const LinkCSS = `
@@ -31,7 +31,6 @@ const ThesaurusPage = (props) => {
   const {
     Link,
     HandleBackButtonClick,
-    ReturnedWord,
     WordsLoaded,
     AvailableWordType,
     getWords,
@@ -44,22 +43,6 @@ const ThesaurusPage = (props) => {
   const hover = useColorModeValue({ background: 'gray.200' }, { background: 'gray.700' });
   const focusBorderColorGeneral = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
   const fallbackBackground = useColorModeValue('rgba(255, 255, 255, .9)', 'rgba(0, 0, 0, 0.26)');
-
-  const changeTitle = (ComponentState) => {
-    const initialTitle = 'Thesaurus By Flary';
-    if (ComponentState === 'mount') {
-      document.title = ReturnedWord.length ? `${ReturnedWord[0].toUpperCase() + ReturnedWord.slice(1)} Synonyms, ${ReturnedWord} Antonyms | Flary Thesaurus` : initialTitle;
-    } else {
-      document.title = initialTitle;
-    }
-  };
-
-  useEffect(() => {
-    changeTitle('mount');
-    return () => {
-      changeTitle();
-    };
-  }, [ReturnedWord]);
 
   const HandleKeyDownBackButtonQctrl = (event) => {
     if (event.key === 'Q' && event.ctrlKey) {
@@ -109,18 +92,16 @@ const ThesaurusPage = (props) => {
         )
         // TODO Break tabs into its own compoonent
         : <></>}
-      <WordsTabs
-        AvailableWordType={AvailableWordType}
-        WordsLoaded={WordsLoaded}
-        getWords={getWords}
-        HandleBackButtonClick={HandleBackButtonClick}
-      />
+      <Presets.TransitionFade>
+        <WordsTabs
+          AvailableWordType={AvailableWordType}
+          WordsLoaded={WordsLoaded}
+          getWords={getWords}
+          HandleBackButtonClick={HandleBackButtonClick}
+        />
+      </Presets.TransitionFade>
     </>
   );
 };
 
-const mapStateToProps = ({ words }) => ({
-  ReturnedWord: words.ReturnedWord,
-});
-
-export default connect(mapStateToProps, null)(withRouter(ThesaurusPage));
+export default withRouter(ThesaurusPage);
