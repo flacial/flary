@@ -1,6 +1,17 @@
 /* eslint-disable import/prefer-default-export */
 import { wordsTypes } from './words.types';
 
+export const setAvailableWordType = (word) => ({
+  type: wordsTypes.SET_AVAILABLE_WORD_TYPES,
+  // eslint-disable-next-line object-shorthand
+  payload: {
+    [word.type]: word.value,
+  },
+});
+
+export const resetAvailableWordType = () => ({
+  type: wordsTypes.RESET_AVAILABLE_WORD_TYPES,
+});
 export const setPhraseArray = (word) => ({
   type: wordsTypes.SET_PHRASE_ARRAY,
   payload: word,
