@@ -36,6 +36,26 @@ const INITIAL_STATE = {
 
 const wordsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case wordsTypes.ON_OPEN_SEARCHBAR:
+      return {
+        ...state,
+        isOpenSearchBar: true,
+        isCloseSearchBar: false,
+      };
+
+    case wordsTypes.ON_CLOSE_SEARCHBAR:
+      return {
+        ...state,
+        isOpenSearchBar: false,
+        isCloseSearchBar: true,
+      };
+
+    case wordsTypes.ON_TOGGLE_SEARCHBAR:
+      return {
+        ...state,
+        isOpenSearchBar: !state.isOpenSearchBar,
+        isCloseSearchBar: !state.isCloseSearchBar,
+      };
     case wordsTypes.SET_NOUN_ARRAY:
       return {
         ...state,
