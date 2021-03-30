@@ -204,6 +204,49 @@ const App = (props) => {
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
+  const InitialWord = (wordObjects) => {
+    try {
+      MainLoop:
+      for (let index = 0; index < 4; index++) {
+        // eslint-disable-next-line no-shadow
+        for (let index = 0; index < wordObjects.length; index++) {
+          const element = wordObjects[index];
+          if (element.fl === 'noun') {
+            WordArraySetState(WordsArrayFilter(wordObjects, 'noun'));
+            break MainLoop;
+          }
+        }
+        // eslint-disable-next-line no-shadow
+        for (let index = 0; index < wordObjects.length; index++) {
+          const element = wordObjects[index];
+          if (element.fl === 'verb') {
+            WordArraySetState(WordsArrayFilter(wordObjects, 'verb'));
+            break MainLoop;
+          }
+        }
+        // eslint-disable-next-line no-shadow
+        for (let index = 0; index < wordObjects.length; index++) {
+          const element = wordObjects[index];
+          if (element.fl === 'adjective') {
+            WordArraySetState(WordsArrayFilter(wordObjects, 'adjective'));
+            break MainLoop;
+          }
+        }
+        // eslint-disable-next-line no-shadow
+        for (let index = 0; index < wordObjects.length; index++) {
+          const element = wordObjects[index];
+          if (element.fl !== 'noun' && 'verb' && 'adjective') {
+            WordArraySetState(WordsArrayFilter(wordObjects, element.fl));
+            break MainLoop;
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const PassRequstedWords = (wordObjects) => {
     try {
       if (wordObjects[0].hwi) {
@@ -246,13 +289,8 @@ const App = (props) => {
     if (isSetword) {
       setWord('');
     }
-    setReturnedWord('');
-    setPartOfSpeech('');
-    setShortDef('');
-    setWordExample('');
-    setSyns([]);
-    setAnts([]);
-    setAvailableWordType({});
+    setWordsLoaded(false);
+    resetAvailableWordType();
     setNounArray([]);
     setVerbArray([]);
     setAdjArray([]);
