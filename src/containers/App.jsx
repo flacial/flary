@@ -171,27 +171,27 @@ const App = (props) => {
       wordObjects.forEach((arr) => {
         switch (arr.fl) {
           case 'noun':
-            setAvailableWordType({ type: 'noun', value: true });
+            setAvailableWordType((prevState) => ({ ...prevState, noun: true }));
             setInitialDone(true);
             setWordsLoaded(true);
             break;
           case 'verb':
-            setAvailableWordType({ type: 'verb', value: true });
+            setAvailableWordType((prevState) => ({ ...prevState, verb: true }));
             setInitialDone(true);
             setWordsLoaded(true);
             break;
           case 'adjective':
-            setAvailableWordType({ type: 'adjective', value: true });
+            setAvailableWordType((prevState) => ({ ...prevState, adjective: true }));
             setInitialDone(true);
             setWordsLoaded(true);
             break;
           case 'phrase':
-            setAvailableWordType({ type: 'phrase', value: true });
+            setAvailableWordType((prevState) => ({ ...prevState, phrase: true }));
             setInitialDone(true);
             setWordsLoaded(true);
             break;
           case 'adverb':
-            setAvailableWordType({ type: 'adverb', value: true });
+            setAvailableWordType((prevState) => ({ ...prevState, adverb: true }));
             setInitialDone(true);
             setWordsLoaded(true);
             break;
@@ -199,49 +199,6 @@ const App = (props) => {
             break;
         }
       });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const InitialWord = (wordObjects) => {
-    try {
-      MainLoop:
-      for (let index = 0; index < 4; index++) {
-        // eslint-disable-next-line no-shadow
-        for (let index = 0; index < wordObjects.length; index++) {
-          const element = wordObjects[index];
-          if (element.fl === 'noun') {
-            WordArraySetState(WordsArrayFilter(wordObjects, 'noun'));
-            break MainLoop;
-          }
-        }
-        // eslint-disable-next-line no-shadow
-        for (let index = 0; index < wordObjects.length; index++) {
-          const element = wordObjects[index];
-          if (element.fl === 'verb') {
-            WordArraySetState(WordsArrayFilter(wordObjects, 'verb'));
-            break MainLoop;
-          }
-        }
-        // eslint-disable-next-line no-shadow
-        for (let index = 0; index < wordObjects.length; index++) {
-          const element = wordObjects[index];
-          if (element.fl === 'adjective') {
-            WordArraySetState(WordsArrayFilter(wordObjects, 'adjective'));
-            break MainLoop;
-          }
-        }
-        // eslint-disable-next-line no-shadow
-        for (let index = 0; index < wordObjects.length; index++) {
-          const element = wordObjects[index];
-          if (element.fl !== 'noun' && 'verb' && 'adjective') {
-            WordArraySetState(WordsArrayFilter(wordObjects, element.fl));
-            break MainLoop;
-          }
-        }
-      }
     } catch (error) {
       console.log(error);
     }
