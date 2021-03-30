@@ -81,11 +81,11 @@ const Help = () => {
             <chakra.span color={KeyboardShortCutsColor}>Ctrl + Shift + E</chakra.span>
           </chakra.span>
           {'\n'}
-          <chakra.span>
+          {/* <chakra.span>
             Switch word type:
             {' '}
             <chakra.span color={KeyboardShortCutsColor}>Shift + 1 or 2 or 3</chakra.span>
-          </chakra.span>
+          </chakra.span> */}
         </PopoverBody>
       </PopoverContent>
     </Popover>

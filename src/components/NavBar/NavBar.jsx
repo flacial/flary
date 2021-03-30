@@ -36,23 +36,14 @@ const NavBar = ({
     {(location.pathname === '/thesaurus' && WordsLoaded)
       ? (
         <>
-          {/* <ErrorBoundary>
+          <Presets.TransitionFade>
             <Suspense fallback={null}>
-              <PopUpSearchBar
-                isOpen2={isOpen2}
-                onOpen2={onOpen2}
-                onClose2={onClose2}
-                onToggle2={onToggle2}
-                HandleBackButtonClick={HandleBackButtonClick}
-                getWords={getWords}
-                setWordsLoaded={setWordsLoaded}
-              />
-            </Suspense>
-          </ErrorBoundary> */}
           <SearchButtonHeader
-            onOpen2={onOpen2}
+                WordsLoaded={WordsLoaded}
             InputFiledSearchBarPopUp={InputFiledSearchBarPopUp}
           />
+            </Suspense>
+          </Presets.TransitionFade>
         </>
       )
       : <></>}
