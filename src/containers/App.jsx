@@ -139,32 +139,59 @@ const App = (props) => {
     }
   }, [AvailableWordType]);
 
+  const WordArraySetState = (wordArray) => {
+    const {
+      fl,
+      hwi: {
+        hw,
+      },
+      shortdef,
+      def: [{
+        sseq: dt,
+      }],
+      meta: {
+        syns,
+      },
+      meta: {
+        ants,
+      },
+    } = wordArray;
+    const Example = dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1];
+    const ExampleModified = Example.replace('{it}', '<em>').replace('{/it}', '</em>');
+    setAnts(ants[0]);
+    setSyns(syns[0]);
+    setReturnedWord(hw);
+    setPartOfSpeech(fl);
+    setShortDef(shortdef[0]);
+    setWordExample(ExampleModified);
+  };
+
   const PartOfSpeechChecker = (wordObjects) => {
     try {
       wordObjects.forEach((arr) => {
         switch (arr.fl) {
           case 'noun':
-            setAvailableWordType((prevState) => ({ ...prevState, noun: true }));
+            setAvailableWordType({ type: 'noun', value: true });
             setInitialDone(true);
             setWordsLoaded(true);
             break;
           case 'verb':
-            setAvailableWordType((prevState) => ({ ...prevState, verb: true }));
+            setAvailableWordType({ type: 'verb', value: true });
             setInitialDone(true);
             setWordsLoaded(true);
             break;
           case 'adjective':
-            setAvailableWordType((prevState) => ({ ...prevState, adjective: true }));
+            setAvailableWordType({ type: 'adjective', value: true });
             setInitialDone(true);
             setWordsLoaded(true);
             break;
           case 'phrase':
-            setAvailableWordType((prevState) => ({ ...prevState, phrase: true }));
+            setAvailableWordType({ type: 'phrase', value: true });
             setInitialDone(true);
             setWordsLoaded(true);
             break;
           case 'adverb':
-            setAvailableWordType((prevState) => ({ ...prevState, adverb: true }));
+            setAvailableWordType({ type: 'adverb', value: true });
             setInitialDone(true);
             setWordsLoaded(true);
             break;
