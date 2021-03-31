@@ -22,7 +22,14 @@ class ErrorBoundary extends React.Component {
     const { hasError } = this.state;
     const { children } = this.props;
     if (hasError) {
-      return <div>Something went wrong</div>;
+      return (
+        <div style={{ color: 'red', fontWeight: 'bold' }}>
+          ERROR: Something went wrong. Please sumbit an issue here
+          {' '}
+          <a href="https://github.com/flacial/flary/issues/new/choose">Link</a>
+          {' '}
+        </div>
+      );
     }
 
     return children;

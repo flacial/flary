@@ -97,7 +97,7 @@ const App = (props) => {
     if (IsInitialDone) {
       setFilterArray(WordArray);
     }
-  }, [AvailableWordType]);
+  }, [Object.keys(AvailableWordType)]);
 
   const PartOfSpeechChecker = (wordObjects) => {
     try {
