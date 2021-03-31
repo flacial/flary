@@ -27,7 +27,7 @@ import {
 import getRequest from '../services/getRequest';
 import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
 import Routes from '../routes/routes';
-import NavBar from '../components/NavBar/NavBar';
+import Header from '../components/header/header.component';
 import {
   setWord,
   setWordArray,
@@ -252,7 +252,7 @@ const App = (props) => {
           </ErrorBoundary>
         )
         : <></>}
-      <NavBar
+      <Header
         PathName={PathName}
         WordsLoaded={WordsLoaded}
       />
