@@ -252,12 +252,10 @@ const App = (props) => {
           </ErrorBoundary>
         )
         : <></>}
-      <Presets.TransitionFade>
-        <NavBar
-          PathName={PathName}
-          WordsLoaded={WordsLoaded}
-        />
-      </Presets.TransitionFade>
+      <NavBar
+        PathName={PathName}
+        WordsLoaded={WordsLoaded}
+      />
       <Routes
         getWords={getWords}
         Thesaurus={Thesaurus}
