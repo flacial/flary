@@ -4,6 +4,9 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-labels */
 /* eslint-disable no-restricted-syntax */
+
+// TODO add react-swipeable
+
 import { connect } from 'react-redux';
 import './App.css';
 import {
@@ -25,9 +28,8 @@ import {
   Presets,
 } from 'react-component-transition';
 import getRequest from '../services/getRequest';
-import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
 import Routes from '../routes/routes';
-import NavBar from '../components/NavBar/NavBar';
+import Header from '../components/header/header.component';
 import {
   setWord,
   setWordArray,
@@ -40,8 +42,10 @@ import {
   resetAvailableWordType,
 } from '../redux/words/words.action';
 import ErrorBoundary from '../components/error-boundary/error-boundary.component';
+import LoadingSpinner from '../components/spinner/spinner.component';
 
 const PopUpSearchBar = lazy(() => import('../components/popup-search-bar/popup-search-bar.component'));
+const ThesaurusPage = lazy(() => import('../pages/ThesaurusPage/ThesaurusPage'));
 
 const App = (props) => {
   const {
@@ -70,6 +74,7 @@ const App = (props) => {
   const [WordsLoaded, setWordsLoaded] = useState(false);
   const [IsInitialDone, setInitialDone] = useState(false);
 
+  // TODO Fix Repeated setState calls
   const setFilterArray = (wordObjects) => {
     if (AvailableWordType.noun) {
       const filteredArray = wordObjects.filter((word) => word.fl === 'noun');
@@ -97,7 +102,7 @@ const App = (props) => {
     if (IsInitialDone) {
       setFilterArray(WordArray);
     }
-  }, [AvailableWordType]);
+  }, [Object.keys(AvailableWordType)]);
 
   const PartOfSpeechChecker = (wordObjects) => {
     try {
@@ -197,13 +202,15 @@ const App = (props) => {
   }, [PathName]);
 
   const ThesaurusStore = () => (
-    <ThesaurusPage
-      getWords={getWords}
-      AvailableWordType={AvailableWordType}
-      WordsLoaded={WordsLoaded}
-      Link={Link}
-      HandleBackButtonClick={HandleBackButtonClick}
-    />
+    <Suspense fallback={<LoadingSpinner />}>
+      <ThesaurusPage
+        getWords={getWords}
+        AvailableWordType={AvailableWordType}
+        WordsLoaded={WordsLoaded}
+        Link={Link}
+        HandleBackButtonClick={HandleBackButtonClick}
+      />
+    </Suspense>
   );
 
   const Thesaurus = () => {
@@ -221,6 +228,7 @@ const App = (props) => {
     } else {
       ThesaurusComponent = <Redirect to="/" />;
     }
+
     useEffect(() => {
       if (Error) {
         setWord('');
@@ -251,13 +259,11 @@ const App = (props) => {
             </Suspense>
           </ErrorBoundary>
         )
-        : <></>}
-      <Presets.TransitionFade>
-        <NavBar
-          PathName={PathName}
-          WordsLoaded={WordsLoaded}
-        />
-      </Presets.TransitionFade>
+        : null}
+      <Header
+        PathName={PathName}
+        WordsLoaded={WordsLoaded}
+      />
       <Routes
         getWords={getWords}
         Thesaurus={Thesaurus}

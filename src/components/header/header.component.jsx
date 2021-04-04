@@ -12,7 +12,7 @@ import ThemeButton from '../theme-button/theme-button.component';
 // import ErrorBoundary from '../error-boundary/error-boundary.component';
 const SearchButtonHeader = lazy(() => import('../search-button/search-button.component'));
 
-const NavBar = ({
+const Header = ({
   InputFiledSearchBarPopUp,
   location,
   WordsLoaded,
@@ -44,4 +44,4 @@ const NavBar = ({
   </Box>
 );
 
-export default withRouter(NavBar);
+export default withRouter(Header);

@@ -1,23 +1,5 @@
 import { wordsTypes } from './words.types';
 
-// const [Error, setError] = useState(false);
-// const PathName = location.pathname;
-// const {
-//   isOpen,
-//   onOpen,
-// } = useDisclosure();
-// const {
-//   isOpen: isOpen2,
-//   onOpen: onOpen2,
-//   onClose: onClose2,
-//   onToggle: onToggle2,
-// } = useDisclosure();
-// const [WordFind, setWordFind] = useState(false);
-// const [WordFindType, setWordFindType] = useState('');
-// const [WordsLoaded, setWordsLoaded] = useState(false);
-// const [WordArray, setWordArray] = useState([]);
-// const [AvailableWordType, setAvailableWordType] = useState({});
-
 const INITIAL_STATE = {
   Word: '',
   ReturnedWord: '',
