@@ -108,22 +108,22 @@ const WordsContainerContent = (
   const hoverSynAntItems = useColorModeValue({ textDecoration: 'underline' }, { textDecoration: 'underline' });
 
   // TODO fix changetitle
-  // const changeTitle = (ComponentState) => {
-  //   const initialTitle = 'Thesaurus By Flary';
-  //   if (ComponentState === 'mount') {
-  //     document.title = ReturnedWord.length ? `${ReturnedWord[0].toUpperCase()
-  //  + ReturnedWord.slice(1)} Synonyms, ${ReturnedWord} Antonyms | Flary Thesaurus` : initialTitle;
-  //   } else {
-  //     document.title = initialTitle;
-  //   }
-  // };
+  const changeTitle = (ComponentState) => {
+    const initialTitle = 'Thesaurus By Flary';
+    if (ComponentState === 'mount') {
+      document.title = ReturnedWord.length ? `${ReturnedWord[0].toUpperCase()
+   + ReturnedWord.slice(1)} Synonyms, ${ReturnedWord} Antonyms | Flary Thesaurus` : initialTitle;
+    } else {
+      document.title = initialTitle;
+    }
+  };
 
-  // useEffect(() => {
-  //   changeTitle('mount');
-  //   return () => {
-  //     changeTitle();
-  //   };
-  // }, [ReturnedWord]);
+  useEffect(() => {
+    changeTitle('mount');
+    return () => {
+      changeTitle();
+    };
+  }, [WordsArray]);
 
   const onClickWords = (event) => {
     HandleBackButtonClick();

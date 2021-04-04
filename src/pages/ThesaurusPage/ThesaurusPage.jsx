@@ -79,8 +79,7 @@ const ThesaurusPage = (props) => {
       {(location.pathname === '/thesaurus')
         ? (
           <Box
-            background={!(CSS.supports('backdrop-filter', 'blur(5px)'))
-                  && fallbackBackground}
+            background={!(CSS.supports('backdrop-filter', 'blur(5px)')) && fallbackBackground}
             className="backdrop-blur"
             zIndex="9990"
             position="fixed"
@@ -90,8 +89,8 @@ const ThesaurusPage = (props) => {
             borderRadius="0 0 20px 20px"
           />
         )
-        // TODO Break tabs into its own compoonent
-        : <></>}
+        : null}
+
       <Presets.TransitionFade>
         <WordsTabs
           AvailableWordType={AvailableWordType}
