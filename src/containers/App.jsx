@@ -28,7 +28,6 @@ import {
   Presets,
 } from 'react-component-transition';
 import getRequest from '../services/getRequest';
-// import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
 import Routes from '../routes/routes';
 import Header from '../components/header/header.component';
 import {
@@ -201,7 +200,7 @@ const App = (props) => {
       HandleBackButtonClick();
     }
   }, [PathName]);
-  // TODO convert Thesaurus compoennt to lazy one
+
   const ThesaurusStore = () => (
     <Suspense fallback={<LoadingSpinner />}>
       <ThesaurusPage
@@ -229,6 +228,7 @@ const App = (props) => {
     } else {
       ThesaurusComponent = <Redirect to="/" />;
     }
+
     useEffect(() => {
       if (Error) {
         setWord('');
@@ -259,7 +259,7 @@ const App = (props) => {
             </Suspense>
           </ErrorBoundary>
         )
-        : <></>}
+        : null}
       <Header
         PathName={PathName}
         WordsLoaded={WordsLoaded}
