@@ -4,6 +4,9 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-labels */
 /* eslint-disable no-restricted-syntax */
+
+// TODO add react-swipeable
+
 import { connect } from 'react-redux';
 import './App.css';
 import {
@@ -70,6 +73,7 @@ const App = (props) => {
   const [WordsLoaded, setWordsLoaded] = useState(false);
   const [IsInitialDone, setInitialDone] = useState(false);
 
+  // TODO Fix Repeated setState calls
   const setFilterArray = (wordObjects) => {
     if (AvailableWordType.noun) {
       const filteredArray = wordObjects.filter((word) => word.fl === 'noun');
@@ -195,7 +199,7 @@ const App = (props) => {
       HandleBackButtonClick();
     }
   }, [PathName]);
-
+  // TODO convert Thesaurus compoennt to lazy one
   const ThesaurusStore = () => (
     <ThesaurusPage
       getWords={getWords}
