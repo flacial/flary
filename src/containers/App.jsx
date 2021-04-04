@@ -43,6 +43,7 @@ import {
   resetAvailableWordType,
 } from '../redux/words/words.action';
 import ErrorBoundary from '../components/error-boundary/error-boundary.component';
+import LoadingSpinner from '../components/spinner/spinner.component';
 
 const PopUpSearchBar = lazy(() => import('../components/popup-search-bar/popup-search-bar.component'));
 const ThesaurusPage = lazy(() => import('../pages/ThesaurusPage/ThesaurusPage'));
@@ -202,7 +203,7 @@ const App = (props) => {
   }, [PathName]);
   // TODO convert Thesaurus compoennt to lazy one
   const ThesaurusStore = () => (
-    <Suspense fallback={null}>
+    <Suspense fallback={<LoadingSpinner />}>
       <ThesaurusPage
         getWords={getWords}
         AvailableWordType={AvailableWordType}
