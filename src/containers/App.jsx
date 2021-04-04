@@ -28,7 +28,7 @@ import {
   Presets,
 } from 'react-component-transition';
 import getRequest from '../services/getRequest';
-import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
+// import ThesaurusPage from '../pages/ThesaurusPage/ThesaurusPage';
 import Routes from '../routes/routes';
 import Header from '../components/header/header.component';
 import {
@@ -45,6 +45,7 @@ import {
 import ErrorBoundary from '../components/error-boundary/error-boundary.component';
 
 const PopUpSearchBar = lazy(() => import('../components/popup-search-bar/popup-search-bar.component'));
+const ThesaurusPage = lazy(() => import('../pages/ThesaurusPage/ThesaurusPage'));
 
 const App = (props) => {
   const {
@@ -201,13 +202,15 @@ const App = (props) => {
   }, [PathName]);
   // TODO convert Thesaurus compoennt to lazy one
   const ThesaurusStore = () => (
-    <ThesaurusPage
-      getWords={getWords}
-      AvailableWordType={AvailableWordType}
-      WordsLoaded={WordsLoaded}
-      Link={Link}
-      HandleBackButtonClick={HandleBackButtonClick}
-    />
+    <Suspense fallback={null}>
+      <ThesaurusPage
+        getWords={getWords}
+        AvailableWordType={AvailableWordType}
+        WordsLoaded={WordsLoaded}
+        Link={Link}
+        HandleBackButtonClick={HandleBackButtonClick}
+      />
+    </Suspense>
   );
 
   const Thesaurus = () => {
