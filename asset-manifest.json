@@ -3,8 +3,8 @@
     "main.css": "/flary/static/css/main.3a5c7593.chunk.css",
     "main.js": "/flary/static/js/main.b7a47050.chunk.js",
     "main.js.map": "/flary/static/js/main.b7a47050.chunk.js.map",
-    "runtime-main.js": "/flary/static/js/runtime-main.b888241a.js",
-    "runtime-main.js.map": "/flary/static/js/runtime-main.b888241a.js.map",
+    "runtime-main.js": "/flary/static/js/runtime-main.9362411b.js",
+    "runtime-main.js.map": "/flary/static/js/runtime-main.9362411b.js.map",
     "static/js/2.ffa11769.chunk.js": "/flary/static/js/2.ffa11769.chunk.js",
     "static/js/2.ffa11769.chunk.js.map": "/flary/static/js/2.ffa11769.chunk.js.map",
     "static/js/3.02326c17.chunk.js": "/flary/static/js/3.02326c17.chunk.js",
@@ -15,8 +15,8 @@
     "static/js/5.98e9d975.chunk.js.map": "/flary/static/js/5.98e9d975.chunk.js.map",
     "static/js/6.b1704f79.chunk.js": "/flary/static/js/6.b1704f79.chunk.js",
     "static/js/6.b1704f79.chunk.js.map": "/flary/static/js/6.b1704f79.chunk.js.map",
-    "static/js/7.c71c78e5.chunk.js": "/flary/static/js/7.c71c78e5.chunk.js",
-    "static/js/7.c71c78e5.chunk.js.map": "/flary/static/js/7.c71c78e5.chunk.js.map",
+    "static/js/7.f23f998a.chunk.js": "/flary/static/js/7.f23f998a.chunk.js",
+    "static/js/7.f23f998a.chunk.js.map": "/flary/static/js/7.f23f998a.chunk.js.map",
     "static/js/8.f66d0d24.chunk.js": "/flary/static/js/8.f66d0d24.chunk.js",
     "static/js/8.f66d0d24.chunk.js.map": "/flary/static/js/8.f66d0d24.chunk.js.map",
     "static/js/9.90043d3f.chunk.js": "/flary/static/js/9.90043d3f.chunk.js",
@@ -28,7 +28,7 @@
     "static/js/4.a53b2afc.chunk.js.LICENSE.txt": "/flary/static/js/4.a53b2afc.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.b888241a.js",
+    "static/js/runtime-main.9362411b.js",
     "static/js/2.ffa11769.chunk.js",
     "static/css/main.3a5c7593.chunk.css",
     "static/js/main.b7a47050.chunk.js"
