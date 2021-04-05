@@ -1,10 +1,7 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 import {
-  useColorModeValue,
-  useMediaQuery,
   chakra,
 } from '@chakra-ui/react';
 
@@ -24,7 +21,7 @@ const ChakraWordTypeContainer = chakra(WordTypeContainer);
 
 const WordsContainer = (props) => {
   const {
-    children, ml, mr, marginTop, boxShadow, gradientbg, isLargerthan440,
+    children, ml, mr, marginTop, boxShadow, gradientbg,
   } = props;
 
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import {
-  chakra, Button, useColorMode, useColorModeValue,
+  chakra, Button, useColorMode, useColorModeValue, useMediaQuery,
 } from '@chakra-ui/react';
 import { MoonIcon } from '@chakra-ui/icons';
 
@@ -8,6 +8,7 @@ const ThemeButton = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const focusBorderColorInput = useColorModeValue({ boxShadow: '0 0 0 3px #3B82F6' }, { boxShadow: '0 0 0 3px orange' });
   const ThemeButtonRef = useRef(null);
+  const [isMoreThan420px] = useMediaQuery('(max-width: 420px)');
   const HandleKeyDownThemeIcon = (event) => {
     if (event.key === 'X' && event.ctrlKey) {
       event.preventDefault();
@@ -23,7 +24,23 @@ const ThemeButton = () => {
   }, []);
 
   return (
-    <Button ref={ThemeButtonRef} _focus={focusBorderColorInput} focusBorderColor={focusBorderColorInput} boxShadow="lg" outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }} m="4" mr="-1" rounded="xl" onClick={toggleColorMode}>
+    <Button
+      ref={ThemeButtonRef}
+      _focus={focusBorderColorInput}
+      focusBorderColor={focusBorderColorInput}
+      boxShadow="lg"
+      outline="none"
+      outlineColor="initial"
+      style={{ outlineStyle: 'none' }}
+      m="4"
+      mr={
+      isMoreThan420px
+        ? '4'
+        : '-1'
+      }
+      rounded="xl"
+      onClick={toggleColorMode}
+    >
       {colorMode === 'light'
         ? <MoonIcon />
         : (
