@@ -2,13 +2,11 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable no-unused-vars */
 
 import {
   TabList, Tab, Tabs, TabPanels, TabPanel, useColorModeValue,
 } from '@chakra-ui/react';
-// eslint-disable-next-line no-unused-vars
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import { Presets } from 'react-component-transition';
 import { connect } from 'react-redux';
 import LoadingSkeleton from '../loading-skeleton/loading-skeleton.component';
@@ -120,49 +118,31 @@ const WordsTabs = ({
       </Presets.TransitionFade>
     </WordsContainer>
   );
+  // TODO Make a function for the tab's buttons.
+  const TabFunc = (key, ref, type) => (
+    (key) ? ((Object.keys(AvailableWordType).length)
+      ? <Tab ref={ref} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>{type}</Tab>
+      : null
+    )
+      : null
+  );
 
   return (
     <>
       <Tabs defaultIndex={0} align="center" variant="soft-rounded">
-        {/* <Box className='backdrop-blur z-50' display='flex'
-         justifyContent='center' h='22' width='full'  position='fixed' bottom='0'> */}
         <Presets.TransitionFade>
           <TabList ref={TabListElement} flexWrap="wrap" marginTop={['4', '2', null]}>
-            {(AvailableWordType.noun) ? ((Object.keys(AvailableWordType).length)
-              ? <Tab ref={NounTabButton} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Noun</Tab>
-              : null
-            )
-              : null}
-            {(AvailableWordType.verb) ? ((Object.keys(AvailableWordType).length)
-              ? <Tab ref={VerbTabButton} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Verb</Tab>
-              : null
-            )
-              : null}
-            {(AvailableWordType.adjective) ? ((Object.keys(AvailableWordType).length)
-              ? <Tab ref={AdjectiveTabButton} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adjective</Tab>
-              : null
-            )
-              : null}
-            {(AvailableWordType.phrase) ? ((Object.keys(AvailableWordType).length)
-              ? <Tab ref={PhraseTabButton} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Phrase</Tab>
-              : null
-            )
-              : null}
-            {(AvailableWordType.adverb) ? ((Object.keys(AvailableWordType).length)
-              ? <Tab ref={AdverbTabButton} _hover={Tabshover} _selected={{ color, bg }} _focus={focusBorderColorGeneral} outline="none" outlineColor="initial" style={{ outlineStyle: 'none' }}>Adverb</Tab>
-              : null
-            )
-              : null}
+            {TabFunc(AvailableWordType.noun, NounTabButton, 'Noun')}
+            {TabFunc(AvailableWordType.verb, VerbTabButton, 'Verb')}
+            {TabFunc(AvailableWordType.adjective, AdjectiveTabButton, 'Adjective')}
+            {TabFunc(AvailableWordType.phrase, PhraseTabButton, 'Phrase')}
+            {TabFunc(AvailableWordType.adverb, AdverbTabButton, 'Adverb')}
           </TabList>
         </Presets.TransitionFade>
-        {/* </Box> */}
         <TabPanels>
           <TabPanel>
             {TheWholeThesaurus(InitialWordArray())}
           </TabPanel>
-          {/* )
-              : null
-          } */}
           {
             Object.keys(VerbArray).length && InitialWordArray().fl !== 'verb'
               ? (
