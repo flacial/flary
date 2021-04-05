@@ -1,0 +1,16 @@
+@keyframes rainbow {
+    0% { fill: #fc0303 }
+    17% { fill: #45f52a }
+    34% { fill: #2a7bf5 }
+    51% { fill: #2af5e4 }
+    68% { fill: #c92af5 }
+    85% { fill: #f5dd2a }
+    100% { fill: #f200ff }
+  }
+   
+  /* CHANGE THE ANIMATION SPEED HERE */
+  .rainbow:hover {
+    animation-name: rainbow;
+    animation-duration: 500ms;
+    animation-iteration-count: infinite;
+  }

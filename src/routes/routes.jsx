@@ -5,20 +5,16 @@ import {
   Route,
   useLocation,
 } from 'react-router-dom';
-// eslint-disable-next-line no-unused-vars
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { Presets } from 'react-component-transition';
-
-const SearchPage = lazy(() => import('../pages/SearchPage/SearchPage'));
+import SearchPage from '../pages/SearchPage/SearchPage';
 
 function Routes({ Thesaurus, ...props }) {
   const location = useLocation();
   return (
     <Switch key={location.key} location={location}>
       <Route exact path="/">
-        <Suspense fallback={null}>
-          <SearchPage {...props} />
-        </Suspense>
+        <SearchPage {...props} />
       </Route>
       <Route exact path="/thesaurus">
         <Presets.TransitionFade>
