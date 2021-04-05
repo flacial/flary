@@ -35,6 +35,7 @@ const Help = () => {
           m="4"
           mr={[null, '40', null]}
           rounded="xl"
+          title="Help button"
         >
           <QuestionIcon />
         </Button>
