@@ -1,4 +1,5 @@
 ## Flary Thesaurus - Project 001
+A website that let you search for word's Synonyms and Antonyms using Merriam-Webster API. 
 Inspired by Merriam Webster.
 
 ## Many clones?
