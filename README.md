@@ -3,4 +3,4 @@
 Inspired by Merriam Webster.
 
 ## Many clones?
-If you found any mistakes I've done or a way to make the app's functions better, please pull a new request.
+If you found any mistakes I've done or a way to make the app's better, please pull a new request.
