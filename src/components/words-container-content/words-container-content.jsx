@@ -92,14 +92,14 @@ const WordsContainerContent = (
       ants,
     },
   } = WordsArray;
-  const ExampleSentence = dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1];
-  const ExampleModified = ExampleSentence.replace('{it}', '<em>').replace('{/it}', '</em>');
+  const ExampleSentence = (dt[0][0][1].dt?.[1]?.[1]?.[0].t ?? dt[0][0][1].dt[0][1]).replace(/\s*\{.*?\}\s*/g, '<em> ');
+  // const ExampleModified = ExampleSentence.replace(/\s*\{.*?\}\s*/g, '<em> ');
   const Ants = ants[0];
   const Syns = syns[0];
   const ReturnedWord = hw;
   const PartOfSpeech = fl;
   const ShortDef = shortdef[0];
-  const WordExample = ExampleModified;
+  const WordExample = ExampleSentence;
 
   const fontColorMain = useColorModeValue('gray.700', '#edf2f7');
   const fontColorHeaders = useColorModeValue('#2563EB', '#db8b02');

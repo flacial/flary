@@ -32,7 +32,6 @@ const ThesaurusPage = (props) => {
     Link,
     HandleBackButtonClick,
     WordsLoaded,
-    AvailableWordType,
     getWords,
     history,
     location,
@@ -93,7 +92,6 @@ const ThesaurusPage = (props) => {
 
       <Presets.TransitionFade>
         <WordsTabs
-          AvailableWordType={AvailableWordType}
           WordsLoaded={WordsLoaded}
           getWords={getWords}
           HandleBackButtonClick={HandleBackButtonClick}
