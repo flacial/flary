@@ -40,6 +40,7 @@ const ThemeButton = () => {
       }
       rounded="xl"
       onClick={toggleColorMode}
+      title="Switch theme button"
     >
       {colorMode === 'light'
         ? <MoonIcon />

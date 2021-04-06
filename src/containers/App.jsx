@@ -63,18 +63,31 @@ const App = (props) => {
     setAvailableWordType,
     resetAvailableWordType,
   } = props;
+  // Used for an Error by the API
   const [Error, setError] = useState(false);
+
   const PathName = location.pathname;
   const {
     isOpen,
     onOpen,
   } = useDisclosure();
+  // TODO move the rest of the states to the Reducer
+
+  // Used for an Error from the user (E.g. Empty Input field - Not found word)
   const [WordFind, setWordFind] = useState(false);
+
+  // The WordFind error type for Error message.
   const [WordFindType, setWordFindType] = useState('');
+
+  // State for if Words loaded or not loaded.
   const [WordsLoaded, setWordsLoaded] = useState(false);
+
+  // True when part of speech is found - PartOfSpeechChecker()
   const [IsInitialDone, setInitialDone] = useState(false);
 
-  // TODO Fix Repeated setState calls
+  // TODO Fix Repeated setState calls.
+
+  // Checks if the part of speech exist in AvailableWordType then sets the type's array state.
   const setFilterArray = (wordObjects) => {
     if (AvailableWordType.noun) {
       const filteredArray = wordObjects.filter((word) => word.fl === 'noun');
@@ -98,12 +111,14 @@ const App = (props) => {
     }
   };
 
+  // Checks if the word's part of speech exist then call setFilterArray to set each word's state.
   useEffect(() => {
     if (IsInitialDone) {
       setFilterArray(WordArray);
     }
   }, [Object.keys(AvailableWordType)]);
 
+  // Loops through the word's objects to check if the Part of speech exist or doesn't.
   const PartOfSpeechChecker = (wordObjects) => {
     try {
       wordObjects.forEach((arr) => {
@@ -142,11 +157,10 @@ const App = (props) => {
     }
   };
 
-  const PassRequstedWords = (wordObjects) => {
+  const PassRequstedWord = (wordObjects) => {
     try {
       if (wordObjects[0].hwi) {
         setWordArray(wordObjects);
-        // InitialWord(wordObjects);
         PartOfSpeechChecker(wordObjects);
       } else {
         setError(true);
@@ -162,6 +176,7 @@ const App = (props) => {
     }
   };
 
+  // Fetch the word from the API
   const getWords = (word = Word) => {
     if (word === '') {
       setWordFind(true);
@@ -169,7 +184,7 @@ const App = (props) => {
       onOpen();
     } else {
       getRequest(word)
-        .then((data) => PassRequstedWords(data));
+        .then((data) => PassRequstedWord(data));
       setWordFind(false);
       setWordFindType('');
     }
@@ -179,6 +194,7 @@ const App = (props) => {
     getWords();
   };
 
+  // Sets the states to their Initial state
   const HandleBackButtonClick = (isSetword) => {
     if (isSetword) {
       setWord('');
@@ -193,7 +209,7 @@ const App = (props) => {
     setWordArray([]);
   };
 
-  // Sets AvailableWordType to an empty object
+  // Sets AvailableWordType to an empty object if the conditions are true.
   useEffect(() => {
     if (PathName !== '/thesaurus' && Object.keys(AvailableWordType).length !== 0) {
       setAvailableWordType([]);
@@ -205,7 +221,6 @@ const App = (props) => {
     <Suspense fallback={<LoadingSpinner />}>
       <ThesaurusPage
         getWords={getWords}
-        AvailableWordType={AvailableWordType}
         WordsLoaded={WordsLoaded}
         Link={Link}
         HandleBackButtonClick={HandleBackButtonClick}
@@ -228,7 +243,7 @@ const App = (props) => {
     } else {
       ThesaurusComponent = <Redirect to="/" />;
     }
-
+    // Checks if Error is True
     useEffect(() => {
       if (Error) {
         setWord('');
