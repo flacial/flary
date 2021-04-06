@@ -63,7 +63,7 @@ const App = (props) => {
     setAvailableWordType,
     resetAvailableWordType,
   } = props;
-  // Used for an Error from the API
+  // Used for an Error by the API
   const [Error, setError] = useState(false);
 
   const PathName = location.pathname;
