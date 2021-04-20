@@ -33,7 +33,7 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ## Things this project taught me
-1. Write better Git messages.
-2. Respect the concept of Components and break them up.
+1. Write better commit messages.
+2. Respect the concept of components, and break them up.
 3. Shorter methods doesn't always mean better performance.
-4. Understand how the framework you're using work to avoid problems.
+4. Understand how the used framework works to avoid problems.
