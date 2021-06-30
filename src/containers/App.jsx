@@ -209,7 +209,6 @@ const App = (props) => {
     setWordArray([]);
   };
 
-  // Sets AvailableWordType to an empty object if the conditions are true.
   useEffect(() => {
     if (PathName !== '/thesaurus' && Object.keys(AvailableWordType).length !== 0) {
       setAvailableWordType([]);
