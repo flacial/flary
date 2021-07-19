@@ -36,4 +36,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 1. Write better commit messages.
 2. Respect the concept of components, and break them up.
 3. Shorter methods doesn't always mean better performance.
-4. Understand how the used framework works to avoid problems.
+4. Understand how the used framework work to avoid problems.
