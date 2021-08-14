@@ -9,7 +9,7 @@
   }
    
   /* CHANGE THE ANIMATION SPEED HERE */
-  .rainbow:hover {
+  .rainbow:hover .rainbow__logo {
     animation-name: rainbow;
     animation-duration: 500ms;
     animation-iteration-count: infinite;
