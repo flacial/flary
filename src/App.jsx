@@ -27,9 +27,9 @@ import {
 import {
   Presets,
 } from 'react-component-transition';
-import getRequest from '../services/getRequest';
-import Routes from '../routes/routes';
-import Header from '../components/header/header.component';
+import getRequest from './services/getRequest';
+import Routes from './routes/routes';
+import Header from './components/header/header.component';
 import {
   setWord,
   setWordArray,
@@ -40,12 +40,12 @@ import {
   setAdverbArray,
   setAvailableWordType,
   resetAvailableWordType,
-} from '../redux/words/words.action';
-import ErrorBoundary from '../components/error-boundary/error-boundary.component';
-import LoadingSpinner from '../components/spinner/spinner.component';
+} from './redux/words/words.action';
+import ErrorBoundary from './components/error-boundary/error-boundary.component';
+import LoadingSpinner from './components/spinner/spinner.component';
 
-const PopUpSearchBar = lazy(() => import('../components/popup-search-bar/popup-search-bar.component'));
-const ThesaurusPage = lazy(() => import('../pages/ThesaurusPage/ThesaurusPage'));
+const PopUpSearchBar = lazy(() => import('./components/popup-search-bar/popup-search-bar.component'));
+const ThesaurusPage = lazy(() => import('./pages/ThesaurusPage/ThesaurusPage'));
 
 const App = (props) => {
   const {
@@ -63,7 +63,6 @@ const App = (props) => {
     setAvailableWordType,
     resetAvailableWordType,
   } = props;
-  // Used for an Error by the API
   const [Error, setError] = useState(false);
 
   const PathName = location.pathname;

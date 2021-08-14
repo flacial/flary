@@ -27,15 +27,14 @@ const LinkCSS = `
   m-4
 `;
 
-const ThesaurusPage = (props) => {
-  const {
-    Link,
-    HandleBackButtonClick,
-    WordsLoaded,
-    getWords,
-    history,
-    location,
-  } = props;
+const ThesaurusPage = ({
+  Link,
+  HandleBackButtonClick,
+  WordsLoaded,
+  getWords,
+  history,
+  location,
+}) => {
   const LinkChak = chakra(Link);
   const bg = useColorModeValue('#edf2f7', 'rgba(255, 255, 255, 0.08)');
   const color = useColorModeValue('#252d3d', '#edf2f7');
