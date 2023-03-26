@@ -2,9 +2,6 @@
 A website that let you search for word's Synonyms and Antonyms using Merriam-Webster API. 
 Inspired by Merriam Webster.
 
-## Many clones?
-If you found any mistakes I've done or a way to make the app's better, please pull a new request.
-
 ## Available Scripts
 
 In the project directory, you can run:
